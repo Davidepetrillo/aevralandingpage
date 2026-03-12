@@ -165,7 +165,7 @@ label {
   max-width: none;
   color: #171c22;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(2.1rem, 3.9vw, 3.95rem);
+  font-size: clamp(2.1rem, 3.85vw, 3.95rem);
   line-height: 0.9;
   letter-spacing: -0.045em;
   font-weight: 700;
@@ -1172,6 +1172,12 @@ label {
   .why-aevra-feature {
     margin-top: var(--space-lg);
     border-radius: 22px;
+  }
+
+  .why-aevra-feature-image {
+    min-height: 0;
+    height: auto;
+    object-fit: contain;
   }
 
   .why-aevra-card {
