@@ -155,7 +155,7 @@ label {
 }
 
 .hero-copy {
-  max-width: 1080px;
+  max-width: 1180px;
   margin: 0 auto;
   text-align: center;
 }
@@ -163,9 +163,9 @@ label {
 .hero h1 {
   margin: 0;
   max-width: none;
-  color: #2d2622;
+  color: #171c22;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(2.35rem, 4.35vw, 4.45rem);
+  font-size: clamp(2.1rem, 3.9vw, 3.95rem);
   line-height: 0.9;
   letter-spacing: -0.045em;
   font-weight: 700;
@@ -190,13 +190,15 @@ label {
 
 .hero h1 .hero-title-italic {
   display: inline;
-  color: #6d5850;
+  color: #444f5c;
   font-style: italic;
   font-weight: 600;
 }
 
 .hero h1 .hero-title-accent {
-  color: #7a6961;
+  display: inline;
+  color: #58616c;
+  font-weight: 650;
 }
 
 .hero .lead {
@@ -1217,6 +1219,12 @@ label {
   h1,
   h1 span {
     white-space: normal;
+  }
+}
+
+@media (min-width: 701px) {
+  .hero h1 span {
+    white-space: nowrap;
   }
 }
 
