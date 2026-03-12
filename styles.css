@@ -1167,7 +1167,8 @@ label {
   }
 
   .why-aevra h2 {
-    font-size: clamp(1.55rem, 8vw, 2.15rem);
+    font-size: clamp(1.28rem, 6.2vw, 1.75rem);
+    line-height: 1.02;
   }
 
   .why-aevra-feature {
