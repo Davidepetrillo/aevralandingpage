@@ -410,6 +410,7 @@ label {
 
 .why-aevra {
   width: min(1180px, calc(100% - 2rem));
+  padding-top: calc(var(--section-space) + 1.2rem);
 }
 
 .why-aevra-head {
@@ -444,7 +445,7 @@ label {
   margin-right: auto;
   max-width: 1160px;
   overflow: hidden;
-  border: 1px solid rgba(199, 193, 184, 0.55);
+  border: 0;
   border-radius: 30px;
   background: rgba(247, 245, 241, 0.42);
 }
@@ -1166,7 +1167,7 @@ label {
   }
 
   .why-aevra h2 {
-    font-size: clamp(1.9rem, 10vw, 2.6rem);
+    font-size: clamp(1.55rem, 8vw, 2.15rem);
   }
 
   .why-aevra-feature {
