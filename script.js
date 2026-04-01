@@ -1,106 +1,68 @@
-const yearEl = document.getElementById("year");
-const topbar = document.querySelector(".topbar");
-const tiltCards = Array.from(document.querySelectorAll(".tilt-card"));
-const magneticButtons = Array.from(document.querySelectorAll(".btn"));
-const lightbox = document.getElementById("lightbox");
-const lightboxImage = document.getElementById("lightbox-image");
-const lightboxClose = document.getElementById("lightbox-close");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const yearEl = document.getElementById("year");
 if (yearEl) {
   yearEl.textContent = String(new Date().getFullYear());
 }
 
-if (lightbox instanceof HTMLElement && lightboxImage instanceof HTMLImageElement && lightboxClose instanceof HTMLElement) {
-  const closeLightbox = () => {
-    lightbox.classList.remove("is-open");
-    lightbox.setAttribute("aria-hidden", "true");
-    lightboxImage.removeAttribute("src");
-    lightboxImage.alt = "";
-  };
-
-  const openLightbox = (src, alt) => {
-    lightboxImage.src = src;
-    lightboxImage.alt = alt || "Preview image";
-    lightbox.classList.add("is-open");
-    lightbox.setAttribute("aria-hidden", "false");
-  };
-
-  document.querySelectorAll("[data-lightbox-image]").forEach((img) => {
-    if (!(img instanceof HTMLImageElement)) return;
-    img.style.cursor = "zoom-in";
-    img.addEventListener("click", () => openLightbox(img.currentSrc || img.src, img.alt));
-  });
-
-  lightboxClose.addEventListener("click", closeLightbox);
-
-  lightbox.addEventListener("click", (event) => {
-    if (event.target === lightbox) {
-      closeLightbox();
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
-      closeLightbox();
-    }
-  });
+const progressBar = document.getElementById("scroll-progress");
+if (progressBar) {
+  window.addEventListener(
+    "scroll",
+    () => {
+      const scrolled = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+      progressBar.style.width = pct + "%";
+    },
+    { passive: true }
+  );
 }
 
-const revealTargets = Array.from(document.querySelectorAll(".hero, .section, .footer"));
-revealTargets.forEach((el, index) => {
-  el.setAttribute("data-reveal", "");
-  el.style.transitionDelay = `${index * 70}ms`;
+const heroEls = Array.from(document.querySelectorAll("[data-hero-reveal]"));
+heroEls.forEach((el, i) => {
+  el.style.transitionDelay = `${i * 120}ms`;
 });
 
-const io = new IntersectionObserver(
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    heroEls.forEach((el) => el.classList.add("is-visible"));
+  });
+});
+
+const revealEls = Array.from(document.querySelectorAll("[data-reveal]"));
+const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
-        io.unobserve(entry.target);
+        revealObserver.unobserve(entry.target);
       }
     });
   },
-  { threshold: 0.15 }
+  { threshold: 0.12 }
 );
 
-revealTargets.forEach((el) => io.observe(el));
+revealEls.forEach((el) => revealObserver.observe(el));
 
-if (topbar) {
-  topbar.classList.remove("is-scrolled");
-}
+const storyCards = Array.from(document.querySelectorAll(".story-card[data-reveal]"));
+storyCards.forEach((el, i) => {
+  el.style.transitionDelay = `${i * 110}ms`;
+});
 
 if (!prefersReducedMotion) {
-  tiltCards.forEach((card) => {
-    card.addEventListener("pointermove", (event) => {
-      const bounds = card.getBoundingClientRect();
-      const mx = event.clientX - bounds.left;
-      const my = event.clientY - bounds.top;
-      const px = mx / bounds.width - 0.5;
-      const py = my / bounds.height - 0.5;
-      card.style.setProperty("--mx", `${mx}px`);
-      card.style.setProperty("--my", `${my}px`);
-      card.style.transform = `translateY(-4px) rotateX(${(-py * 2.2).toFixed(2)}deg) rotateY(${(px * 3.1).toFixed(2)}deg)`;
-      card.classList.add("is-hover");
+  const magnets = Array.from(document.querySelectorAll(".magnetic"));
+
+  magnets.forEach((btn) => {
+    btn.addEventListener("pointermove", (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${(x * 0.15).toFixed(2)}px, ${(y * 0.15).toFixed(2)}px)`;
     });
 
-    card.addEventListener("pointerleave", () => {
-      card.classList.remove("is-hover");
-      card.style.transform = "";
-    });
-  });
-
-  magneticButtons.forEach((button) => {
-    button.addEventListener("pointermove", (event) => {
-      const rect = button.getBoundingClientRect();
-      const x = event.clientX - rect.left - rect.width / 2;
-      const y = event.clientY - rect.top - rect.height / 2;
-      button.style.transform = `translate(${(x * 0.09).toFixed(2)}px, ${(y * 0.13).toFixed(2)}px)`;
-    });
-
-    button.addEventListener("pointerleave", () => {
-      button.style.transform = "";
+    btn.addEventListener("pointerleave", () => {
+      btn.style.transform = "";
     });
   });
 }

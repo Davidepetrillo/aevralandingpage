@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aevra | Interactive Documentation for Web Tools</title>
+    <title>Aevra - The end of static documentation</title>
     <meta
       name="description"
-      content="Aevra is the agentic operating system for teams that automates repetitive workflows, learns how your team works, and executes with context."
+      content="Aevra captures how your team works, turns it into interactive step-by-step guides, and replays them live inside the tools you already use."
     />
     <link rel="icon" type="image/png" href="./thelogo.png" />
     <link rel="shortcut icon" type="image/png" href="./thelogo.png" />
@@ -14,184 +14,105 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="ambient" aria-hidden="true"></div>
-    <div class="bg-grid" aria-hidden="true"></div>
-    <header class="shell topbar">
-      <a class="brand" href="#">
-        <img class="brand-logo" src="./thelogo.png" alt="Aevra logo" />
-      </a>
-      <a class="nav-cta" href="https://calendly.com/davide-aevra/30min">Book a demo</a>
-    </header>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
     <main>
-      <section class="shell hero" id="product">
-        <div class="hero-aura" aria-hidden="true"></div>
-        <div class="hero-layout">
-          <div class="hero-copy">
-            <h1>
-              <span class="hero-title-line"><span class="hero-title-italic">Interactive</span> documentation</span>
-              <span>for the tools your <span class="hero-title-accent">team</span> already uses.</span>
-            </h1>
-            <p class="lead">
-              Aevra records how a task is done in your web tools, turns it into a step by step workflow, and guides
-              users through it live or automates parts of it.
-            </p>
-          </div>
-        </div>
-
-        <figure class="hero-demo" id="demo" aria-label="Aevra product demo preview">
-          <video
-            class="hero-demo-video"
-            autoplay
-            muted
-            loop
-            controls
-            playsinline
-            preload="metadata"
-            aria-label="Product demo video"
-          >
-            <source src="./herodemo.mp4" type="video/mp4" />
-          </video>
-        </figure>
-
-        <div class="hero-marquee cap-marquee" aria-label="Aevra capabilities">
-          <div class="cap-track">
-            <ul class="cap-row">
-              <li>Capture</li>
-              <li>Analyze</li>
-              <li>Replay inside tabs</li>
-              <li>No context switch</li>
-              <li>Privacy-first control</li>
-              <li>Auto blur private elements</li>
-              <li>KPI analytics</li>
-              <li>Workflow time dynamics</li>
-              <li>Workspace division</li>
-              <li>Cross-team visibility</li>
-              <li>Execution memory</li>
-            </ul>
-            <ul class="cap-row" aria-hidden="true">
-              <li>Capture</li>
-              <li>Analyze</li>
-              <li>Replay inside tabs</li>
-              <li>No context switch</li>
-              <li>Privacy-first control</li>
-              <li>Auto blur private elements</li>
-              <li>KPI analytics</li>
-              <li>Workflow time dynamics</li>
-              <li>Workspace division</li>
-              <li>Cross-team visibility</li>
-              <li>Execution memory</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="shell section why-aevra" id="why-aevra" aria-labelledby="why-aevra-title">
-        <div class="why-aevra-head">
-          <h2 id="why-aevra-title">Why teams use Aevra</h2>
-          <p class="why-aevra-subtitle">
-            Aevra replaces static documentation, repeated explanations, and tab switching with workflows people can
-            follow inside the tools they already use.
-          </p>
-        </div>
-
-        <figure class="why-aevra-feature">
-          <img
-            class="why-aevra-feature-image"
-            src="./Aevra.png"
-            alt="Aevra workflow interface preview"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-
-      </section>
-
-      <section class="shell section integrations" id="integrations">
-        <div class="integrations-layout">
-          <div
-            class="integrations-visual"
-            aria-label="Integration ecosystem showing Salesforce, Deel, HubSpot, Google, Workday, Slack, Jira, and Microsoft"
-          >
-            <div class="integration-orbits">
-              <div class="integration-ring integration-ring-outer"></div>
-              <div class="integration-ring integration-ring-mid"></div>
-              <div class="integration-ring integration-ring-inner"></div>
-              <div class="integration-ring integration-ring-core"></div>
-
-              <div class="integration-core">
-                <img class="integration-core-logo" src="./thelogo.png" alt="Aevra" />
+      <section class="section hero" id="hero">
+        <div class="hero-frame">
+          <nav class="nav hero-nav" id="nav">
+            <div class="nav-inner">
+              <a class="nav-brand" href="#">
+                <img src="./thelogolight.png" alt="Aevra" width="30" height="30" />
+              </a>
+              <div class="nav-links">
+                <a class="nav-link" href="#how">How it works</a>
+                <a class="nav-link" href="#integrations">Integrations</a>
               </div>
-
-              <div class="integration-badge integration-badge-salesforce">
-                <img src="./logos/salesforce.svg" alt="Salesforce" loading="lazy" decoding="async" />
-              </div>
-              <div class="integration-badge integration-badge-google">
-                <img src="./logos/google-workspace.svg" alt="Google Workspace" loading="lazy" decoding="async" />
-              </div>
-              <div class="integration-badge integration-badge-microsoft">
-                <img src="./logos/microsoft.svg" alt="Microsoft" loading="lazy" decoding="async" />
-              </div>
-              <div class="integration-badge integration-badge-jira">
-                <img src="./logos/jira.svg" alt="Jira" loading="lazy" decoding="async" />
-              </div>
-              <div class="integration-badge integration-badge-slack">
-                <img src="./logos/slack.svg" alt="Slack" loading="lazy" decoding="async" />
-              </div>
-              <div class="integration-badge integration-badge-workday">
-                <img src="./logos/workday.svg" alt="Workday" loading="lazy" decoding="async" />
-              </div>
-              <div class="integration-badge integration-badge-deel">
-                <img src="./logos/deel.svg" alt="Deel" loading="lazy" decoding="async" />
-              </div>
-              <div class="integration-badge integration-badge-hubspot">
-                <img src="./logos/hubspot.svg" alt="HubSpot" loading="lazy" decoding="async" />
+              <div class="nav-actions">
+                <a class="btn-primary magnetic" href="https://calendly.com/davide-aevra/30min">Book a demo</a>
               </div>
             </div>
-          </div>
+          </nav>
 
-          <div class="integrations-copy">
-            <h2>
-              Work directly <span>inside your existing stack.</span>
+          <div class="hero-body">
+            <div class="hero-copy">
+              <h1 data-hero-reveal>Aevra AI</h1>
+              <p class="hero-line" data-hero-reveal>
+                Aevra uses AI to learn how your team works, then turns each process into live in-product guidance and automation.
+              </p>
+              <div class="hero-actions" data-hero-reveal>
+                <a class="btn-primary magnetic" href="https://calendly.com/davide-aevra/30min">Book a demo</a>
+                <a class="btn-secondary magnetic" href="#how">See how it works</a>
+              </div>
+            </div>
+
+            <aside class="hero-side" data-hero-reveal>
+              <span class="hero-side-label">Built for onboarding, SOPs, and repeatable work</span>
+              <p class="hero-side-copy">
+                Record a workflow once, then let your team follow it live across the web. Standardize execution, automate the repetitive parts, and leave people focused on what needs judgment.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section story-section" id="how">
+        <div class="container story-shell">
+          <div class="section-lead" data-reveal>
+            <span class="section-kicker">Introducing Aevra</span>
+            <h2 class="section-title">
+              <span class="title-line">Harness invisible execution power to guide teams faster,</span>
+              <span class="title-line title-line--muted">reduce mistakes, and automate repetitive work.</span>
             </h2>
-            <p>
-              Aevra runs as an extension across the web, so teams can capture, replay, and automate directly inside
-              Salesforce, Deel, HubSpot, Slack, Google Workspace, Workday, and the rest of the tools they already open
-              every day.
-            </p>
+          </div>
+
+          <div class="story-grid">
+            <article class="story-card" data-reveal>
+              <div class="story-media">
+                <img src="./testimages.png" alt="Aevra product placeholder" />
+              </div>
+              <div class="story-copy">
+                <h3 class="story-title">Time Reclaimed</h3>
+                <p class="story-desc">
+                  Capture a workflow once, then generate live guidance instantly so teams move faster without writing and maintaining static docs by hand.
+                </p>
+              </div>
+            </article>
+
+            <article class="story-card" data-reveal>
+              <div class="story-media">
+                <img src="./testimages.png" alt="Aevra product placeholder" />
+              </div>
+              <div class="story-copy">
+                <h3 class="story-title">Guidance That Flows</h3>
+                <p class="story-desc">
+                  Replay every process directly inside the browser with contextual guidance layered on top of the actual workflow, so work stays clear and easy to follow.
+                </p>
+              </div>
+            </article>
+
+            <article class="story-card" data-reveal>
+              <div class="story-media">
+                <img src="./testimages.png" alt="Aevra product placeholder" />
+              </div>
+              <div class="story-copy">
+                <h3 class="story-title">A Silent Operator</h3>
+                <p class="story-desc">
+                  Aevra stays present in the background, suggesting next steps, automating repetition, and reducing mistakes while people focus on judgment.
+                </p>
+              </div>
+            </article>
           </div>
         </div>
       </section>
 
-      <section class="shell section cta" id="waitlist">
-        <div class="cta-minimal">
-          <h2>Book a demo. See exactly how Aevra works.</h2>
-          <p>A focused walkthrough of capture, replay, automation, and workflow analytics.</p>
-          <a class="hero-link hero-link-strong cta-link" href="https://calendly.com/davide-aevra/30min">Book a demo</a>
-          <div class="cta-logos" aria-label="Recognition and partner logos">
-            <img src="./logos/french_tech_leaders_logo.jpeg" alt="French Tech Leaders" loading="lazy" decoding="async" />
-            <img src="./logos/download (4).png" alt="Partner logo" loading="lazy" decoding="async" />
-          </div>
-        </div>
-      </section>
     </main>
-
-    <div class="lightbox" id="lightbox" aria-hidden="true">
-      <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close preview">Close</button>
-      <img class="lightbox-image" id="lightbox-image" alt="" />
-    </div>
-
-    <footer class="shell footer">
-      <p>&copy; <span id="year"></span> Aevra. Agentic operations, elegantly executed.</p>
-    </footer>
-
-    <a class="privacy-link" href="./privacy-policy.html">Privacy &amp; Policy</a>
 
     <script src="./script.js"></script>
   </body>
