@@ -50,6 +50,36 @@ storyCards.forEach((el, i) => {
   el.style.transitionDelay = `${i * 110}ms`;
 });
 
+const useCaseTabs = Array.from(document.querySelectorAll("[data-use-case-tab]"));
+const useCasePanels = Array.from(document.querySelectorAll("[data-use-case-panel]"));
+const useCaseCopies = Array.from(document.querySelectorAll("[data-use-case-copy]"));
+
+if (useCaseTabs.length && useCasePanels.length && useCaseCopies.length) {
+  const activateUseCase = (id) => {
+    useCaseTabs.forEach((tab) => {
+      const active = tab.dataset.useCaseTab === id;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", String(active));
+    });
+
+    useCasePanels.forEach((panel) => {
+      const active = panel.dataset.useCasePanel === id;
+      panel.classList.toggle("is-active", active);
+      panel.setAttribute("aria-hidden", String(!active));
+    });
+
+    useCaseCopies.forEach((copy) => {
+      copy.classList.toggle("is-active", copy.dataset.useCaseCopy === id);
+    });
+  };
+
+  useCaseTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      activateUseCase(tab.dataset.useCaseTab);
+    });
+  });
+}
+
 if (!prefersReducedMotion) {
   const hero = document.getElementById("hero");
   const heroMessage = document.querySelector("[data-hero-message]");
