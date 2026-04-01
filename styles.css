@@ -100,6 +100,25 @@ a {
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(200, 215, 235, 0.4));
 }
 
+.privacy-link {
+  position: fixed;
+  left: 22px;
+  bottom: 18px;
+  z-index: 160;
+  color: rgba(236, 241, 248, 0.56);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: color 0.22s ease, opacity 0.22s ease;
+}
+
+.privacy-link:hover,
+.privacy-link:focus-visible {
+  color: rgba(247, 249, 252, 0.9);
+  opacity: 1;
+}
+
 [data-reveal] {
   opacity: 0;
   transform: translateY(24px);
@@ -798,6 +817,12 @@ a {
     font-size: 0.75rem;
   }
 
+  .privacy-link {
+    left: 14px;
+    bottom: 14px;
+    font-size: 0.72rem;
+  }
+
   .section-lead {
     max-width: none;
   }
@@ -847,14 +872,14 @@ a {
 }
 
 .policy-page {
-  background: #ffffff;
-  color: #1b2430;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .policy-shell {
   width: min(1180px, calc(100% - 2.2rem));
   margin: 0 auto;
-  padding: 1.25rem 0 4rem;
+  padding: 1.5rem 0 4rem;
 }
 
 .policy-topbar {
@@ -956,7 +981,7 @@ a {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.36);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .policy-table-row {
@@ -972,7 +997,7 @@ a {
 }
 
 .policy-table-head {
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .policy-table-head div {
