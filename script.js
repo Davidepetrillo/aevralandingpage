@@ -31,11 +31,51 @@ requestAnimationFrame(() => {
 });
 
 const revealEls = Array.from(document.querySelectorAll("[data-reveal]"));
+const countUpEls = Array.from(document.querySelectorAll("[data-countup]"));
+const animatedCountEls = new WeakSet();
+
+if (!prefersReducedMotion) {
+  countUpEls.forEach((countEl) => {
+    const suffix = countEl.dataset.countupSuffix || "";
+    countEl.textContent = `0${suffix}`;
+  });
+}
+
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
+
+        const countEl = entry.target.querySelector("[data-countup]");
+        if (countEl && !animatedCountEls.has(countEl)) {
+          const targetValue = Number(countEl.dataset.countupValue || "0");
+          const suffix = countEl.dataset.countupSuffix || "";
+          const duration = prefersReducedMotion ? 0 : 1200;
+
+          animatedCountEls.add(countEl);
+
+          if (!duration) {
+            countEl.textContent = `${targetValue}${suffix}`;
+          } else {
+            const startTime = performance.now();
+            const startValue = 0;
+
+            const tick = (now) => {
+              const progress = Math.min((now - startTime) / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              const currentValue = Math.round(startValue + (targetValue - startValue) * eased);
+              countEl.textContent = `${currentValue}${suffix}`;
+
+              if (progress < 1) {
+                requestAnimationFrame(tick);
+              }
+            };
+
+            requestAnimationFrame(tick);
+          }
+        }
+
         revealObserver.unobserve(entry.target);
       }
     });
@@ -53,6 +93,11 @@ storyCards.forEach((el, i) => {
 const useCaseTabs = Array.from(document.querySelectorAll("[data-use-case-tab]"));
 const useCasePanels = Array.from(document.querySelectorAll("[data-use-case-panel]"));
 const useCaseCopies = Array.from(document.querySelectorAll("[data-use-case-copy]"));
+const pricingSwitch = document.querySelector("[data-pricing-switch]");
+const pricingLabels = Array.from(document.querySelectorAll("[data-pricing-label]"));
+const pricingValues = Array.from(document.querySelectorAll("[data-price-monthly]"));
+const faqQuestions = Array.from(document.querySelectorAll(".faq-question"));
+const contactForm = document.querySelector("[data-contact-form]");
 
 if (useCaseTabs.length && useCasePanels.length && useCaseCopies.length) {
   const activateUseCase = (id) => {
@@ -80,11 +125,152 @@ if (useCaseTabs.length && useCasePanels.length && useCaseCopies.length) {
   });
 }
 
+if (pricingSwitch && pricingLabels.length && pricingValues.length) {
+  const syncPricingMode = (yearly) => {
+    pricingSwitch.classList.toggle("is-yearly", yearly);
+    pricingSwitch.setAttribute("aria-checked", String(yearly));
+
+    pricingLabels.forEach((label) => {
+      const active = label.dataset.pricingLabel === (yearly ? "yearly" : "monthly");
+      label.classList.toggle("is-active", active);
+    });
+
+    pricingValues.forEach((valueEl) => {
+      valueEl.textContent = yearly ? valueEl.dataset.priceYearly : valueEl.dataset.priceMonthly;
+    });
+  };
+
+  pricingSwitch.addEventListener("click", () => {
+    const yearly = pricingSwitch.getAttribute("aria-checked") !== "true";
+    syncPricingMode(yearly);
+  });
+
+  syncPricingMode(false);
+}
+
+if (faqQuestions.length) {
+  faqQuestions.forEach((question) => {
+    question.addEventListener("click", () => {
+      const expanded = question.getAttribute("aria-expanded") === "true";
+      const answer = question.nextElementSibling;
+
+      question.setAttribute("aria-expanded", String(!expanded));
+
+      if (answer) {
+        answer.hidden = expanded;
+      }
+    });
+  });
+}
+
+if (contactForm) {
+  const nameInput = contactForm.querySelector("[data-contact-name]");
+  const emailInput = contactForm.querySelector("[data-contact-email]");
+  const messageInput = contactForm.querySelector("textarea[name='message']");
+  const submitButton = contactForm.querySelector("[data-contact-submit]");
+  const successMessage = contactForm.querySelector("[data-contact-success]");
+  const errorEls = {
+    name: contactForm.querySelector("[data-error-for='name']"),
+    email: contactForm.querySelector("[data-error-for='email']"),
+    message: contactForm.querySelector("[data-error-for='message']"),
+  };
+
+  const setFieldError = (field, key, message) => {
+    field.classList.add("is-invalid");
+    if (errorEls[key]) {
+      errorEls[key].textContent = message;
+      errorEls[key].hidden = false;
+    }
+  };
+
+  const clearFieldError = (field, key) => {
+    field.classList.remove("is-invalid");
+    if (errorEls[key]) {
+      errorEls[key].hidden = true;
+    }
+  };
+
+  const validateContactForm = () => {
+    let valid = true;
+    const nameValue = nameInput.value.trim();
+    const emailValue = emailInput.value.trim().toLowerCase();
+    const messageValue = messageInput.value.trim();
+    const emailMatch = emailValue.match(/^[^\s@]+@([^\s@]+\.[a-z]{2,})$/i);
+
+    clearFieldError(nameInput, "name");
+    clearFieldError(emailInput, "email");
+    clearFieldError(messageInput, "message");
+
+    if (!nameValue) {
+      setFieldError(nameInput, "name", "Please enter your name.");
+      valid = false;
+    }
+
+    if (!emailValue) {
+      setFieldError(emailInput, "email", "Please enter your work email.");
+      valid = false;
+    } else if (!emailMatch) {
+      setFieldError(emailInput, "email", "Please enter a valid email with a real domain.");
+      valid = false;
+    }
+
+    if (!messageValue) {
+      setFieldError(messageInput, "message", "Please add a short message.");
+      valid = false;
+    }
+
+    return valid;
+  };
+
+  [nameInput, emailInput, messageInput].forEach((field) => {
+    field.addEventListener("input", () => {
+      if (field === nameInput) clearFieldError(nameInput, "name");
+      if (field === emailInput) clearFieldError(emailInput, "email");
+      if (field === messageInput) clearFieldError(messageInput, "message");
+    });
+  });
+
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!validateContactForm()) {
+      return;
+    }
+
+    submitButton.classList.add("is-submitting");
+    submitButton.textContent = "Sending...";
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: "POST",
+        body: new FormData(contactForm),
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+
+      submitButton.hidden = true;
+      successMessage.hidden = false;
+      contactForm.reset();
+    } catch (error) {
+      submitButton.classList.remove("is-submitting");
+      submitButton.textContent = "Send";
+      setFieldError(messageInput, "message", "We could not send your request. Please try again.");
+    }
+  });
+}
+
 if (!prefersReducedMotion) {
   const hero = document.getElementById("hero");
   const heroMessage = document.querySelector("[data-hero-message]");
   const heroMessageText = document.querySelector("[data-hero-message-text]");
   const magnets = Array.from(document.querySelectorAll(".magnetic"));
+  const integrationsOrbit = document.querySelector("[data-integrations-orbit]");
+  const orbitBadges = integrationsOrbit ? Array.from(integrationsOrbit.querySelectorAll(".orbit-badge")) : [];
   const heroPrompt = "Stop telling your team how work is done..";
   let heroTypingTimer = null;
   let heroResetTimer = null;
@@ -172,4 +358,31 @@ if (!prefersReducedMotion) {
       btn.style.transform = "";
     });
   });
+
+  if (integrationsOrbit && orbitBadges.length) {
+    integrationsOrbit.addEventListener("pointermove", (event) => {
+      const rect = integrationsOrbit.getBoundingClientRect();
+      const px = (event.clientX - rect.left) / rect.width - 0.5;
+      const py = (event.clientY - rect.top) / rect.height - 0.5;
+
+      integrationsOrbit.style.setProperty("--orbit-x", `${(px * 10).toFixed(2)}px`);
+      integrationsOrbit.style.setProperty("--orbit-y", `${(py * 10).toFixed(2)}px`);
+
+      orbitBadges.forEach((badge) => {
+        const depth = Number(badge.dataset.depth || "1");
+        const offsetX = px * 18 * depth;
+        const offsetY = py * 18 * depth;
+        badge.style.transform = `translate(calc(-50% + ${offsetX.toFixed(2)}px), calc(-50% + ${offsetY.toFixed(2)}px))`;
+      });
+    });
+
+    integrationsOrbit.addEventListener("pointerleave", () => {
+      integrationsOrbit.style.setProperty("--orbit-x", "0px");
+      integrationsOrbit.style.setProperty("--orbit-y", "0px");
+
+      orbitBadges.forEach((badge) => {
+        badge.style.transform = "";
+      });
+    });
+  }
 }
