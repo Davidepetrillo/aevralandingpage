@@ -254,7 +254,7 @@ a {
   height: calc(100svh - 68px);
   min-height: 620px;
   padding-top: clamp(92px, 14vh, 148px);
-  padding-bottom: clamp(54px, 8vh, 92px);
+  padding-bottom: clamp(68px, 9vh, 112px);
 }
 
 .hero-copy {
@@ -402,7 +402,7 @@ a {
 .hero-scroll-cue {
   position: absolute;
   left: 50%;
-  bottom: 54px;
+  bottom: 68px;
   display: block;
   width: max-content;
   color: rgba(236, 241, 248, 0.58);
@@ -519,7 +519,7 @@ a {
   flex-direction: column;
   align-items: flex-start;
   width: min(1256px, 100%);
-  gap: 16px;
+  gap: 24px;
   max-width: 1256px;
 }
 
@@ -911,7 +911,7 @@ a {
     height: calc(100svh - 56px);
     min-height: 640px;
     padding-top: 112px;
-    padding-bottom: 56px;
+    padding-bottom: 72px;
   }
 
   .hero-copy,
@@ -931,7 +931,7 @@ a {
   }
 
   .hero-scroll-cue {
-    bottom: 42px;
+    bottom: 54px;
   }
 
   .story-shell {
@@ -1036,7 +1036,7 @@ a {
     height: calc(100svh - 42px);
     min-height: 560px;
     padding-top: 96px;
-    padding-bottom: 44px;
+    padding-bottom: 58px;
     gap: 20px;
   }
 
@@ -1074,7 +1074,7 @@ a {
   }
 
   .hero-scroll-cue {
-    bottom: 34px;
+    bottom: 44px;
   }
 
   .hero-scroll-cue__label {
