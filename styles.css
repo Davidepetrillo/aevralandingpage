@@ -2821,3 +2821,340 @@ a {
     font-size: clamp(1.85rem, 10vw, 2.6rem);
   }
 }
+
+/* Light theme overrides for the static landing page */
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f6f3ed;
+  --text: #121315;
+  --text-2: rgba(17, 18, 20, 0.72);
+  --text-3: rgba(17, 18, 20, 0.46);
+  --border: rgba(17, 18, 20, 0.1);
+}
+
+body {
+  color: var(--text);
+  background: var(--bg);
+}
+
+body::before {
+  content: none;
+}
+
+body::after {
+  content: none;
+}
+
+.scroll-progress {
+  background: linear-gradient(90deg, rgba(17, 18, 20, 0.64), rgba(17, 18, 20, 0.16));
+}
+
+.privacy-link {
+  color: rgba(17, 18, 20, 0.52);
+}
+
+.privacy-link:hover,
+.privacy-link:focus-visible {
+  color: rgba(17, 18, 20, 0.86);
+}
+
+.story-section,
+.benefits-section,
+.use-cases-section,
+.integrations-section,
+.pricing-section,
+.faq-section,
+.contact-section,
+.closing-section,
+.site-footer {
+  background: #ffffff;
+}
+
+.story-section::before,
+.story-section::after,
+.benefits-section::before,
+.benefits-section::after,
+.use-cases-section::before,
+.use-cases-section::after,
+.integrations-section::before,
+.integrations-section::after,
+.pricing-section::before,
+.pricing-section::after,
+.faq-section::before,
+.faq-section::after {
+  content: none;
+}
+
+.section-kicker {
+  color: rgba(17, 18, 20, 0.5);
+}
+
+.section-kicker::before {
+  background: rgba(17, 18, 20, 0.28);
+}
+
+.section-title {
+  color: rgba(17, 18, 20, 0.96);
+}
+
+.section-title .title-line--muted {
+  color: rgba(17, 18, 20, 0.52);
+}
+
+.story-media,
+.use-cases-media {
+  background: #f4efe7;
+}
+
+.story-media::before,
+.use-cases-media::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(17, 18, 20, 0.04) 100%),
+    radial-gradient(circle at 50% 6%, rgba(255, 255, 255, 0.34), transparent 42%);
+}
+
+.story-media::after,
+.use-cases-media::after {
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+}
+
+.story-media img,
+.use-case-visual img {
+  filter: saturate(1) contrast(0.98) brightness(0.98);
+}
+
+.story-card:hover .story-media img {
+  filter: saturate(1.03) contrast(1) brightness(1);
+}
+
+.story-title,
+.benefit-title,
+.integrations-title,
+.pricing-card__title,
+.pricing-card__price,
+.faq-question,
+.contact-title,
+.closing-hero__title,
+.use-case-title {
+  color: rgba(17, 18, 20, 0.96);
+}
+
+.story-desc,
+.benefit-desc,
+.integrations-desc,
+.integrations-desc--muted,
+.pricing-card__summary,
+.faq-answer,
+.contact-copy,
+.footer-brand__copy,
+.use-case-desc {
+  color: rgba(17, 18, 20, 0.66);
+}
+
+.benefit-card,
+.pricing-card {
+  border-color: rgba(17, 18, 20, 0.12);
+  background: #ffffff;
+  box-shadow: 0 18px 42px rgba(17, 18, 20, 0.05);
+}
+
+.benefit-card:hover {
+  border-color: rgba(17, 18, 20, 0.14);
+  background: #ffffff;
+}
+
+.benefit-card::before {
+  opacity: 0.01;
+}
+
+.benefit-badge {
+  border-color: rgba(17, 18, 20, 0.1);
+  color: rgba(17, 18, 20, 0.6);
+  background: rgba(247, 243, 236, 0.95);
+}
+
+.benefit-metric {
+  color: rgba(17, 18, 20, 0.98);
+}
+
+.benefit-card:hover .benefit-metric {
+  color: rgba(17, 18, 20, 1);
+}
+
+.orbit-ring {
+  border-color: rgba(17, 18, 20, 0.08);
+  box-shadow: 0 0 0 1px rgba(17, 18, 20, 0.015) inset;
+}
+
+.orbit-ring--mid {
+  border-color: rgba(191, 150, 150, 0.16);
+}
+
+.orbit-ring--inner {
+  border-color: rgba(129, 162, 190, 0.16);
+}
+
+.orbit-ring--core {
+  border-color: rgba(17, 18, 20, 0.08);
+}
+
+.orbit-core,
+.orbit-badge {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(17, 18, 20, 0.08);
+  box-shadow: 0 18px 34px rgba(17, 18, 20, 0.08);
+}
+
+.orbit-badge:hover {
+  border-color: rgba(17, 18, 20, 0.14);
+}
+
+.pricing-toggle__label,
+.pricing-card__period,
+.pricing-toggle__badge,
+.pricing-card__tag,
+.contact-field span,
+.use-case-eyebrow,
+.footer-nav a {
+  color: rgba(17, 18, 20, 0.58);
+}
+
+.pricing-toggle__label.is-active,
+.pricing-card__cta,
+.contact-submit,
+.footer-social {
+  color: rgba(17, 18, 20, 0.9);
+}
+
+.pricing-toggle__switch {
+  border-color: rgba(17, 18, 20, 0.12);
+  background: rgba(17, 18, 20, 0.04);
+}
+
+.pricing-toggle__switch.is-yearly {
+  background: rgba(17, 18, 20, 0.08);
+  border-color: rgba(17, 18, 20, 0.18);
+}
+
+.pricing-toggle__knob {
+  background: rgba(17, 18, 20, 0.92);
+}
+
+.pricing-toggle__badge,
+.pricing-card__tag {
+  border-color: rgba(17, 18, 20, 0.08);
+}
+
+.pricing-card__features {
+  border-top-color: rgba(17, 18, 20, 0.08);
+}
+
+.pricing-card__features li {
+  color: rgba(17, 18, 20, 0.64);
+}
+
+.pricing-card__features li::before {
+  background: rgba(17, 18, 20, 0.42);
+}
+
+.pricing-card__cta:hover,
+.contact-submit:hover,
+.footer-social:hover,
+.footer-nav a:hover {
+  color: rgba(17, 18, 20, 1);
+}
+
+.faq-item,
+.contact-layout,
+.footer-shell,
+.use-cases-tabs {
+  border-color: rgba(17, 18, 20, 0.08);
+}
+
+.faq-plus {
+  color: rgba(17, 18, 20, 0.56);
+}
+
+.faq-question[aria-expanded="true"] .faq-plus {
+  color: rgba(17, 18, 20, 0.92);
+}
+
+.contact-field input,
+.contact-field textarea {
+  border-color: rgba(17, 18, 20, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  color: rgba(17, 18, 20, 0.96);
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+  border-color: rgba(17, 18, 20, 0.16);
+  background: #ffffff;
+}
+
+.contact-submit.is-submitting {
+  opacity: 0.6;
+}
+
+.contact-success {
+  color: rgba(17, 18, 20, 0.82);
+}
+
+.closing-hero {
+  background:
+    linear-gradient(90deg, rgba(10, 11, 14, 0.62) 0%, rgba(10, 11, 14, 0.28) 44%, rgba(10, 11, 14, 0.42) 100%),
+    linear-gradient(180deg, rgba(11, 12, 15, 0.08) 0%, rgba(11, 12, 15, 0.26) 100%),
+    url("./nexora.jpg");
+  background-position: center center;
+  background-size: cover;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.closing-hero__title {
+  color: rgba(247, 249, 252, 0.98);
+}
+
+.closing-hero__desc {
+  color: rgba(236, 241, 248, 0.68);
+}
+
+.closing-hero__cta {
+  background: rgba(247, 249, 252, 0.95);
+  color: #111214;
+}
+
+.use-case-cta {
+  background: #111214;
+  color: #ffffff;
+}
+
+.closing-hero__cta:hover {
+  background: #ffffff;
+}
+
+.use-case-cta:hover {
+  background: #000000;
+}
+
+.use-case-tab {
+  color: rgba(17, 18, 20, 0.44);
+}
+
+.use-case-tab::after {
+  background: rgba(17, 18, 20, 0.92);
+}
+
+.use-case-tab:hover,
+.use-case-tab:focus-visible,
+.use-case-tab.is-active {
+  color: rgba(17, 18, 20, 0.96);
+}
+
+.policy-table {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.policy-table-head {
+  background: rgba(17, 18, 20, 0.04);
+}
