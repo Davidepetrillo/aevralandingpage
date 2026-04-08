@@ -1,0 +1,47 @@
+// Shared design tokens for the platform redesign.
+// Import this in every component module: @use '../styles/variables' as *;
+
+$bg:            #f6f7f4;
+$bg-elevated:   #ffffff;
+$bg-muted:      #f2f3ef;
+$bg-hover:      #eef0ea;
+
+$text:          #101418;
+$text-muted:    #667085;
+$text-subtle:   #8a93a1;
+
+$stroke:        #e3e5df;
+$stroke-strong: #d7dbd2;
+$stroke-weak:   #eceee8;
+
+$accent:        #111111;
+$accent-soft:   #5f6f86;
+
+$success-bg:    #eaf7ee;
+$success-text:  #2f7a4b;
+$warning-bg:    #fff4db;
+$warning-text:  #a66b00;
+$danger-bg:     #fdecec;
+$danger-text:   #c53b2f;
+$info-bg:       #eaf2ff;
+$info-text:     #3f6fa8;
+
+$tone-teal-bg:   #e8f7f5;
+$tone-teal-text: #1f8c83;
+$tone-violet-bg: #f1ecff;
+$tone-violet-text: #6842d8;
+$tone-blue-bg:   #eaf2ff;
+$tone-blue-text: #3168b7;
+$tone-coral-bg:  #fdedea;
+$tone-coral-text: #d95c4a;
+$tone-amber-bg:  #fff4e4;
+$tone-amber-text: #b8700c;
+$tone-green-bg:  #ecf7ec;
+$tone-green-text: #3e8e49;
+
+$radius-sm:     12px;
+$radius-md:     16px;
+$radius-lg:     20px;
+
+$font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+$font-display: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;

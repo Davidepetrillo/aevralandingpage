@@ -1,0 +1,193 @@
+@use '../../styles/variables' as *;
+
+// ── Hero container ────────────────────────────────────────────────────────────
+
+.hero {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0a0e0b;
+  isolation: isolate;
+  min-height: 680px;
+}
+
+// ── Ambient orbs ──────────────────────────────────────────────────────────────
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(90px);
+  z-index: 0;
+
+  &:nth-child(1) {
+    width: 380px;
+    height: 380px;
+    background: rgba(99, 102, 241, 0.15);
+    top: -140px;
+    right: 8%;
+    animation: drift1 18s ease-in-out infinite;
+  }
+
+  &:nth-child(2) {
+    width: 300px;
+    height: 300px;
+    background: rgba(236, 72, 153, 0.09);
+    bottom: -100px;
+    left: 12%;
+    animation: drift2 22s ease-in-out infinite;
+  }
+
+  &:nth-child(3) {
+    width: 220px;
+    height: 220px;
+    background: rgba(34, 197, 94, 0.08);
+    top: 40%;
+    right: 30%;
+    animation: drift3 26s ease-in-out infinite;
+  }
+}
+
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0); }
+  33%       { transform: translate(-35px, 28px); }
+  66%       { transform: translate(22px, -18px); }
+}
+
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0); }
+  50%       { transform: translate(44px, -32px); }
+}
+
+@keyframes drift3 {
+  0%, 100% { transform: translate(0, 0); }
+  40%       { transform: translate(-22px, 28px); }
+  80%       { transform: translate(28px, -12px); }
+}
+
+// ── Scenes ────────────────────────────────────────────────────────────────────
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  padding: 56px 64px;
+  z-index: 1;
+}
+
+.sceneBackdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 24%, var(--scene-glow-a) 0, transparent 38%),
+    radial-gradient(circle at 78% 68%, var(--scene-glow-b) 0, transparent 42%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 44%),
+    var(--scene-bg);
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -18%;
+  }
+
+  &::before {
+    background:
+      linear-gradient(115deg, transparent 28%, var(--scene-beam) 48%, transparent 68%),
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05), transparent 46%);
+    animation: backdropSweep 16s ease-in-out infinite;
+    mix-blend-mode: screen;
+  }
+
+  &::after {
+    background-image:
+      linear-gradient(var(--scene-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--scene-grid) 1px, transparent 1px);
+    background-size: 42px 42px;
+    animation: backdropGrid 22s linear infinite;
+    opacity: 0.5;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.58), transparent 90%);
+  }
+}
+
+.sceneFlip {
+  flex-direction: row-reverse;
+}
+
+// ── Text block ────────────────────────────────────────────────────────────────
+
+.text {
+  flex: 0 0 296px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+  font-family: $font;
+  margin: 0;
+}
+
+.h2 {
+  font-size: 34px;
+  font-weight: 730;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: $font;
+  margin: 0;
+}
+
+.body {
+  font-size: 15px;
+  line-height: 1.68;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: $font;
+  margin: 0;
+}
+
+.line {
+  display: block;
+}
+
+.bodyLine {
+  display: block;
+}
+
+// ── Demo block ────────────────────────────────────────────────────────────────
+
+.demo {
+  flex: 1;
+  min-width: 0;
+  // The scene components render their own bordered card
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid $stroke;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.1),
+    0 16px 52px rgba(0, 0, 0, 0.28);
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes backdropSweep {
+  0%, 100% { transform: translate3d(-8%, -4%, 0) rotate(0deg) scale(1); }
+  50% { transform: translate3d(8%, 4%, 0) rotate(5deg) scale(1.04); }
+}
+
+@keyframes backdropGrid {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(24px, 16px, 0); }
+}
