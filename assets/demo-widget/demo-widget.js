@@ -13142,7 +13142,7 @@ function L2({ playToken: m, mode: a = "full" }) {
     ] }) })
   ] });
 }
-const V2 = "_hero_1khrf_1", G2 = "_orb_1khrf_11", X2 = "_scene_1khrf_73", Q2 = "_sceneBackdrop_1khrf_83", Z2 = "_sceneFlip_1khrf_108", K2 = "_text_1khrf_112", J2 = "_eyebrow_1khrf_121", k2 = "_h2_1khrf_131", F2 = "_body_1khrf_141", W2 = "_line_1khrf_149", $2 = "_bodyLine_1khrf_153", P2 = "_demo_1khrf_157", Ae = {
+const V2 = "_hero_14z2i_1", G2 = "_orb_14z2i_11", X2 = "_scene_14z2i_73", Q2 = "_sceneBackdrop_14z2i_83", Z2 = "_sceneFlip_14z2i_108", K2 = "_text_14z2i_112", J2 = "_eyebrow_14z2i_121", k2 = "_h2_14z2i_131", F2 = "_body_14z2i_141", W2 = "_line_14z2i_149", $2 = "_bodyLine_14z2i_153", P2 = "_demo_14z2i_157", Ae = {
   hero: V2,
   orb: G2,
   scene: X2,
@@ -13160,14 +13160,14 @@ const V2 = "_hero_1khrf_1", G2 = "_orb_1khrf_11", X2 = "_scene_1khrf_73", Q2 = "
     eyebrow: "Chrome Extension",
     lines: ["Record anything", "on the web"],
     body: ["Capture any workflow in one click.", "Share knowledge with your team."],
-    bgColor: "#0a0e0b",
+    bgColor: "#f6efe6",
     hold: 4.2
   },
   {
     eyebrow: "Workflow Guides",
     lines: ["Visual guides.", "30h saved per employee"],
     body: ["Every recording becomes a", "step-by-step guide instantly."],
-    bgColor: "#09090f",
+    bgColor: "#edf1f4",
     flip: !0,
     hold: 4.2
   },
@@ -13175,27 +13175,27 @@ const V2 = "_hero_1khrf_1", G2 = "_orb_1khrf_11", X2 = "_scene_1khrf_73", Q2 = "
     eyebrow: "AI Agent",
     lines: ["Agent extracts", "context."],
     body: ["AI autofills every input from the context.", "The workflow can be executed in seconds."],
-    bgColor: "#0e0c08",
+    bgColor: "#e2e5ea",
     hold: 8
   }
 ], Af = [
   {
-    glowA: "rgba(79, 172, 132, 0.24)",
-    glowB: "rgba(104, 122, 255, 0.16)",
-    grid: "rgba(255, 255, 255, 0.06)",
-    beam: "rgba(255, 255, 255, 0.12)"
+    glowA: "rgba(227, 195, 152, 0.32)",
+    glowB: "rgba(255, 255, 255, 0.28)",
+    grid: "rgba(24, 28, 34, 0.06)",
+    beam: "rgba(255, 255, 255, 0.44)"
   },
   {
-    glowA: "rgba(80, 123, 255, 0.2)",
-    glowB: "rgba(122, 96, 255, 0.14)",
-    grid: "rgba(255, 255, 255, 0.06)",
-    beam: "rgba(255, 255, 255, 0.1)"
+    glowA: "rgba(170, 192, 216, 0.28)",
+    glowB: "rgba(214, 220, 228, 0.22)",
+    grid: "rgba(24, 28, 34, 0.055)",
+    beam: "rgba(255, 255, 255, 0.36)"
   },
   {
-    glowA: "rgba(214, 159, 86, 0.2)",
-    glowB: "rgba(97, 123, 153, 0.16)",
-    grid: "rgba(255, 255, 255, 0.05)",
-    beam: "rgba(255, 255, 255, 0.1)"
+    glowA: "rgba(168, 175, 184, 0.24)",
+    glowB: "rgba(205, 210, 217, 0.2)",
+    grid: "rgba(24, 28, 34, 0.05)",
+    beam: "rgba(255, 255, 255, 0.3)"
   }
 ], I2 = 0.5, w_ = 0.79;
 function tb() {
