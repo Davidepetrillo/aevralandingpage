@@ -146,7 +146,7 @@
 .agentFullPane {
   position: relative;
   min-height: 548px;
-  background: linear-gradient(180deg, #f7f6f1 0%, #f1f0ea 100%);
+  background: linear-gradient(180deg, #fbfbfa 0%, #f6f7f8 100%);
   user-select: none;
   overflow: hidden;
   display: flex;
@@ -182,14 +182,16 @@
 .agentCard {
   width: 100%;
   max-width: 420px;
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 249, 248, 0.92));
   border-radius: 8px;
   padding: 24px 24px 22px;
   box-shadow:
     0 1px 2px rgba(17, 18, 20, 0.04),
     0 10px 24px rgba(17, 18, 20, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(17, 18, 20, 0.14);
+    inset 0 1px 0 rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(14px) saturate(108%);
+  -webkit-backdrop-filter: blur(14px) saturate(108%);
 }
 
 .agentCardHead {
@@ -220,7 +222,7 @@
   min-height: 158px;
   border-radius: 6px;
   border: 1px dashed rgba(17, 18, 20, 0.22);
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 249, 248, 0.92));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,7 +235,7 @@
 .agentDropZoneLargeActive {
   border-style: solid;
   border-color: rgba(17, 18, 20, 0.24);
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 248, 247, 0.93));
   align-items: flex-start;
 }
 
@@ -293,7 +295,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(160deg, #1e1a12 0%, #100e09 100%);
+  background: linear-gradient(180deg, rgba(249, 249, 248, 0.98), rgba(243, 244, 243, 0.96));
 }
 
 .agentDocSheet {
@@ -301,27 +303,27 @@
   width: 114px;
   height: 152px;
   border-radius: 5px;
-  background: #f4f0e8;
-  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.52);
+  background: #fafaf9;
+  box-shadow: 0 12px 28px rgba(17, 18, 20, 0.08);
   transition: transform 900ms cubic-bezier(0.34, 1.1, 0.64, 1);
 }
 
 .agentDocSheet1 {
   transform: rotate(-14deg) translate(-26px, 14px);
   opacity: 0.72;
-  background: linear-gradient(145deg, #f4f0e8, #e8e2d6);
+  background: linear-gradient(145deg, #fbfbfa, #f1f2f0);
 }
 
 .agentDocSheet2 {
   transform: rotate(-4deg) translate(-6px, -2px);
   opacity: 0.9;
-  background: linear-gradient(145deg, #f8f5ef, #ede8dd);
+  background: linear-gradient(145deg, #ffffff, #f3f4f2);
 }
 
 .agentDocSheet3 {
   transform: rotate(9deg) translate(22px, 8px);
   opacity: 0.78;
-  background: linear-gradient(145deg, #f5f1ea, #e9e4d9);
+  background: linear-gradient(145deg, #fafaf9, #eff1ef);
 }
 
 .agentDocSheetShift1 {
@@ -344,7 +346,7 @@
   border-right: 1px solid $stroke;
   position: relative;
   overflow: hidden;
-  background: #f7f6f2;
+  background: linear-gradient(180deg, rgba(249, 249, 248, 1), rgba(244, 245, 244, 1));
   min-height: 0;
 }
 
@@ -358,7 +360,7 @@
   gap: 10px;
   padding: 8px 12px;
   border-bottom: 1px solid $stroke;
-  background: #efeee9;
+  background: linear-gradient(180deg, rgba(246, 246, 245, 0.98), rgba(241, 242, 241, 0.98));
   flex-shrink: 0;
   height: 36px;
   box-sizing: border-box;
@@ -590,7 +592,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  background: rgba(247, 246, 241, 0.98);
+  background: linear-gradient(180deg, rgba(248, 248, 247, 0.98), rgba(243, 244, 243, 0.98));
   min-height: 0;
   overflow: hidden;
   box-shadow: none;
@@ -606,7 +608,7 @@
   min-height: 42px;
   flex-shrink: 0;
   border-bottom: 0;
-  background: rgba(247, 246, 241, 0.98);
+  background: linear-gradient(180deg, rgba(248, 248, 247, 0.98), rgba(244, 244, 243, 0.98));
 }
 
 .panelIconButton {
@@ -654,7 +656,7 @@
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  background: rgba(247, 246, 241, 0.98);
+  background: linear-gradient(180deg, rgba(248, 248, 247, 0.98), rgba(243, 244, 243, 0.98));
 }
 
 .panelStatusRow {
@@ -706,7 +708,7 @@
   font-size: 11.5px;
   line-height: 1.6;
   text-align: center;
-  background: rgba(250, 250, 247, 0.82);
+  background: linear-gradient(180deg, rgba(252, 252, 251, 0.92), rgba(246, 247, 246, 0.88));
   font-family: $font;
 }
 
@@ -1095,14 +1097,14 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 249, 248, 0.92));
 }
 
 .websiteStage {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 249, 248, 0.92));
 }
 
 .nariStageHeader {
@@ -1145,7 +1147,7 @@
   min-height: 84px;
   border-radius: 12px;
   border: 1px dashed rgba(17, 18, 20, 0.22);
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 249, 248, 0.92));
   transition:
     border-color 180ms ease,
     background 180ms ease,
@@ -1155,7 +1157,7 @@
 .agentDropFieldActive {
   border-style: solid;
   border-color: rgba(17, 18, 20, 0.24);
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 248, 247, 0.93));
   box-shadow: inset 0 0 0 1px rgba(17, 18, 20, 0.04);
 }
 
@@ -1190,18 +1192,18 @@
   padding: 12px;
   border-radius: 12px;
   border: 1px solid rgba(17, 18, 20, 0.14);
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 249, 248, 0.92));
   overflow: hidden;
 }
 
 .agentAnalysisCardActive {
   border-color: rgba(17, 18, 20, 0.18);
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 248, 247, 0.93));
 }
 
 .agentAnalysisCardDone {
   border-color: rgba(17, 18, 20, 0.18);
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 248, 247, 0.93));
 }
 
 .agentAnalysisDot {
@@ -1242,7 +1244,7 @@
   padding: 8px 10px;
   border-radius: 10px;
   border: 1px solid rgba(17, 18, 20, 0.14);
-  background: rgba(255, 255, 255, 0.92);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 249, 248, 0.91));
   opacity: 0;
   transform: translateY(4px);
   min-width: 0;
@@ -1294,14 +1296,14 @@
   padding: 14px;
   border-radius: 12px;
   border: 1px solid rgba(17, 18, 20, 0.14);
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 249, 248, 0.92));
   min-width: 0;
   overflow: hidden;
 }
 
 .singleFieldCardAgent {
   border-color: rgba(17, 18, 20, 0.18);
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 248, 247, 0.93));
 }
 
 .singleFieldCardAgentPulse {
@@ -1351,7 +1353,7 @@
   padding: 10px 12px;
   border-radius: 14px;
   border: 1px solid rgba(17, 18, 20, 0.16);
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 248, 247, 0.93));
   box-shadow: 0 8px 18px rgba(17, 18, 20, 0.06);
   transition: transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
 }
