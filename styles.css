@@ -211,7 +211,7 @@ a {
   position: relative;
   min-height: 100svh;
   overflow: hidden;
-  padding: 28px 0 132px;
+  padding: 28px 0 92px;
   background: #ffffff;
   color: #111214;
 }
@@ -229,50 +229,20 @@ a {
   z-index: 2;
 }
 
-.hero-center-message,
 .hero-scroll-cue {
   position: absolute;
   z-index: 2;
 }
 
-.hero-nav,
-.hero-body {
+.hero-nav {
   width: auto;
   max-width: none;
   margin-right: clamp(24px, 4vw, 44px);
   margin-left: clamp(24px, 4vw, 44px);
 }
 
-.hero-body {
-  display: block;
-  height: auto;
-  min-height: 0;
-  padding-top: clamp(56px, 8vh, 88px);
-  padding-bottom: clamp(22px, 3vh, 34px);
-}
-
-.hero-copy {
-  width: min(1280px, 100%);
-  margin: 0 auto;
-}
-
-.hero h1 {
-  font-family: var(--font-display);
-  font-size: clamp(4.2rem, 8.8vw, 7.25rem);
-  font-weight: 600;
-  line-height: 0.88;
-  letter-spacing: -0.045em;
-  color: rgba(17, 18, 20, 0.98);
-  white-space: nowrap;
-}
-
-.hero-line {
-  max-width: 40ch;
-  margin: 20px 0 0 auto;
-  font-size: 1.24rem;
-  line-height: 1.62;
-  color: rgba(17, 18, 20, 0.7);
-  text-align: left;
+.story-section {
+  padding-top: clamp(164px, 18vw, 260px);
 }
 
 .hero-actions {
@@ -324,107 +294,30 @@ a {
   color: rgba(17, 18, 20, 0.95);
 }
 
-.hero-side {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 20px 48px;
-  width: min(1280px, 100%);
-  margin: 24px auto 0;
-  padding-top: 18px;
-  border-top: 1px solid rgba(17, 18, 20, 0.12);
-}
-
-.hero-side-label {
-  display: block;
-  flex: 0 0 280px;
-  margin-bottom: 0;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(17, 18, 20, 0.48);
-}
-
-.hero-side-copy {
-  margin-left: auto;
-  max-width: 62ch;
-  font-size: 0.81rem;
-  line-height: 1.58;
-  color: rgba(17, 18, 20, 0.7);
-}
-
 .hero-demo {
-  width: auto;
-  max-width: none;
-  margin-right: clamp(24px, 4vw, 44px);
-  margin-left: clamp(24px, 4vw, 44px);
+  width: min(1480px, calc(100% - 48px));
+  margin-top: clamp(28px, 5vh, 56px);
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .hero-demo-card {
-  width: min(1280px, 100%);
+  width: 100%;
   margin: 0 auto;
 }
 
 .hero-demo-root {
   width: 100%;
-  min-height: 680px;
-  border-radius: 24px;
+  min-height: clamp(720px, 84vh, 980px);
+  border-radius: 0;
   overflow: hidden;
-  box-shadow:
-    0 28px 80px rgba(17, 18, 20, 0.12),
-    0 12px 28px rgba(17, 18, 20, 0.08);
-}
-
-.hero-demo-outro {
-  margin-top: 28px;
-}
-
-.hero-center-message {
-  top: 43%;
-  left: 50%;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.22rem;
-  max-width: min(28ch, calc(100% - 48px));
-  color: rgba(17, 18, 20, 0.8);
-  font-size: clamp(0.82rem, 1vw, 0.96rem);
-  font-weight: 500;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
-  text-align: center;
-  pointer-events: none;
-  opacity: 0;
-  transform: translate(calc(-50% + var(--hero-message-x, 0px)), calc(-50% + var(--hero-message-y, 0px)));
-  transition:
-    opacity 0.24s ease,
-    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.hero-center-message.is-visible {
-  opacity: 1;
-}
-
-.hero-center-message__text {
-  min-height: 1.35em;
-}
-
-.hero-center-message__caret {
-  width: 1px;
-  height: 0.92em;
-  background: rgba(17, 18, 20, 0.55);
-  opacity: 0;
-}
-
-.hero-center-message.is-visible .hero-center-message__caret {
-  opacity: 1;
-  animation: hero-caret-blink 0.9s steps(1, end) infinite;
+  box-shadow: none;
 }
 
 .hero-scroll-cue {
   position: absolute;
   left: 50%;
-  bottom: 68px;
+  bottom: 28px;
   display: block;
   width: max-content;
   color: rgba(17, 18, 20, 0.56);
@@ -1979,63 +1872,34 @@ a {
 
   .hero-frame {
     min-height: 100svh;
-    padding: 24px 0 124px;
+    padding: 24px 0 84px;
   }
 
   .hero-nav,
-  .hero-body,
   .hero-demo {
-    margin-right: 24px;
-    margin-left: 24px;
+    width: min(1120px, calc(100% - 48px));
+    margin-right: auto;
+    margin-left: auto;
   }
 
-  .hero-body {
-    height: auto;
-    min-height: 0;
-    padding-top: 72px;
-    padding-bottom: 26px;
+  .hero-demo {
+    margin-top: 28px;
   }
 
-  .hero-copy {
-    width: min(1120px, 100%);
-  }
-
-  .hero h1 {
-    font-size: clamp(3.6rem, 8.8vw, 5.8rem);
-  }
-
-  .hero-line {
-    max-width: 38ch;
-    font-size: 1.1rem;
-  }
-
-  .hero-demo-card,
-  .hero-side {
-    width: min(1120px, 100%);
+  .hero-demo-card {
+    width: 100%;
   }
 
   .hero-demo-root {
-    min-height: 620px;
-  }
-
-  .hero-side {
-    flex-direction: column;
-    align-items: start;
-    gap: 12px;
-  }
-
-  .hero-side-label,
-  .hero-side-copy {
-    max-width: 40rem;
-  }
-
-  .hero-center-message {
-    top: 40%;
-    font-size: 0.82rem;
+    min-height: min(78vh, 760px);
   }
 
   .hero-scroll-cue {
-    bottom: 54px;
+    bottom: 24px;
+  }
+
+  .story-section {
+    padding-top: clamp(136px, 16vw, 200px);
   }
 
   .story-shell {
@@ -2200,14 +2064,14 @@ a {
 
   .hero-frame {
     min-height: 100svh;
-    padding: 18px 0 108px;
+    padding: 18px 0 72px;
   }
 
   .hero-nav,
-  .hero-body,
   .hero-demo {
-    margin-right: 16px;
-    margin-left: 16px;
+    width: min(100%, calc(100% - 32px));
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .nav-inner {
@@ -2217,31 +2081,6 @@ a {
   .nav-brand img {
     width: 28px;
     height: 28px;
-  }
-
-  .hero-body {
-    height: auto;
-    min-height: 0;
-    padding-top: 88px;
-    padding-bottom: 24px;
-  }
-
-  .hero-copy {
-    width: 100%;
-    text-align: center;
-  }
-
-  .hero h1 {
-    font-size: clamp(3.1rem, 15vw, 4.7rem);
-    line-height: 0.9;
-    white-space: normal;
-  }
-
-  .hero-line {
-    max-width: 31ch;
-    margin: 18px auto 0;
-    font-size: 0.92rem;
-    text-align: center;
   }
 
   .hero-actions {
@@ -2255,17 +2094,8 @@ a {
     padding: 10px 14px;
   }
 
-  .hero-side {
-    max-width: none;
-    padding-top: 14px;
-  }
-
-  .hero-side-label {
-    flex-basis: auto;
-  }
-
-  .hero-side-copy {
-    font-size: 0.78rem;
+  .hero-demo {
+    margin-top: 20px;
   }
 
   .hero-demo-card {
@@ -2273,15 +2103,16 @@ a {
   }
 
   .hero-demo-root {
-    min-height: 560px;
-  }
-
-  .hero-center-message {
-    display: none;
+    min-height: min(72vh, 640px);
+    border-radius: 0;
   }
 
   .hero-scroll-cue {
-    bottom: 44px;
+    bottom: 18px;
+  }
+
+  .story-section {
+    padding-top: clamp(112px, 20vw, 156px);
   }
 
   .hero-scroll-cue__label {
@@ -2670,9 +2501,6 @@ a {
     transform: none;
   }
 
-  .hero-center-message {
-    display: none;
-  }
 }
 
 .policy-page {

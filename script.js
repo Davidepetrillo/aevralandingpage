@@ -266,85 +266,9 @@ if (contactForm) {
 
 if (!prefersReducedMotion) {
   const hero = document.getElementById("hero");
-  const heroMessage = document.querySelector("[data-hero-message]");
-  const heroMessageText = document.querySelector("[data-hero-message-text]");
   const magnets = Array.from(document.querySelectorAll(".magnetic"));
   const integrationsOrbit = document.querySelector("[data-integrations-orbit]");
   const orbitBadges = integrationsOrbit ? Array.from(integrationsOrbit.querySelectorAll(".orbit-badge")) : [];
-  const heroPrompt = "Stop telling your team how work is done..";
-  let heroTypingTimer = null;
-  let heroResetTimer = null;
-  let heroHasTyped = false;
-
-  if (hero && heroMessage && heroMessageText) {
-    const setHeroMessageOffset = (event) => {
-      const rect = hero.getBoundingClientRect();
-      const px = (event.clientX - rect.left) / rect.width - 0.5;
-      const py = (event.clientY - rect.top) / rect.height - 0.5;
-      heroMessage.style.setProperty("--hero-message-x", `${(px * 16).toFixed(2)}px`);
-      heroMessage.style.setProperty("--hero-message-y", `${(py * 12).toFixed(2)}px`);
-    };
-
-    const clearHeroTimers = () => {
-      clearInterval(heroTypingTimer);
-      clearTimeout(heroResetTimer);
-    };
-
-    const resetHeroMessage = () => {
-      heroMessage.classList.remove("is-visible");
-      heroMessageText.textContent = "";
-      heroMessage.style.setProperty("--hero-message-x", "0px");
-      heroMessage.style.setProperty("--hero-message-y", "0px");
-      heroHasTyped = false;
-    };
-
-    const startHeroTyping = () => {
-      if (heroHasTyped) {
-        heroMessageText.textContent = heroPrompt;
-        heroMessage.classList.add("is-visible");
-        return;
-      }
-
-      clearInterval(heroTypingTimer);
-      heroMessageText.textContent = "";
-
-      let index = 0;
-      heroTypingTimer = window.setInterval(() => {
-        index += 1;
-        heroMessageText.textContent = heroPrompt.slice(0, index);
-
-        if (index >= heroPrompt.length) {
-          clearInterval(heroTypingTimer);
-          heroHasTyped = true;
-        }
-      }, 68);
-    };
-
-    hero.addEventListener("pointerenter", (event) => {
-      clearHeroTimers();
-      setHeroMessageOffset(event);
-      heroMessage.classList.add("is-visible");
-      startHeroTyping();
-    });
-
-    hero.addEventListener("pointermove", (event) => {
-      setHeroMessageOffset(event);
-
-      if (!heroMessage.classList.contains("is-visible")) {
-        clearHeroTimers();
-        heroMessage.classList.add("is-visible");
-        startHeroTyping();
-      }
-    });
-
-    hero.addEventListener("pointerleave", () => {
-      clearHeroTimers();
-      heroMessage.classList.remove("is-visible");
-      heroResetTimer = window.setTimeout(() => {
-        resetHeroMessage();
-      }, 220);
-    });
-  }
 
   magnets.forEach((btn) => {
     btn.addEventListener("pointermove", (e) => {
