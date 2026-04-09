@@ -141,6 +141,56 @@
   overflow: hidden;
 }
 
+/* widget texture removed */
+/*
+.singlePane::before,
+.agentFullPane::before,
+.browser::after,
+.extension::after,
+.nariStage::after,
+.websiteStage::after,
+.agentCard::after,
+.agentDocDecor::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.72;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='gamma' amplitude='1.05' exponent='0.9' offset='0'/%3E%3CfeFuncG type='gamma' amplitude='1.05' exponent='0.9' offset='0'/%3E%3CfeFuncB type='gamma' amplitude='1.05' exponent='0.9' offset='0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"),
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.24), transparent 44%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(17, 18, 20, 0.06));
+  background-size: 180px 180px, 100% 100%, 100% 100%;
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-blend-mode: multiply, normal, normal;
+  mix-blend-mode: multiply;
+  filter: contrast(150%) brightness(97%);
+}
+
+.dualPane::before,
+.singlePane::before,
+.agentFullPane::before {
+  z-index: 0;
+}
+
+.browser::after,
+.extension::after,
+.nariStage::after,
+.websiteStage::after,
+.agentCard::after,
+.agentDocDecor::after {
+  z-index: 2;
+  opacity: 0.34;
+}
+
+.dualPane > *,
+.singlePane > *,
+.agentFullPane > * {
+  position: relative;
+  z-index: 1;
+}
+*/
+
 // ── Agent full-panel layout ───────────────────────────────────────────────────
 
 .agentFullPane {
@@ -192,6 +242,8 @@
   border: 1px solid rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(14px) saturate(108%);
   -webkit-backdrop-filter: blur(14px) saturate(108%);
+  position: relative;
+  overflow: hidden;
 }
 
 .agentCardHead {
@@ -592,6 +644,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
   background: linear-gradient(180deg, rgba(248, 248, 247, 0.98), rgba(243, 244, 243, 0.98));
   min-height: 0;
   overflow: hidden;
@@ -1091,6 +1144,8 @@
   border: 1px solid rgba(17, 18, 20, 0.14);
   box-shadow: 0 8px 24px rgba(17, 18, 20, 0.04);
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
 .nariStage {
