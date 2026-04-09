@@ -12,7 +12,7 @@ const SCENES = [
   },
   {
     eyebrow: 'Workflow Guides',
-    lines: ['Visual guides.', '30h saved per employee'],
+    lines: ['Visual guides.', '30h/month saved per employee'],
     body: ['Every recording becomes a', 'step-by-step guide instantly.'],
     flip: true,
     hold: 4.2,

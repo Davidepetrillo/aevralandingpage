@@ -13164,7 +13164,7 @@ const Yb = "_hero_txw9x_1", qb = "_scene_txw9x_70", Vb = "_sceneFlip_txw9x_101",
   },
   {
     eyebrow: "Workflow Guides",
-    lines: ["Visual guides.", "30h saved per employee"],
+    lines: ["Visual guides.", "30h/month saved per employee"],
     body: ["Every recording becomes a", "step-by-step guide instantly."],
     flip: !0,
     hold: 4.2
