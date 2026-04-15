@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      document.documentElement.dataset.compactCapture = params.has('compact') ? '1' : '0';
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/demo-widget/demo-widget.css" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { min-height: 100%; background: #f8f8f7; }
+      body { min-height: 100vh; display: grid; place-items: center; overflow: auto; padding: 24px; }
+      .capture-stage { width: min(1280px, calc(100vw - 48px)); background: #f8f8f7; }
+      #hero-demo-root { width: 100%; }
+      html[data-compact-capture="1"] body { padding: 0; overflow: hidden; }
+      html[data-compact-capture="1"] .capture-stage { width: 860px; height: 548px; overflow: hidden; }
+      html[data-compact-capture="1"] #hero-demo-root { height: 100%; overflow: hidden; }
+    </style>
+  </head>
+  <body>
+    <div class="capture-stage">
+      <div id="hero-demo-root"></div>
+    </div>
+    <script type="module" src="./assets/demo-widget/demo-widget.js"></script>
+  </body>
+</html>

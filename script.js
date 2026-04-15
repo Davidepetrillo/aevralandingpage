@@ -1,5 +1,24 @@
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const getPosthog = () =>
+  typeof window !== "undefined" && typeof window.posthog?.capture === "function" ? window.posthog : null;
+
+const trackEvent = (eventName, properties = {}) => {
+  const posthog = getPosthog();
+  if (!posthog) {
+    return;
+  }
+
+  posthog.capture(eventName, properties);
+};
+
+const demoBookingLinks = Array.from(document.querySelectorAll('a[href*="calendly.com"]'));
+demoBookingLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    trackEvent("demo booking clicked", { source: link.closest("section")?.id || "unknown" });
+  });
+});
+
 const yearEl = document.getElementById("year");
 if (yearEl) {
   yearEl.textContent = String(new Date().getFullYear());
@@ -121,6 +140,7 @@ if (useCaseTabs.length && useCasePanels.length && useCaseCopies.length) {
   useCaseTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       activateUseCase(tab.dataset.useCaseTab);
+      trackEvent("use case tab clicked", { use_case: tab.dataset.useCaseTab });
     });
   });
 }
@@ -143,6 +163,7 @@ if (pricingSwitch && pricingLabels.length && pricingValues.length) {
   pricingSwitch.addEventListener("click", () => {
     const yearly = pricingSwitch.getAttribute("aria-checked") !== "true";
     syncPricingMode(yearly);
+    trackEvent("pricing mode toggled", { billing_period: yearly ? "yearly" : "monthly" });
   });
 
   syncPricingMode(false);
@@ -158,6 +179,12 @@ if (faqQuestions.length) {
 
       if (answer) {
         answer.hidden = expanded;
+      }
+
+      if (!expanded) {
+        trackEvent("faq item expanded", {
+          question: question.querySelector("span")?.textContent?.trim(),
+        });
       }
     });
   });
@@ -253,98 +280,37 @@ if (contactForm) {
         throw new Error("Request failed");
       }
 
+      const submittedName = nameInput.value.trim();
+      const submittedCompany = contactForm.querySelector("input[name='company']")?.value?.trim() || null;
+      const submittedEmail = emailInput.value.trim().toLowerCase();
+      const submittedEmailDomain = submittedEmail.split("@")[1] || null;
+
       submitButton.hidden = true;
       successMessage.hidden = false;
       contactForm.reset();
+
+      trackEvent("contact form submitted", {
+        company: submittedCompany,
+        email_domain: submittedEmailDomain,
+        has_company: Boolean(submittedCompany),
+        lead_name_provided: Boolean(submittedName),
+      });
     } catch (error) {
       submitButton.classList.remove("is-submitting");
       submitButton.textContent = "Send";
       setFieldError(messageInput, "message", "We could not send your request. Please try again.");
+      trackEvent("contact form submission failed", {
+        reason: error instanceof Error ? error.message : "unknown",
+      });
     }
   });
 }
 
 if (!prefersReducedMotion) {
   const hero = document.getElementById("hero");
-  const heroMessage = document.querySelector("[data-hero-message]");
-  const heroMessageText = document.querySelector("[data-hero-message-text]");
   const magnets = Array.from(document.querySelectorAll(".magnetic"));
   const integrationsOrbit = document.querySelector("[data-integrations-orbit]");
   const orbitBadges = integrationsOrbit ? Array.from(integrationsOrbit.querySelectorAll(".orbit-badge")) : [];
-  const heroPrompt = "Stop telling your team how work is done..";
-  let heroTypingTimer = null;
-  let heroResetTimer = null;
-  let heroHasTyped = false;
-
-  if (hero && heroMessage && heroMessageText) {
-    const setHeroMessageOffset = (event) => {
-      const rect = hero.getBoundingClientRect();
-      const px = (event.clientX - rect.left) / rect.width - 0.5;
-      const py = (event.clientY - rect.top) / rect.height - 0.5;
-      heroMessage.style.setProperty("--hero-message-x", `${(px * 16).toFixed(2)}px`);
-      heroMessage.style.setProperty("--hero-message-y", `${(py * 12).toFixed(2)}px`);
-    };
-
-    const clearHeroTimers = () => {
-      clearInterval(heroTypingTimer);
-      clearTimeout(heroResetTimer);
-    };
-
-    const resetHeroMessage = () => {
-      heroMessage.classList.remove("is-visible");
-      heroMessageText.textContent = "";
-      heroMessage.style.setProperty("--hero-message-x", "0px");
-      heroMessage.style.setProperty("--hero-message-y", "0px");
-      heroHasTyped = false;
-    };
-
-    const startHeroTyping = () => {
-      if (heroHasTyped) {
-        heroMessageText.textContent = heroPrompt;
-        heroMessage.classList.add("is-visible");
-        return;
-      }
-
-      clearInterval(heroTypingTimer);
-      heroMessageText.textContent = "";
-
-      let index = 0;
-      heroTypingTimer = window.setInterval(() => {
-        index += 1;
-        heroMessageText.textContent = heroPrompt.slice(0, index);
-
-        if (index >= heroPrompt.length) {
-          clearInterval(heroTypingTimer);
-          heroHasTyped = true;
-        }
-      }, 68);
-    };
-
-    hero.addEventListener("pointerenter", (event) => {
-      clearHeroTimers();
-      setHeroMessageOffset(event);
-      heroMessage.classList.add("is-visible");
-      startHeroTyping();
-    });
-
-    hero.addEventListener("pointermove", (event) => {
-      setHeroMessageOffset(event);
-
-      if (!heroMessage.classList.contains("is-visible")) {
-        clearHeroTimers();
-        heroMessage.classList.add("is-visible");
-        startHeroTyping();
-      }
-    });
-
-    hero.addEventListener("pointerleave", () => {
-      clearHeroTimers();
-      heroMessage.classList.remove("is-visible");
-      heroResetTimer = window.setTimeout(() => {
-        resetHeroMessage();
-      }, 220);
-    });
-  }
 
   magnets.forEach((btn) => {
     btn.addEventListener("pointermove", (e) => {

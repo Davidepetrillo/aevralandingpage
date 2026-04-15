@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jira Sandbox Clone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400..800&display=swap" rel="stylesheet">
+  <style>
+    body.embedded .nari-panel-shell { display: none !important; }
+    body.embedded .global-header { margin-right: 0 !important; }
+    body.embedded .workspace-shell { padding-right: 0 !important; }
+    body.embedded .dialog-backdrop { right: 0 !important; }
+  </style>
+  <script>
+    if (new URLSearchParams(location.search).has('embed')) {
+      document.documentElement.classList.add('embedded');
+      document.addEventListener('DOMContentLoaded', function () {
+        document.body.classList.add('embedded');
+      });
+    }
+  </script>
+  <link rel="stylesheet" crossorigin href="/demo/assets/main-DhugfyeU.css">
+</head>
+<body>
+  <div class="jira-app site-mode--jira" id="demoApp">
+    <header class="global-header">
+      <div class="global-left">
+        <button class="icon-ghost" type="button" aria-label="Apps">
+          <span class="grid-icon">
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </span>
+        </button>
+
+        <div class="product-brand">
+          <span class="atlassian-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+          </span>
+          <div class="product-brand-text">
+            <strong>Atlassian</strong>
+            <span>Jira</span>
+          </div>
+        </div>
+
+        <nav class="global-nav" aria-label="Global">
+          <a href="#your-work">Your work</a>
+          <a href="#projects" class="is-active">Projects</a>
+          <a href="#filters">Filters</a>
+          <a href="#dashboards">Dashboards</a>
+          <a href="#teams">Teams</a>
+          <a href="#apps">Apps</a>
+        </nav>
+      </div>
+
+      <div class="global-right">
+        <button class="create-button" id="createGlobalBtn" type="button" data-demo-target="jira-create-global">Create</button>
+
+        <label class="search-shell" aria-label="Search">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15.5 15.5L20 20"></path>
+            <circle cx="10.5" cy="10.5" r="5.5"></circle>
+          </svg>
+          <input type="text" value="Search" readonly>
+        </label>
+
+        <button class="icon-ghost" type="button" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4a4 4 0 0 1 4 4v2.5c0 .8.3 1.6.9 2.1l1.1 1V15H6v-1.4l1.1-1A3 3 0 0 0 8 10.5V8a4 4 0 0 1 4-4Z"></path>
+            <path d="M10 18a2 2 0 0 0 4 0"></path>
+          </svg>
+        </button>
+
+        <button class="icon-ghost" type="button" aria-label="Help">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="8"></circle>
+            <path d="M9.8 9.2a2.5 2.5 0 1 1 4.4 1.7c-.7.7-1.5 1.1-1.5 2"></path>
+            <circle cx="12" cy="16.8" r="0.8" fill="currentColor" stroke="none"></circle>
+          </svg>
+        </button>
+
+        <div class="avatar avatar-purple">SO</div>
+      </div>
+    </header>
+
+    <div class="workspace-shell">
+      <aside class="project-sidebar">
+        <div class="sidebar-header">
+          <div class="project-avatar">SE</div>
+          <div class="project-copy">
+            <strong>Support Enablement</strong>
+            <span>Software project</span>
+          </div>
+        </div>
+
+        <button class="sidebar-project-switch" type="button">
+          Change project
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 10l5 5 5-5"></path>
+          </svg>
+        </button>
+
+        <nav class="sidebar-nav" aria-label="Project">
+          <a href="#summary">
+            <span class="nav-bullet nav-bullet-home"></span>
+            Summary
+          </a>
+          <a href="#timeline">
+            <span class="nav-bullet nav-bullet-timeline"></span>
+            Timeline
+          </a>
+          <a href="#backlog">
+            <span class="nav-bullet nav-bullet-backlog"></span>
+            Backlog
+          </a>
+          <a href="#board" class="is-active">
+            <span class="nav-bullet nav-bullet-board"></span>
+            Board
+          </a>
+          <a href="#calendar">
+            <span class="nav-bullet nav-bullet-calendar"></span>
+            Calendar
+          </a>
+          <a href="#list">
+            <span class="nav-bullet nav-bullet-list"></span>
+            List
+          </a>
+          <a href="#issues">
+            <span class="nav-bullet nav-bullet-issues"></span>
+            Issues
+          </a>
+          <a href="#reports">
+            <span class="nav-bullet nav-bullet-report"></span>
+            Reports
+          </a>
+          <a href="#components">
+            <span class="nav-bullet nav-bullet-components"></span>
+            Components
+          </a>
+          <a href="#releases">
+            <span class="nav-bullet nav-bullet-releases"></span>
+            Releases
+          </a>
+        </nav>
+
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Shortcuts</span>
+          <button class="shortcut-button" type="button">Invite team members</button>
+          <button class="shortcut-button" type="button">Project settings</button>
+        </div>
+      </aside>
+
+      <main class="board-page">
+        <div class="breadcrumbs">
+          <a href="#projects">Projects</a>
+          <span>/</span>
+          <a href="#support-enablement">Support Enablement</a>
+          <span>/</span>
+          <span>Board</span>
+        </div>
+
+        <div class="board-header">
+          <div class="board-title-group">
+            <div class="board-title-row">
+              <h1>Support Enablement board</h1>
+              <button class="star-button" type="button" aria-label="Star board">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3.8l2.3 4.7 5.2.8-3.8 3.7.9 5.2L12 15.8l-4.6 2.4.9-5.2L4.5 9.3l5.2-.8L12 3.8Z"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="board-tabs">
+              <button type="button" class="tab-button is-active">Active sprint</button>
+              <button type="button" class="tab-button">Roadmap</button>
+              <button type="button" class="tab-button">All work</button>
+            </div>
+          </div>
+
+          <div class="board-actions">
+            <button class="action-button" type="button">Filter</button>
+            <button class="action-button" type="button">Group</button>
+            <button class="action-button" type="button">Insights</button>
+            <button class="create-button" id="createBoardBtn" type="button" data-demo-target="jira-create-board">Create</button>
+          </div>
+        </div>
+
+        <div class="board-toolbar">
+          <div class="toolbar-left">
+            <div class="sprint-chip">Sprint 14</div>
+            <div class="sprint-meta">22 issues</div>
+            <div class="sprint-meta">Apr 8 - Apr 19</div>
+          </div>
+
+          <div class="toolbar-right">
+            <div class="avatar-stack" aria-label="Assignees">
+              <div class="avatar avatar-blue">AL</div>
+              <div class="avatar avatar-orange">MB</div>
+              <div class="avatar avatar-green">SK</div>
+              <div class="avatar avatar-slate">+4</div>
+            </div>
+            <button class="action-button" type="button">Complete sprint</button>
+          </div>
+        </div>
+
+        <section class="board-columns" aria-label="Sprint board">
+          <div class="board-column">
+            <div class="column-header">
+              <div class="column-title">
+                <span class="status-pill status-todo"></span>
+                <strong>TO DO</strong>
+                <span id="todoCount">5</span>
+              </div>
+              <button class="column-add-button" id="createColumnBtn" type="button" aria-label="Create issue" data-demo-target="jira-create-column">+</button>
+            </div>
+
+            <div class="column-body" id="todoColumn">
+              <article class="issue-card">
+                <div class="issue-card-top">
+                  <span class="issue-type issue-type-task"></span>
+                  <span class="issue-key">SE-142</span>
+                </div>
+                <h3>Finalize onboarding checklist for support hires</h3>
+                <div class="issue-footer">
+                  <span class="priority priority-medium">Medium</span>
+                  <div class="avatar avatar-blue avatar-small">AL</div>
+                </div>
+              </article>
+
+              <article class="issue-card">
+                <div class="issue-card-top">
+                  <span class="issue-type issue-type-story"></span>
+                  <span class="issue-key">SE-141</span>
+                </div>
+                <h3>Audit tutorial handoff between CS and support</h3>
+                <div class="issue-footer">
+                  <span class="priority priority-high">High</span>
+                  <div class="avatar avatar-orange avatar-small">MB</div>
+                </div>
+              </article>
+
+              <article class="issue-card">
+                <div class="issue-card-top">
+                  <span class="issue-type issue-type-bug"></span>
+                  <span class="issue-key">SE-139</span>
+                </div>
+                <h3>Fix broken deep links in embedded SOPs</h3>
+                <div class="issue-footer">
+                  <span class="priority priority-highest">Highest</span>
+                  <div class="avatar avatar-green avatar-small">SK</div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="board-column">
+            <div class="column-header">
+              <div class="column-title">
+                <span class="status-pill status-progress"></span>
+                <strong>IN PROGRESS</strong>
+                <span>3</span>
+              </div>
+            </div>
+
+            <div class="column-body">
+              <article class="issue-card issue-card-selected">
+                <div class="issue-card-top">
+                  <span class="issue-type issue-type-story"></span>
+                  <span class="issue-key">SE-138</span>
+                </div>
+                <h3>Draft the issue-creation walkthrough for enterprise onboarding</h3>
+                <div class="issue-tag-row">
+                  <span class="lozenge">Demo</span>
+                  <span class="lozenge lozenge-subtle">Q2</span>
+                </div>
+                <div class="issue-footer">
+                  <span class="priority priority-medium">Medium</span>
+                  <div class="avatar avatar-purple avatar-small">SO</div>
+                </div>
+              </article>
+
+              <article class="issue-card">
+                <div class="issue-card-top">
+                  <span class="issue-type issue-type-task"></span>
+                  <span class="issue-key">SE-136</span>
+                </div>
+                <h3>Review customer feedback about first-run setup guides</h3>
+                <div class="issue-footer">
+                  <span class="priority priority-low">Low</span>
+                  <div class="avatar avatar-slate avatar-small">KP</div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="board-column">
+            <div class="column-header">
+              <div class="column-title">
+                <span class="status-pill status-review"></span>
+                <strong>IN REVIEW</strong>
+                <span>2</span>
+              </div>
+            </div>
+
+            <div class="column-body">
+              <article class="issue-card">
+                <div class="issue-card-top">
+                  <span class="issue-type issue-type-task"></span>
+                  <span class="issue-key">SE-134</span>
+                </div>
+                <h3>Update playbook screenshots for the latest extension UI</h3>
+                <div class="issue-footer">
+                  <span class="priority priority-medium">Medium</span>
+                  <div class="avatar avatar-blue avatar-small">AL</div>
+                </div>
+              </article>
+
+              <article class="issue-card">
+                <div class="issue-card-top">
+                  <span class="issue-type issue-type-bug"></span>
+                  <span class="issue-key">SE-131</span>
+                </div>
+                <h3>Investigate missing comments on imported workflow runs</h3>
+                <div class="issue-footer">
+                  <span class="priority priority-high">High</span>
+                  <div class="avatar avatar-slate avatar-small">KP</div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="board-column">
+            <div class="column-header">
+              <div class="column-title">
+                <span class="status-pill status-done"></span>
+                <strong>DONE</strong>
+                <span>4</span>
+              </div>
+            </div>
+
+            <div class="column-body">
+              <article class="issue-card">
+                <div class="issue-card-top">
+                  <span class="issue-type issue-type-task"></span>
+                  <span class="issue-key">SE-127</span>
+                </div>
+                <h3>Ship refreshed onboarding guide for support specialists</h3>
+                <div class="issue-footer">
+                  <span class="priority priority-medium">Medium</span>
+                  <div class="avatar avatar-orange avatar-small">MB</div>
+                </div>
+              </article>
+
+              <article class="issue-card">
+                <div class="issue-card-top">
+                  <span class="issue-type issue-type-story"></span>
+                  <span class="issue-key">SE-125</span>
+                </div>
+                <h3>Align SOP publishing steps with compliance review workflow</h3>
+                <div class="issue-footer">
+                  <span class="priority priority-low">Low</span>
+                  <div class="avatar avatar-green avatar-small">SK</div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <main class="nari-site-page" id="nariSitePage" aria-label="Nari app mock">
+        <div class="nari-app-shell">
+          <aside class="nari-site-sidebar" aria-label="Nari navigation">
+            <button class="nari-org-switch" type="button">
+              <img src="/demo/assets/nari-icon-dark-_MUuSiGX.png" width="24" height="24" alt="" class="nari-org-logo" aria-hidden="true">
+              <div class="nari-org-copy">
+                <strong>Aevra Labs</strong>
+              </div>
+              <svg class="nari-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 10l5 5 5-5"></path>
+              </svg>
+            </button>
+
+            <nav class="nari-site-nav" aria-label="Main">
+              <button class="nari-nav-item is-active" type="button">
+                <span class="nari-nav-chip tone-blue">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 10.5l9-7 9 7"></path>
+                    <path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"></path>
+                  </svg>
+                </span>
+                <span>Home</span>
+              </button>
+
+              <button class="nari-nav-item" type="button">
+                <span class="nari-nav-chip tone-teal">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="4" y="4" width="6" height="6" rx="1"></rect>
+                    <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+                    <rect x="4" y="14" width="6" height="6" rx="1"></rect>
+                    <rect x="14" y="14" width="6" height="6" rx="1"></rect>
+                  </svg>
+                </span>
+                <span>Workspaces</span>
+              </button>
+
+              <button class="nari-nav-item" type="button">
+                <span class="nari-nav-chip tone-violet">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 4v8"></path>
+                    <path d="M18 12v8"></path>
+                    <path d="M6 12c0 3.3 2.7 6 6 6h6"></path>
+                    <circle cx="6" cy="4" r="2"></circle>
+                    <circle cx="18" cy="12" r="2"></circle>
+                  </svg>
+                </span>
+                <span>Workflows</span>
+              </button>
+
+              <button class="nari-nav-item" type="button">
+                <span class="nari-nav-chip tone-amber">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 11.5l2 2 4-5"></path>
+                    <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+                  </svg>
+                </span>
+                <span>Tasks</span>
+              </button>
+
+              <button class="nari-nav-item" type="button">
+                <span class="nari-nav-chip tone-blue">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 16l4-4 3 3 7-7"></path>
+                    <path d="M5 20h14"></path>
+                  </svg>
+                </span>
+                <span>Analytics</span>
+              </button>
+
+              <button class="nari-nav-item" type="button">
+                <span class="nari-nav-chip tone-green">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M16 18a4 4 0 0 0-8 0"></path>
+                    <circle cx="12" cy="9" r="3"></circle>
+                    <path d="M20 18a3 3 0 0 0-3-3"></path>
+                    <path d="M4 18a3 3 0 0 1 3-3"></path>
+                  </svg>
+                </span>
+                <span>Members</span>
+              </button>
+            </nav>
+
+            <div class="nari-sidebar-footer">
+              <button class="nari-user-shell" type="button">
+                <div class="nari-user-avatar">SO</div>
+                <div class="nari-user-copy">
+                  <strong>Sofia Orlova</strong>
+                  <span>sofia@nari.app</span>
+                </div>
+              </button>
+            </div>
+          </aside>
+
+          <section class="nari-site-content">
+            <section class="nari-hero">
+              <div class="nari-hero-top">
+                <div class="nari-hero-date">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8 3v3"></path>
+                    <path d="M16 3v3"></path>
+                    <rect x="4" y="5" width="16" height="15" rx="2"></rect>
+                    <path d="M4 10h16"></path>
+                  </svg>
+                  <span>Fri, Apr 10</span>
+                </div>
+
+                <button class="nari-hero-action" id="nariNewWorkflowBtn" type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 5v14"></path>
+                    <path d="M5 12h14"></path>
+                  </svg>
+                  Start capture
+                </button>
+              </div>
+
+              <div class="nari-hero-copy">
+                <h1>Good afternoon, Sofia!</h1>
+                <p id="nariHeroNote">Start on the fake Nari home, hit Capture, and the demo swaps into Jira without ever leaving this page.</p>
+              </div>
+            </section>
+
+            <div class="nari-overlap">
+              <div class="nari-home-grid">
+                <section class="nari-home-panel nari-panel-activity">
+                  <header class="nari-panel-head">
+                    <div class="nari-panel-copy">
+                      <h2>Recent activity</h2>
+                    </div>
+                    <button class="nari-panel-link" type="button">Open</button>
+                  </header>
+
+                  <div class="nari-panel-body">
+                    <div class="nari-activity-summary">
+                      <div class="nari-activity-metric">
+                        <span>Runs</span>
+                        <strong id="nariCapturedCount">0</strong>
+                      </div>
+                      <div class="nari-activity-metric">
+                        <span>Active days</span>
+                        <strong>6/7</strong>
+                      </div>
+                      <div class="nari-activity-metric">
+                        <span>Workflows</span>
+                        <strong>14</strong>
+                      </div>
+                      <div class="nari-activity-metric">
+                        <span>Peak day</span>
+                        <strong>Wed</strong>
+                      </div>
+                    </div>
+
+                    <div class="nari-chart-shell">
+                      <div class="nari-chart-head">
+                        <div>
+                          <p class="nari-chart-title">Your daily runs</p>
+                          <p class="nari-chart-subtitle">Usage across captures and workflow replays</p>
+                        </div>
+                        <div class="nari-chart-range">
+                          <button class="is-active" type="button">7d</button>
+                          <button type="button">30d</button>
+                        </div>
+                      </div>
+
+                      <div class="nari-chart-bars" aria-hidden="true">
+                        <span style="height: 28%"></span>
+                        <span style="height: 44%"></span>
+                        <span style="height: 38%"></span>
+                        <span style="height: 70%"></span>
+                        <span style="height: 56%"></span>
+                        <span style="height: 82%"></span>
+                        <span style="height: 48%"></span>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="nari-home-panel nari-panel-recent">
+                  <header class="nari-panel-head compact">
+                    <div class="nari-panel-copy">
+                      <h2>Recent workflows</h2>
+                    </div>
+                    <button class="nari-panel-link" type="button">Open</button>
+                  </header>
+
+                  <div class="nari-panel-stack">
+                    <button class="nari-home-entry" id="nariWorkflowCard" type="button" data-demo-target="nari-open-workflow">
+                      <span class="nari-entry-icon tone-violet">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M6 4v8"></path>
+                          <path d="M18 12v8"></path>
+                          <path d="M6 12c0 3.3 2.7 6 6 6h6"></path>
+                          <circle cx="6" cy="4" r="2"></circle>
+                          <circle cx="18" cy="12" r="2"></circle>
+                        </svg>
+                      </span>
+                      <div class="nari-entry-copy">
+                        <p class="nari-entry-eyebrow">Recently used</p>
+                        <div class="nari-entry-row">
+                          <div class="nari-entry-stack">
+                            <p class="nari-entry-title" id="nariWorkflowTitle">Create support ticket in Jira</p>
+                            <div class="nari-entry-meta">
+                              <span>Support Ops</span>
+                              <span class="nari-meta-dot"></span>
+                              <span id="nariWorkflowMeta">0 actions captured</span>
+                            </div>
+                            <p class="nari-entry-supporting" id="nariWorkflowSupporting">Start in fake Nari, move into Jira for the ticket flow, then swap back here.</p>
+                          </div>
+                          <svg class="nari-entry-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M7 17L17 7"></path>
+                            <path d="M9 7h8v8"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </button>
+
+                    <button class="nari-home-entry" type="button">
+                      <span class="nari-entry-icon tone-blue">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M6 12h12"></path>
+                          <path d="M12 6v12"></path>
+                        </svg>
+                      </span>
+                      <div class="nari-entry-copy">
+                        <p class="nari-entry-eyebrow">Last used 2h ago</p>
+                        <div class="nari-entry-row">
+                          <div class="nari-entry-stack">
+                            <p class="nari-entry-title">Workspace onboarding walkthrough</p>
+                            <div class="nari-entry-meta">
+                              <span>Customer Success</span>
+                              <span class="nari-meta-dot"></span>
+                              <span>11 steps</span>
+                            </div>
+                          </div>
+                          <svg class="nari-entry-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M7 17L17 7"></path>
+                            <path d="M9 7h8v8"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </section>
+
+                <section class="nari-home-panel nari-panel-tasks">
+                  <header class="nari-panel-head">
+                    <div class="nari-panel-copy">
+                      <h2>Tasks</h2>
+                    </div>
+                    <button class="nari-panel-link" type="button">Open</button>
+                  </header>
+
+                  <div class="nari-task-columns">
+                    <div class="nari-task-column">
+                      <div class="nari-task-column-head">
+                        <span class="task-dot tone-green"></span>
+                        <strong>To do</strong>
+                      </div>
+                      <button class="nari-task-card" type="button">
+                        <span>Publish support SOP update</span>
+                        <small>Today</small>
+                      </button>
+                    </div>
+
+                    <div class="nari-task-column">
+                      <div class="nari-task-column-head">
+                        <span class="task-dot tone-blue"></span>
+                        <strong>In progress</strong>
+                      </div>
+                      <button class="nari-task-card" type="button">
+                        <span>Review extension walkthrough</span>
+                        <small>Tomorrow</small>
+                      </button>
+                    </div>
+
+                    <div class="nari-task-column">
+                      <div class="nari-task-column-head">
+                        <span class="task-dot tone-slate"></span>
+                        <strong>Done</strong>
+                      </div>
+                      <button class="nari-task-card" type="button">
+                        <span>Clean up workspace permissions</span>
+                        <small>Completed</small>
+                      </button>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="nari-home-panel nari-panel-most-used">
+                  <header class="nari-panel-head compact">
+                    <div class="nari-panel-copy">
+                      <h2>Most used</h2>
+                    </div>
+                    <button class="nari-panel-link" type="button">Open</button>
+                  </header>
+
+                  <div class="nari-panel-stack">
+                    <button class="nari-home-entry" type="button">
+                      <span class="nari-entry-icon tone-blue">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M5 16l4-4 3 3 7-7"></path>
+                          <path d="M5 20h14"></path>
+                        </svg>
+                      </span>
+                      <div class="nari-entry-copy">
+                        <p class="nari-entry-eyebrow">24 runs</p>
+                        <div class="nari-entry-row">
+                          <div class="nari-entry-stack">
+                            <p class="nari-entry-title">Embed QA handoff</p>
+                            <div class="nari-entry-meta">
+                              <span>Engineering</span>
+                              <span class="nari-meta-dot"></span>
+                              <span>Last used 1d ago</span>
+                            </div>
+                          </div>
+                          <svg class="nari-entry-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M7 17L17 7"></path>
+                            <path d="M9 7h8v8"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </button>
+
+                    <button class="nari-home-entry" type="button">
+                      <span class="nari-entry-icon tone-teal">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <rect x="4" y="4" width="6" height="6" rx="1"></rect>
+                          <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+                          <rect x="4" y="14" width="6" height="6" rx="1"></rect>
+                          <rect x="14" y="14" width="6" height="6" rx="1"></rect>
+                        </svg>
+                      </span>
+                      <div class="nari-entry-copy">
+                        <p class="nari-entry-eyebrow">18 runs</p>
+                        <div class="nari-entry-row">
+                          <div class="nari-entry-stack">
+                            <p class="nari-entry-title">Support triage checklist</p>
+                            <div class="nari-entry-meta">
+                              <span>Support Ops</span>
+                              <span class="nari-meta-dot"></span>
+                              <span>Last used 3d ago</span>
+                            </div>
+                          </div>
+                          <svg class="nari-entry-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M7 17L17 7"></path>
+                            <path d="M9 7h8v8"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </section>
+
+                <section class="nari-home-panel nari-panel-workspaces">
+                  <header class="nari-panel-head compact">
+                    <div class="nari-panel-copy">
+                      <h2>Workspaces</h2>
+                    </div>
+                    <button class="nari-panel-link" type="button">Open</button>
+                  </header>
+
+                  <div class="nari-workspace-overview">
+                    <button class="nari-workspace-card" type="button">
+                      <span class="nari-workspace-icon tone-blue">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"></path>
+                        </svg>
+                      </span>
+                      <strong>Support Ops</strong>
+                      <div class="nari-workspace-meta">
+                        <span>Team</span>
+                        <span>15 workflows</span>
+                        <span>8 members</span>
+                      </div>
+                    </button>
+
+                    <button class="nari-workspace-card" type="button">
+                      <span class="nari-workspace-icon tone-teal">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"></path>
+                        </svg>
+                      </span>
+                      <strong>Onboarding</strong>
+                      <div class="nari-workspace-meta">
+                        <span>Private</span>
+                        <span>8 workflows</span>
+                        <span>4 members</span>
+                      </div>
+                    </button>
+
+                    <button class="nari-workspace-card" type="button">
+                      <span class="nari-workspace-icon tone-violet">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"></path>
+                        </svg>
+                      </span>
+                      <strong>Personal</strong>
+                      <div class="nari-workspace-meta">
+                        <span>Personal</span>
+                        <span>3 workflows</span>
+                        <span>Drafts</span>
+                      </div>
+                    </button>
+                  </div>
+                </section>
+
+                <section class="nari-home-panel nari-panel-invitations">
+                  <header class="nari-panel-head compact">
+                    <div class="nari-panel-copy">
+                      <h2>Pending invitations</h2>
+                    </div>
+                  </header>
+
+                  <div class="nari-panel-stack">
+                    <button class="nari-home-entry" type="button">
+                      <span class="nari-entry-icon tone-amber">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M4 8l8 5 8-5"></path>
+                          <rect x="4" y="6" width="16" height="12" rx="2"></rect>
+                        </svg>
+                      </span>
+                      <div class="nari-entry-copy">
+                        <p class="nari-entry-eyebrow">Invitation</p>
+                        <div class="nari-entry-row">
+                          <div class="nari-entry-stack">
+                            <p class="nari-entry-title">Enterprise rollout workspace</p>
+                            <div class="nari-entry-meta">
+                              <span>Admin access</span>
+                              <span class="nari-meta-dot"></span>
+                              <span>Sent today</span>
+                            </div>
+                          </div>
+                          <svg class="nari-entry-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M7 17L17 7"></path>
+                            <path d="M9 7h8v8"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <aside class="nari-panel-shell" aria-label="Nari side panel mock">
+        <div class="sidepanel-sandbox" id="sidepanelSandbox">
+          <div class="shell">
+            <div id="sidePanel" class="panel">
+              <header class="topbar">
+                <button id="backBtn" class="icon-plain" aria-label="Back" type="button">
+                  <svg class="svgi" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15.5 19.5L8 12l7.5-7.5"></path>
+                  </svg>
+                </button>
+
+                <button id="homeBtn" class="icon-plain center-btn" aria-label="Home" type="button">
+                  <svg class="svgi" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 10.5l9-7 9 7"></path>
+                    <path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"></path>
+                  </svg>
+                </button>
+
+                <div class="topbar-end">
+                  <button id="pulseReturnBtn" class="pulse-return-btn" type="button">
+                    <span class="pulse-return-dot"></span>
+                    <span class="pulse-return-label">Pulse</span>
+                  </button>
+                </div>
+              </header>
+
+              <main class="content">
+                <div class="brand-block">
+                  <img src="/demo/assets/nari-icon-dark-_MUuSiGX.png" width="32" height="32" alt="" class="brand-logo-real" aria-hidden="true">
+                </div>
+
+                <section class="capture-zone">
+                  <div class="rings">
+                    <div class="ring ring-outer"></div>
+                    <div class="ring ring-mid"></div>
+                    <div class="ring ring-inner"></div>
+                    <button id="recordBtn" class="capture-btn" aria-pressed="false" type="button">Capture</button>
+                  </div>
+                </section>
+
+                <div class="pulse-option">
+                  <span class="pulse-option-name">Pulse</span>
+                  <button id="pulseToggle" class="pulse-toggle" role="switch" aria-checked="false" aria-label="Enable Pulse mode" type="button">
+                    <span class="pulse-toggle-track">
+                      <span class="pulse-toggle-knob"></span>
+                    </span>
+                  </button>
+                </div>
+
+                <section class="workflows-section section" id="workflowsSection">
+                  <div class="wf-controls">
+                    <div class="wf-sort-group">
+                      <button class="wf-ctrl-btn active" data-sort="lastUsed" type="button">Last used</button>
+                      <button class="wf-ctrl-btn" data-sort="lastCreated" type="button">Last created</button>
+                    </div>
+                  </div>
+
+                  <div class="wf-pane">
+                    <div id="wfList" class="wf-list">
+                      <article class="wf-item">
+                        <div class="wf-item-info">
+                          <div class="wf-item-title">Jira ticket creation walkthrough</div>
+                          <div class="wf-item-meta">4 steps • Sandbox</div>
+                        </div>
+                      </article>
+
+                      <article class="wf-item">
+                        <div class="wf-item-info">
+                          <div class="wf-item-title">Support triage checklist</div>
+                          <div class="wf-item-meta">7 steps • Team shared</div>
+                        </div>
+                      </article>
+
+                      <article class="wf-item">
+                        <div class="wf-item-info">
+                          <div class="wf-item-title">Embed QA handoff</div>
+                          <div class="wf-item-meta">5 steps • Draft</div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="stream section" id="streamSection">
+                  <div id="actionList" class="stream-list"></div>
+                </section>
+
+                <section id="replaySection">
+                  <div id="workflowContainer" class="section">
+                    <div class="replay-header">
+                      <h3 id="workflowTitle">Workflow</h3>
+                      <span class="replay-progress" id="replayProgress"></span>
+                      <div class="replay-progress-track">
+                        <div class="replay-progress-fill" id="replayProgressFill"></div>
+                      </div>
+                    </div>
+
+                    <div id="workflowList">
+                      <div id="stepsList"></div>
+                    </div>
+
+                    <div class="replay-footer">
+                      <button id="stopReplayBtn" class="replay-btn replay-btn-ghost" type="button">Stop <kbd class="replay-kbd">esc</kbd></button>
+                      <button id="nextStepBtn" class="replay-btn replay-btn-primary" type="button">Next step <kbd class="replay-kbd">↵</kbd></button>
+                    </div>
+                  </div>
+                </section>
+              </main>
+
+              <footer id="recordingControls" class="recording-controls">
+                <button id="pauseBtn" class="control-btn" aria-label="Pause recording" title="Pause" type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                    <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+                  </svg>
+                </button>
+
+                <button id="restartBtn" class="control-btn" aria-label="Restart recording" title="Restart" type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                    <path d="M21 3v5h-5"></path>
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                    <path d="M3 21v-5h5"></path>
+                  </svg>
+                </button>
+
+                <button id="saveRecordingBtn" class="control-btn control-btn-primary" aria-label="Save recording" title="Save" type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20 6L9 17l-5-5"></path>
+                  </svg>
+                </button>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="dialog-backdrop" id="dialogBackdrop" hidden>
+    <section class="create-dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+      <header class="dialog-header">
+        <div>
+          <p class="dialog-eyebrow">Issue creation</p>
+          <h2 id="dialogTitle">Create issue</h2>
+        </div>
+        <button class="icon-ghost dialog-close" id="closeDialogBtn" type="button" aria-label="Close dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 7l10 10"></path>
+            <path d="M17 7L7 17"></path>
+          </svg>
+        </button>
+      </header>
+
+      <form class="dialog-form" id="createIssueForm">
+        <div class="field-grid field-grid-two">
+          <label class="field">
+            <span class="field-label">Project</span>
+            <button class="fake-select" type="button">Support Enablement</button>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Issue type</span>
+            <button class="fake-select" type="button">Task</button>
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Summary <em>*</em></span>
+          <input id="summaryInput" class="text-input" type="text" placeholder="What needs to be done?">
+          <span class="field-help field-error" id="summaryError" hidden>Summary is required.</span>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Description</span>
+          <textarea id="descriptionInput" class="text-area" placeholder="Add a description"></textarea>
+        </label>
+
+        <div class="field-grid field-grid-two">
+          <label class="field">
+            <span class="field-label">Assignee</span>
+            <button class="fake-select" type="button">Sofia Orlova</button>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Priority</span>
+            <button class="fake-select" type="button">Medium</button>
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Labels</span>
+          <div class="label-input">
+            <span class="label-chip">onboarding</span>
+            <span class="label-chip">demo</span>
+            <button type="button" class="label-input-placeholder">Add label</button>
+          </div>
+        </label>
+
+        <footer class="dialog-footer">
+          <button class="footer-link" id="cancelDialogBtn" type="button">Cancel</button>
+          <div class="dialog-footer-actions">
+            <button class="action-button" type="button">Create another</button>
+            <button class="create-button" id="submitIssueBtn" type="submit" data-demo-target="jira-submit">Create issue</button>
+          </div>
+        </footer>
+      </form>
+    </section>
+  </div>
+
+  <script src="./main.js"></script>
+  <script>
+    // Before navigating away, copy embed.js session to a cookie
+    // so app.html can restore it even on a different port
+    window.addEventListener('beforeunload', function () {
+      var s = sessionStorage.getItem('nari_demo_session');
+      if (s) {
+        document.cookie = 'nari_demo_session=' + encodeURIComponent(s) + ';path=/;SameSite=Lax';
+      }
+    });
+  </script>
+  <script src="https://app.aevra.co/embed.js" data-token="7986e6795bd4b85ba3bd3173ce5dbf786ba5"></script>
+</body>
+</html>
