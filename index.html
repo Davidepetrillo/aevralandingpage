@@ -18,7 +18,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
-    <link rel="stylesheet" href="./assets/demo-widget/demo-widget.css" />
     <script>
       const posthogHosts = new Set(["aevra.co", "www.aevra.co"]);
 
@@ -65,17 +64,13 @@
                 <span class="hero-fake-demo-dot"></span>
                 <span class="hero-fake-demo-url">app.jira.com/projects/NOVA</span>
               </div>
-              <iframe
-                src="./demo/"
-                class="hero-fake-demo-frame"
-                title="Aevra live demo"
-              ></iframe>
-            </div>
-          </div>
-
-          <div class="hero-demo">
-            <div class="hero-demo-card" data-hero-reveal>
-              <div id="hero-demo-root" class="hero-demo-root" aria-label="Aevra interactive demo"></div>
+              <div class="hero-fake-demo-stage">
+                <iframe
+                  src="./demo/?embed=1"
+                  class="hero-fake-demo-frame"
+                  title="Aevra live demo"
+                ></iframe>
+              </div>
             </div>
           </div>
 
@@ -650,6 +645,5 @@
     <a class="privacy-link" href="./privacy-policy.html">Privacy &amp; Policy</a>
 
     <script src="./script.js"></script>
-    <script type="module" src="./assets/demo-widget/demo-widget.js"></script>
   </body>
 </html>

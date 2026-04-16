@@ -304,16 +304,21 @@ a {
   margin-top: clamp(28px, 5vh, 56px);
   margin-right: auto;
   margin-left: auto;
-  padding: 0 72px;
+  padding: 0 clamp(16px, 4vw, 72px);
   box-sizing: border-box;
 }
 
 .hero-fake-demo-browser {
+  --hero-demo-base-width: 1440;
+  --hero-demo-base-height: 900;
+  --hero-demo-scale: 1;
+  position: relative;
   width: 100%;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid rgba(17, 18, 20, 0.1);
   box-shadow: 0 8px 32px rgba(17, 18, 20, 0.08);
+  background: #fff;
 }
 
 .hero-fake-demo-chrome {
@@ -325,6 +330,8 @@ a {
   border-bottom: 1px solid #e3e5df;
   height: 36px;
   box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-fake-demo-dot {
@@ -360,30 +367,20 @@ a {
 
 .hero-fake-demo-frame {
   display: block;
-  width: 100%;
-  height: clamp(500px, 72vh, 840px);
+  width: calc(var(--hero-demo-base-width) * 1px);
+  height: calc(var(--hero-demo-base-height) * 1px);
   border: none;
   background: #fff;
+  transform: scale(var(--hero-demo-scale));
+  transform-origin: top left;
 }
 
-.hero-demo {
-  width: min(1480px, calc(100% - 48px));
-  margin-top: clamp(28px, 5vh, 56px);
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.hero-demo-card {
+.hero-fake-demo-stage {
+  position: relative;
   width: 100%;
-  margin: 0 auto;
-}
-
-.hero-demo-root {
-  width: 100%;
-  min-height: clamp(720px, 84vh, 980px);
-  border-radius: 0;
+  height: calc(var(--hero-demo-base-height) * 1px * var(--hero-demo-scale));
   overflow: hidden;
-  box-shadow: none;
+  background: #fff;
 }
 
 .hero-scroll-cue {
@@ -1948,27 +1945,10 @@ a {
   }
 
   .hero-nav,
-  .hero-fake-demo,
-  .hero-demo {
+  .hero-fake-demo {
     width: min(1120px, calc(100% - 48px));
     margin-right: auto;
     margin-left: auto;
-  }
-
-  .hero-fake-demo {
-    padding: 0 48px;
-  }
-
-  .hero-demo {
-    margin-top: 28px;
-  }
-
-  .hero-demo-card {
-    width: 100%;
-  }
-
-  .hero-demo-root {
-    min-height: min(78vh, 760px);
   }
 
   .hero-scroll-cue {
@@ -2145,15 +2125,10 @@ a {
   }
 
   .hero-nav,
-  .hero-fake-demo,
-  .hero-demo {
+  .hero-fake-demo {
     width: min(100%, calc(100% - 32px));
     margin-right: auto;
     margin-left: auto;
-  }
-
-  .hero-fake-demo {
-    padding: 0 16px;
   }
 
   .nav-inner {
@@ -2174,19 +2149,6 @@ a {
   .hero .btn-primary,
   .hero .btn-secondary {
     padding: 10px 14px;
-  }
-
-  .hero-demo {
-    margin-top: 20px;
-  }
-
-  .hero-demo-card {
-    width: 100%;
-  }
-
-  .hero-demo-root {
-    min-height: min(72vh, 640px);
-    border-radius: 0;
   }
 
   .hero-scroll-cue {

@@ -43,6 +43,39 @@ heroEls.forEach((el, i) => {
   el.style.transitionDelay = `${i * 120}ms`;
 });
 
+const heroDemoBrowser = document.querySelector(".hero-fake-demo-browser");
+const syncHeroDemoScale = () => {
+  if (!heroDemoBrowser) {
+    return;
+  }
+
+  const baseWidth = Number.parseFloat(
+    getComputedStyle(heroDemoBrowser).getPropertyValue("--hero-demo-base-width")
+  );
+
+  if (!baseWidth) {
+    return;
+  }
+
+  const availableWidth = heroDemoBrowser.clientWidth;
+  const scale = Math.min(1, availableWidth / baseWidth);
+  heroDemoBrowser.style.setProperty("--hero-demo-scale", String(scale));
+};
+
+if (heroDemoBrowser) {
+  syncHeroDemoScale();
+
+  if ("ResizeObserver" in window) {
+    const heroDemoObserver = new ResizeObserver(() => {
+      syncHeroDemoScale();
+    });
+
+    heroDemoObserver.observe(heroDemoBrowser);
+  } else {
+    window.addEventListener("resize", syncHeroDemoScale, { passive: true });
+  }
+}
+
 requestAnimationFrame(() => {
   requestAnimationFrame(() => {
     heroEls.forEach((el) => el.classList.add("is-visible"));

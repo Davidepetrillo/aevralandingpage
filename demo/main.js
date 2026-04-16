@@ -152,7 +152,7 @@ createIssueForm.addEventListener("submit", (event) => {
   summaryError.hidden = true;
 
   if (isRecording) {
-    recordStep("Submit", "Create Jira issue", `Issue ${issueKey} was created and placed in To do.`, "submit");
+    recordStep("Submit", "Create Jira issue", `Issue ${issueKey} was created and placed in In progress.`, "submit");
   }
 
   addIssueCard(summary, description, issueKey);

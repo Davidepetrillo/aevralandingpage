@@ -8,10 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400..800&display=swap" rel="stylesheet">
   <style>
-    body.embedded .nari-panel-shell { display: none !important; }
-    body.embedded .global-header { margin-right: 0 !important; }
-    body.embedded .workspace-shell { padding-right: 0 !important; }
-    body.embedded .dialog-backdrop { right: 0 !important; }
+    .board-columns { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+    @media (max-width: 1280px) {
+      .board-columns { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+    }
+    @media (max-width: 760px) {
+      .board-columns { grid-template-columns: 1fr !important; }
+    }
   </style>
   <script>
     if (new URLSearchParams(location.search).has('embed')) {
@@ -209,62 +212,14 @@
           <div class="board-column">
             <div class="column-header">
               <div class="column-title">
-                <span class="status-pill status-todo"></span>
-                <strong>TO DO</strong>
-                <span id="todoCount">5</span>
+                <span class="status-pill status-progress"></span>
+                <strong>IN PROGRESS</strong>
+                <span id="todoCount">3</span>
               </div>
               <button class="column-add-button" id="createColumnBtn" type="button" aria-label="Create issue" data-demo-target="jira-create-column">+</button>
             </div>
 
             <div class="column-body" id="todoColumn">
-              <article class="issue-card">
-                <div class="issue-card-top">
-                  <span class="issue-type issue-type-task"></span>
-                  <span class="issue-key">SE-142</span>
-                </div>
-                <h3>Finalize onboarding checklist for support hires</h3>
-                <div class="issue-footer">
-                  <span class="priority priority-medium">Medium</span>
-                  <div class="avatar avatar-blue avatar-small">AL</div>
-                </div>
-              </article>
-
-              <article class="issue-card">
-                <div class="issue-card-top">
-                  <span class="issue-type issue-type-story"></span>
-                  <span class="issue-key">SE-141</span>
-                </div>
-                <h3>Audit tutorial handoff between CS and support</h3>
-                <div class="issue-footer">
-                  <span class="priority priority-high">High</span>
-                  <div class="avatar avatar-orange avatar-small">MB</div>
-                </div>
-              </article>
-
-              <article class="issue-card">
-                <div class="issue-card-top">
-                  <span class="issue-type issue-type-bug"></span>
-                  <span class="issue-key">SE-139</span>
-                </div>
-                <h3>Fix broken deep links in embedded SOPs</h3>
-                <div class="issue-footer">
-                  <span class="priority priority-highest">Highest</span>
-                  <div class="avatar avatar-green avatar-small">SK</div>
-                </div>
-              </article>
-            </div>
-          </div>
-
-          <div class="board-column">
-            <div class="column-header">
-              <div class="column-title">
-                <span class="status-pill status-progress"></span>
-                <strong>IN PROGRESS</strong>
-                <span>3</span>
-              </div>
-            </div>
-
-            <div class="column-body">
               <article class="issue-card issue-card-selected">
                 <div class="issue-card-top">
                   <span class="issue-type issue-type-story"></span>
@@ -1037,6 +992,6 @@
     });
   </script>
   <script src="./embed-url-normalizer.js"></script>
-  <script src="https://app.aevra.co/embed.js" data-token="7986e6795bd4b85ba3bd3173ce5dbf786ba5"></script>
+  <script src="https://app.aevra.co/embed.js" data-token="7986e6795bd4b85ba3bd3173ce5dbf786ba5" data-auto></script>
 </body>
 </html>
