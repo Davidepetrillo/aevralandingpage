@@ -261,7 +261,7 @@ function stopRecording() {
     try {
       localStorage.setItem("nari_demo_steps", JSON.stringify(actions));
     } catch { /* ignore */ }
-    window.location.href = new URL("./app.html", window.location.href).href;
+    window.location.href = new URL("/demo/app.html", window.location.origin).href;
   }
 }
 

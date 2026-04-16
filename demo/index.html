@@ -8,6 +8,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400..800&display=swap" rel="stylesheet">
   <style>
+    html.embedded,
+    body.embedded {
+      overflow: hidden !important;
+    }
+    body.embedded .board-page,
+    body.embedded .nari-site-page,
+    body.embedded .nari-content,
+    body.embedded .workspace-shell {
+      overflow: hidden !important;
+    }
     .board-columns { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
     @media (max-width: 1280px) {
       .board-columns { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
@@ -21,10 +31,20 @@
       document.documentElement.classList.add('embedded');
       document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.add('embedded');
+        ['wheel', 'touchmove'].forEach(function (eventName) {
+          window.addEventListener(eventName, function (event) {
+            event.preventDefault();
+          }, { passive: false });
+        });
+        window.addEventListener('keydown', function (event) {
+          if (['Space', 'PageUp', 'PageDown', 'End', 'Home', 'ArrowUp', 'ArrowDown'].includes(event.code)) {
+            event.preventDefault();
+          }
+        });
       });
     }
   </script>
-  <link rel="stylesheet" crossorigin href="./assets/main-DhugfyeU.css">
+  <link rel="stylesheet" crossorigin href="/demo/assets/main-DhugfyeU.css">
 </head>
 <body>
   <div class="jira-app site-mode--jira" id="demoApp">
@@ -328,7 +348,7 @@
         <div class="nari-app-shell">
           <aside class="nari-site-sidebar" aria-label="Nari navigation">
             <button class="nari-org-switch" type="button">
-              <img src="./assets/nari-icon-dark-_MUuSiGX.png" width="24" height="24" alt="" class="nari-org-logo" aria-hidden="true">
+              <img src="/demo/assets/nari-icon-dark-_MUuSiGX.png" width="24" height="24" alt="" class="nari-org-logo" aria-hidden="true">
               <div class="nari-org-copy">
                 <strong>Aevra Labs</strong>
               </div>
@@ -980,7 +1000,7 @@
     </section>
   </div>
 
-  <script src="./main.js"></script>
+  <script src="/demo/main.js"></script>
   <script>
     // Before navigating away, copy embed.js session to a cookie
     // so app.html can restore it even on a different port
@@ -991,7 +1011,7 @@
       }
     });
   </script>
-  <script src="./embed-url-normalizer.js"></script>
+  <script src="/demo/embed-url-normalizer.js"></script>
   <script src="https://app.aevra.co/embed.js" data-token="7986e6795bd4b85ba3bd3173ce5dbf786ba5" data-auto></script>
 </body>
 </html>

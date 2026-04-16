@@ -49,16 +49,17 @@ const syncHeroDemoScale = () => {
     return;
   }
 
-  const baseWidth = Number.parseFloat(
-    getComputedStyle(heroDemoBrowser).getPropertyValue("--hero-demo-base-width")
-  );
+  const styles = getComputedStyle(heroDemoBrowser);
+  const baseWidth = Number.parseFloat(styles.getPropertyValue("--hero-demo-base-width"));
+  const baseHeight = Number.parseFloat(styles.getPropertyValue("--hero-demo-base-height"));
 
-  if (!baseWidth) {
+  if (!baseWidth || !baseHeight) {
     return;
   }
 
   const availableWidth = heroDemoBrowser.clientWidth;
-  const scale = Math.min(1, availableWidth / baseWidth);
+  const availableHeight = Math.min(window.innerHeight * 0.72, 760);
+  const scale = Math.min(1, availableWidth / baseWidth, availableHeight / baseHeight);
   heroDemoBrowser.style.setProperty("--hero-demo-scale", String(scale));
 };
 

@@ -2,6 +2,18 @@
   const workflowRpcPattern = /\/rest\/v1\/rpc\/get_embed_workflow_actions(?:\?|$)/;
 
   function getDemoBaseUrl() {
+    const currentScript = document.currentScript;
+
+    if (currentScript && currentScript.src) {
+      return new URL("./", currentScript.src);
+    }
+
+    const scriptEl = document.querySelector('script[src*="embed-url-normalizer.js"]');
+
+    if (scriptEl && scriptEl.src) {
+      return new URL("./", scriptEl.src);
+    }
+
     return new URL("./", window.location.href);
   }
 
@@ -10,7 +22,11 @@
       return "./";
     }
 
-    if (pathname.endsWith("/app.html")) {
+    if (
+      pathname.endsWith("/app.html") ||
+      pathname.endsWith("/app") ||
+      pathname.endsWith("/app/")
+    ) {
       return "app.html";
     }
 
