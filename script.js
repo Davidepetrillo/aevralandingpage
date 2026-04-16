@@ -44,8 +44,9 @@ heroEls.forEach((el, i) => {
 });
 
 const heroDemoBrowser = document.querySelector(".hero-fake-demo-browser");
+const heroDemoContainer = document.querySelector(".hero-fake-demo");
 const syncHeroDemoScale = () => {
-  if (!heroDemoBrowser) {
+  if (!heroDemoBrowser || !heroDemoContainer) {
     return;
   }
 
@@ -57,13 +58,12 @@ const syncHeroDemoScale = () => {
     return;
   }
 
-  const availableWidth = heroDemoBrowser.clientWidth;
-  const availableHeight = Math.min(window.innerHeight * 0.72, 760);
-  const scale = Math.min(1, availableWidth / baseWidth, availableHeight / baseHeight);
+  const availableWidth = heroDemoContainer.clientWidth;
+  const scale = Math.min(1, availableWidth / baseWidth);
   heroDemoBrowser.style.setProperty("--hero-demo-scale", String(scale));
 };
 
-if (heroDemoBrowser) {
+if (heroDemoBrowser && heroDemoContainer) {
   syncHeroDemoScale();
 
   if ("ResizeObserver" in window) {
@@ -71,7 +71,7 @@ if (heroDemoBrowser) {
       syncHeroDemoScale();
     });
 
-    heroDemoObserver.observe(heroDemoBrowser);
+    heroDemoObserver.observe(heroDemoContainer);
   } else {
     window.addEventListener("resize", syncHeroDemoScale, { passive: true });
   }
