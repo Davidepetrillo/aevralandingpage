@@ -12,6 +12,160 @@ const trackEvent = (eventName, properties = {}) => {
   posthog.capture(eventName, properties);
 };
 
+const HERO_DEMO_EMBED_MESSAGE_TYPE = "aevra-demo-embed-analytics";
+const HERO_DEMO_EMBED_STATE_REQUEST = "aevra-demo-embed-analytics-request-state";
+const HERO_DEMO_STALL_MS = 15000;
+const HERO_DEMO_SURFACE = "landing_page_hero";
+
+const heroDemoAnalytics = {
+  hasBeenViewed: false,
+  isVisible: false,
+  activeStep: null,
+  stallTimerId: 0,
+  startedSessionIds: new Set(),
+  viewedStepKeys: new Set(),
+};
+
+const toRoundedNumber = (value, digits = 2) => {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return null;
+  }
+
+  return Number(value.toFixed(digits));
+};
+
+const enrichHeroDemoProperties = (properties = {}) => ({
+  ...properties,
+  embed_surface: HERO_DEMO_SURFACE,
+  iframe_visible: heroDemoAnalytics.isVisible,
+});
+
+const clearHeroDemoStallTimer = () => {
+  if (heroDemoAnalytics.stallTimerId) {
+    window.clearTimeout(heroDemoAnalytics.stallTimerId);
+    heroDemoAnalytics.stallTimerId = 0;
+  }
+};
+
+const buildHeroDemoStepKey = (properties = {}) =>
+  [
+    properties.session_id || "no-session",
+    properties.step_index || "no-step",
+    properties.step_title || "untitled",
+    properties.step_visit_number || 0,
+  ].join(":");
+
+const armHeroDemoStallTimer = () => {
+  clearHeroDemoStallTimer();
+
+  const activeStep = heroDemoAnalytics.activeStep;
+  if (!activeStep || !heroDemoAnalytics.isVisible || activeStep.stallTracked) {
+    return;
+  }
+
+  heroDemoAnalytics.stallTimerId = window.setTimeout(() => {
+    const stepState = heroDemoAnalytics.activeStep;
+    if (!stepState || stepState.stallTracked || !heroDemoAnalytics.isVisible) {
+      return;
+    }
+
+    stepState.stallTracked = true;
+
+    trackEvent(
+      "hero demo embed step stalled",
+      enrichHeroDemoProperties({
+        ...stepState.properties,
+        stall_threshold_ms: HERO_DEMO_STALL_MS,
+        time_without_progress_ms: Date.now() - stepState.startedAt,
+      })
+    );
+  }, HERO_DEMO_STALL_MS);
+};
+
+const trackHeroDemoEmbedEvent = (eventName, properties = {}) => {
+  trackEvent(`hero demo embed ${eventName.replaceAll("_", " ")}`, enrichHeroDemoProperties(properties));
+};
+
+const syncHeroDemoStateFromEvent = (eventName, properties = {}) => {
+  if (eventName === "session_started") {
+    if (properties.session_id) {
+      heroDemoAnalytics.startedSessionIds.add(properties.session_id);
+    }
+    return;
+  }
+
+  if (eventName === "session_resumed") {
+    if (properties.session_id) {
+      heroDemoAnalytics.startedSessionIds.add(properties.session_id);
+    }
+    return;
+  }
+
+  if (eventName === "step_viewed") {
+    const stepKey = buildHeroDemoStepKey(properties);
+    heroDemoAnalytics.viewedStepKeys.add(stepKey);
+    heroDemoAnalytics.activeStep = {
+      properties,
+      startedAt: Date.now(),
+      stallTracked: false,
+    };
+    armHeroDemoStallTimer();
+    return;
+  }
+
+  if (eventName === "navigation_clicked" || eventName === "step_completed") {
+    clearHeroDemoStallTimer();
+    return;
+  }
+
+  if (eventName === "session_completed" || eventName === "session_exited") {
+    clearHeroDemoStallTimer();
+    heroDemoAnalytics.activeStep = null;
+  }
+};
+
+const handleHeroDemoSnapshot = (properties = {}) => {
+  if (!properties.session_id) {
+    return;
+  }
+
+  if (!heroDemoAnalytics.startedSessionIds.has(properties.session_id)) {
+    heroDemoAnalytics.startedSessionIds.add(properties.session_id);
+    trackEvent(
+      "hero demo embed session started",
+      enrichHeroDemoProperties({
+        ...properties,
+        captured_from_snapshot: true,
+      })
+    );
+  }
+
+  if (!properties.tooltip_visible || typeof properties.step_index !== "number") {
+    return;
+  }
+
+  const stepKey = buildHeroDemoStepKey(properties);
+  if (heroDemoAnalytics.viewedStepKeys.has(stepKey)) {
+    return;
+  }
+
+  heroDemoAnalytics.viewedStepKeys.add(stepKey);
+  trackEvent(
+    "hero demo embed step viewed",
+    enrichHeroDemoProperties({
+      ...properties,
+      captured_from_snapshot: true,
+    })
+  );
+
+  heroDemoAnalytics.activeStep = {
+    properties,
+    startedAt: Date.now(),
+    stallTracked: false,
+  };
+  armHeroDemoStallTimer();
+};
+
 const demoBookingLinks = Array.from(document.querySelectorAll('a[href*="calendly.com"]'));
 demoBookingLinks.forEach((link) => {
   link.addEventListener("click", () => {
@@ -25,17 +179,26 @@ if (yearEl) {
 }
 
 const progressBar = document.getElementById("scroll-progress");
+const heroScrollCue = document.querySelector(".hero-scroll-cue");
 if (progressBar) {
+  const syncScrollUi = () => {
+    const scrolled = window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+    progressBar.style.width = pct + "%";
+
+    if (heroScrollCue) {
+      heroScrollCue.classList.toggle("is-hidden", scrolled > 8);
+    }
+  };
+
   window.addEventListener(
     "scroll",
-    () => {
-      const scrolled = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
-      progressBar.style.width = pct + "%";
-    },
+    syncScrollUi,
     { passive: true }
   );
+
+  syncScrollUi();
 }
 
 const heroEls = Array.from(document.querySelectorAll("[data-hero-reveal]"));
@@ -43,6 +206,7 @@ heroEls.forEach((el, i) => {
   el.style.transitionDelay = `${i * 120}ms`;
 });
 
+const heroDemoFrame = document.querySelector(".hero-fake-demo-frame");
 const heroDemoBrowser = document.querySelector(".hero-fake-demo-browser");
 const heroDemoContainer = document.querySelector(".hero-fake-demo");
 const syncHeroDemoScale = () => {
@@ -53,13 +217,18 @@ const syncHeroDemoScale = () => {
   const styles = getComputedStyle(heroDemoBrowser);
   const baseWidth = Number.parseFloat(styles.getPropertyValue("--hero-demo-base-width"));
   const baseHeight = Number.parseFloat(styles.getPropertyValue("--hero-demo-base-height"));
+  const visibleHeight = Number.parseFloat(styles.getPropertyValue("--hero-demo-visible-height")) || baseHeight;
 
   if (!baseWidth || !baseHeight) {
     return;
   }
 
   const availableWidth = heroDemoContainer.clientWidth;
-  const scale = Math.min(1, availableWidth / baseWidth);
+  const viewportHeight = window.visualViewport?.height || window.innerHeight;
+  const maxStageHeight = Math.min(viewportHeight * 0.72, 760);
+  const widthScale = availableWidth / baseWidth;
+  const heightScale = maxStageHeight / visibleHeight;
+  const scale = Math.min(1, widthScale, heightScale);
   heroDemoBrowser.style.setProperty("--hero-demo-scale", String(scale));
 };
 
@@ -76,6 +245,77 @@ if (heroDemoBrowser && heroDemoContainer) {
     window.addEventListener("resize", syncHeroDemoScale, { passive: true });
   }
 }
+
+if (heroDemoFrame) {
+  heroDemoFrame.addEventListener("load", () => {
+    trackEvent("hero demo iframe loaded", enrichHeroDemoProperties());
+
+    try {
+      heroDemoFrame.contentWindow?.postMessage({ type: HERO_DEMO_EMBED_STATE_REQUEST }, window.location.origin);
+    } catch {
+      // The iframe is same-origin in production; ignore local preview mismatches.
+    }
+  });
+}
+
+if (heroDemoContainer) {
+  const heroDemoViewObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const isVisible = entry.isIntersecting && entry.intersectionRatio >= 0.45;
+        heroDemoAnalytics.isVisible = isVisible;
+
+        if (isVisible && !heroDemoAnalytics.hasBeenViewed) {
+          heroDemoAnalytics.hasBeenViewed = true;
+          trackEvent(
+            "hero demo iframe viewed",
+            enrichHeroDemoProperties({
+              intersection_ratio: toRoundedNumber(entry.intersectionRatio),
+            })
+          );
+        }
+
+        if (isVisible) {
+          armHeroDemoStallTimer();
+        } else {
+          clearHeroDemoStallTimer();
+        }
+      });
+    },
+    { threshold: [0.2, 0.45, 0.7] }
+  );
+
+  heroDemoViewObserver.observe(heroDemoContainer);
+}
+
+window.addEventListener("message", (event) => {
+  if (event.origin !== window.location.origin) {
+    return;
+  }
+
+  if (heroDemoFrame && event.source !== heroDemoFrame.contentWindow) {
+    return;
+  }
+
+  if (event.data?.type !== HERO_DEMO_EMBED_MESSAGE_TYPE) {
+    return;
+  }
+
+  const embedEventName = event.data.event;
+  const properties = event.data.properties || {};
+
+  if (!embedEventName) {
+    return;
+  }
+
+  if (embedEventName === "state_snapshot") {
+    handleHeroDemoSnapshot(properties);
+    return;
+  }
+
+  trackHeroDemoEmbedEvent(embedEventName, properties);
+  syncHeroDemoStateFromEvent(embedEventName, properties);
+});
 
 requestAnimationFrame(() => {
   requestAnimationFrame(() => {

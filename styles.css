@@ -235,7 +235,6 @@ a {
 }
 
 .hero-scroll-cue {
-  position: absolute;
   z-index: 2;
 }
 
@@ -311,9 +310,11 @@ a {
 .hero-fake-demo-browser {
   --hero-demo-base-width: 1440;
   --hero-demo-base-height: 900;
+  --hero-demo-visible-height: 850;
   --hero-demo-scale: 1;
   position: relative;
-  width: 100%;
+  width: min(100%, calc(var(--hero-demo-base-width) * 1px * var(--hero-demo-scale)));
+  margin: 0 auto;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid rgba(17, 18, 20, 0.1);
@@ -378,38 +379,44 @@ a {
 .hero-fake-demo-stage {
   position: relative;
   width: 100%;
-  height: min(calc(var(--hero-demo-base-height) * 1px * var(--hero-demo-scale)), min(72vh, 760px));
+  height: min(calc(var(--hero-demo-visible-height) * 1px * var(--hero-demo-scale)), min(72vh, 760px));
+  height: min(calc(var(--hero-demo-visible-height) * 1px * var(--hero-demo-scale)), min(72svh, 760px));
   overflow: hidden;
   background: #fff;
 }
 
 .hero-scroll-cue {
-  position: absolute;
-  left: 50%;
-  bottom: 28px;
-  display: block;
-  width: max-content;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: fit-content;
+  margin: clamp(8px, 1.5vh, 14px) auto 0;
   color: rgba(17, 18, 20, 0.56);
   text-decoration: none;
   white-space: nowrap;
-  transform: translateX(-50%);
-  transition: color 0.24s ease, opacity 0.24s ease;
+  transform: translateY(0);
+  transition: color 0.24s ease, opacity 0.24s ease, transform 0.24s ease;
 }
 
 .hero-scroll-cue:hover {
   color: rgba(17, 18, 20, 0.86);
 }
 
+.hero-scroll-cue.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+
 .hero-scroll-cue__mouse {
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  margin-right: 10px;
+  position: relative;
   width: 15px;
   height: 24px;
   border: 1px solid rgba(17, 18, 20, 0.32);
   border-radius: 999px;
-  transform: translateY(-50%);
+  flex-shrink: 0;
 }
 
 .hero-scroll-cue__wheel {
@@ -1952,7 +1959,7 @@ a {
   }
 
   .hero-scroll-cue {
-    bottom: 24px;
+    margin-top: 10px;
   }
 
   .story-section {
@@ -2152,7 +2159,7 @@ a {
   }
 
   .hero-scroll-cue {
-    bottom: 18px;
+    margin-top: 8px;
   }
 
   .story-section {
