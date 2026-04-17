@@ -1013,6 +1013,21 @@
   </script>
   <script src="/demo/embed-url-normalizer.js"></script>
   <script src="/demo/embed-analytics.js"></script>
-  <script src="https://app.aevra.co/embed.js" data-token="7986e6795bd4b85ba3bd3173ce5dbf786ba5" data-auto></script>
+  <script>
+    (function () {
+      var isTopLevel = window.parent === window;
+      var isEmbedFrame = new URLSearchParams(window.location.search).has("embed");
+
+      if (!isTopLevel && !isEmbedFrame) {
+        return;
+      }
+
+      var embedScript = document.createElement("script");
+      embedScript.src = "https://app.aevra.co/embed.js";
+      embedScript.dataset.token = "7986e6795bd4b85ba3bd3173ce5dbf786ba5";
+      embedScript.dataset.auto = "";
+      document.body.appendChild(embedScript);
+    })();
+  </script>
 </body>
 </html>
