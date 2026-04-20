@@ -25,6 +25,35 @@
     @media (max-width: 760px) {
       .board-columns { grid-template-columns: 1fr !important; }
     }
+    .column-header {
+      position: relative;
+      min-height: 28px;
+      padding-right: 36px;
+    }
+    .column-add-button {
+      position: absolute;
+      top: 50%;
+      right: 4px;
+      transform: translateY(-50%);
+    }
+    .issue-card {
+      display: flex;
+      flex-direction: column;
+      height: 140px;
+      overflow: hidden;
+    }
+    .issue-card h3 {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+    .issue-tag-row {
+      min-height: 20px;
+    }
+    .issue-footer {
+      margin-top: auto;
+    }
   </style>
   <script>
     if (new URLSearchParams(location.search).has('embed')) {
@@ -101,7 +130,6 @@
         </div>
 
         <nav class="global-nav" aria-label="Global">
-          <a href="#your-work">Your work</a>
           <a href="#projects" class="is-active">Projects</a>
           <a href="#filters">Filters</a>
           <a href="#dashboards">Dashboards</a>

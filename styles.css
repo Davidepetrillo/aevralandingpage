@@ -401,7 +401,9 @@ a {
 .hero-fake-demo-stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  /* Match the iframe viewport so the sidepanel footer controls stay visible. */
+  aspect-ratio: 8 / 5;
+  aspect-ratio: var(--hero-demo-base-width) / var(--hero-demo-base-height);
   overflow: hidden;
   background: #fff;
 }
