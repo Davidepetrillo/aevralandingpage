@@ -57,6 +57,28 @@ function isEmbedPlaying() {
   return !!document.getElementById("nari-root");
 }
 
+function getWorkflowPageUrl() {
+  const pageUrl = new URL(window.location.href);
+  pageUrl.searchParams.delete("embed");
+  return pageUrl.href;
+}
+
+function navigateToDemoApp(actions) {
+  const targetUrl = new URL("/demo/app.html", window.location.origin).href;
+
+  try {
+    localStorage.setItem("nari_demo_steps", JSON.stringify(actions));
+  } catch { /* ignore */ }
+
+  if (window.parent !== window) {
+    window.parent.postMessage({ type: "nari-save", steps: actions, targetUrl }, "*");
+    window.location.href = targetUrl;
+    return;
+  }
+
+  window.location.href = targetUrl;
+}
+
 createButtons.forEach((button) => {
   button.addEventListener("click", () => { openDialog(); });
 });
@@ -233,13 +255,6 @@ function startRecording() {
 function stopRecording() {
   if (!isRecording && recordedSteps.length === 0) return;
 
-  // During guided replay, the embed overlay drives page-to-page navigation.
-  // Letting the fake "Save recording" control mutate the demo underneath the
-  // overlay leaves the Jira surface in a broken intermediate state.
-  if (isEmbedPlaying()) {
-    return;
-  }
-
   isRecording = false;
   isPaused = false;
   sidepanelSandbox.classList.remove("recording-mode");
@@ -258,19 +273,12 @@ function stopRecording() {
     sequence: i + 1,
     timestamp: new Date().toISOString(),
     title: step.title,
-    page: { url: window.location.href, title: step.site },
+    page: { url: getWorkflowPageUrl(), title: step.site },
     element: null,
     note: step.description || null,
   }));
 
-  if (window.parent !== window) {
-    window.parent.postMessage({ type: "nari-save", steps: actions }, "*");
-  } else {
-    try {
-      localStorage.setItem("nari_demo_steps", JSON.stringify(actions));
-    } catch { /* ignore */ }
-    window.location.href = new URL("/demo/app.html", window.location.origin).href;
-  }
+  navigateToDemoApp(actions);
 }
 
 function recordStep(badge, title, description, key, site = getCurrentSiteLabel()) {
