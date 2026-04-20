@@ -28,6 +28,33 @@
   </style>
   <script>
     if (new URLSearchParams(location.search).has('embed')) {
+      var EMBED_SCROLL_LOCK_KEYS = ['Space', 'PageUp', 'PageDown', 'End', 'Home', 'ArrowUp', 'ArrowDown'];
+
+      function isEditableEmbedTarget(target) {
+        if (!(target instanceof Element)) {
+          return false;
+        }
+
+        if (target instanceof HTMLElement && target.isContentEditable) {
+          return true;
+        }
+
+        var field = target.closest('input, textarea, select, [contenteditable=""], [contenteditable="true"], [contenteditable="plaintext-only"]');
+        if (!field) {
+          return false;
+        }
+
+        if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+          return !field.disabled && !field.readOnly;
+        }
+
+        if (field instanceof HTMLSelectElement) {
+          return !field.disabled;
+        }
+
+        return field instanceof HTMLElement && field.isContentEditable;
+      }
+
       document.documentElement.classList.add('embedded');
       document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.add('embedded');
@@ -37,7 +64,11 @@
           }, { passive: false });
         });
         window.addEventListener('keydown', function (event) {
-          if (['Space', 'PageUp', 'PageDown', 'End', 'Home', 'ArrowUp', 'ArrowDown'].includes(event.code)) {
+          if (isEditableEmbedTarget(event.target)) {
+            return;
+          }
+
+          if (EMBED_SCROLL_LOCK_KEYS.includes(event.code)) {
             event.preventDefault();
           }
         });
