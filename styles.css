@@ -200,7 +200,7 @@ a {
 .hero-frame {
   position: relative;
   overflow: hidden;
-  padding: 28px 0 92px;
+  padding: clamp(40px, 6vh, 80px) 0 clamp(72px, 10vh, 120px);
   background: #ffffff;
   color: #111214;
 }
@@ -298,7 +298,7 @@ a {
 
 .hero-copy {
   text-align: center;
-  margin-bottom: clamp(32px, 5vh, 56px);
+  margin-bottom: clamp(48px, 7vh, 80px);
 }
 
 .hero-heading {
@@ -322,7 +322,7 @@ a {
 
 .hero-fake-demo {
   width: min(var(--container), calc(100% - 64px));
-  margin-top: clamp(28px, 5vh, 56px);
+  margin-top: clamp(48px, 7vh, 88px);
   margin-right: auto;
   margin-left: auto;
 }
@@ -385,6 +385,9 @@ a {
 }
 
 .hero-fake-demo-scaler {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: calc(var(--hero-demo-base-width) * 1px);
   transform: scale(var(--hero-demo-scale));
   transform-origin: top left;

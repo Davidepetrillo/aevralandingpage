@@ -92,6 +92,9 @@
             event.preventDefault();
           }, { passive: false });
         });
+        window.addEventListener('scroll', function () {
+          window.scrollTo(0, 0);
+        }, { passive: true });
         window.addEventListener('keydown', function (event) {
           if (isEditableEmbedTarget(event.target)) {
             return;
@@ -1082,8 +1085,8 @@
       }
 
       var embedScript = document.createElement("script");
-      //embedScript.src = "https://app.aevra.co/embed.js";
-      //embedScript.dataset.token = "7986e6795bd4b85ba3bd3173ce5dbf786ba5";
+      embedScript.src = "https://app.aevra.co/embed.js";
+      embedScript.dataset.token = "bbbd06983fd123181a3f64e6ac5e8fd30981";
       embedScript.dataset.auto = "";
       document.body.appendChild(embedScript);
     })();
