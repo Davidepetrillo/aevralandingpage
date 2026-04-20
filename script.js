@@ -216,19 +216,12 @@ const syncHeroDemoScale = () => {
 
   const styles = getComputedStyle(heroDemoBrowser);
   const baseWidth = Number.parseFloat(styles.getPropertyValue("--hero-demo-base-width"));
-  const baseHeight = Number.parseFloat(styles.getPropertyValue("--hero-demo-base-height"));
-  const visibleHeight = Number.parseFloat(styles.getPropertyValue("--hero-demo-visible-height")) || baseHeight;
 
-  if (!baseWidth || !baseHeight) {
+  if (!baseWidth) {
     return;
   }
 
-  const availableWidth = heroDemoContainer.clientWidth;
-  const viewportHeight = window.visualViewport?.height || window.innerHeight;
-  const maxStageHeight = Math.max(viewportHeight - 300, 400);
-  const widthScale = availableWidth / baseWidth;
-  const heightScale = maxStageHeight / visibleHeight;
-  const scale = Math.min(1, widthScale, heightScale);
+  const scale = Math.min(1, heroDemoContainer.clientWidth / baseWidth);
   heroDemoBrowser.style.setProperty("--hero-demo-scale", String(scale));
 };
 

@@ -321,22 +321,18 @@ a {
 }
 
 .hero-fake-demo {
-  width: min(1480px, calc(100% - 48px));
+  width: min(var(--container), calc(100% - 64px));
   margin-top: clamp(28px, 5vh, 56px);
   margin-right: auto;
   margin-left: auto;
-  padding: 0 clamp(16px, 4vw, 72px);
-  box-sizing: border-box;
 }
 
 .hero-fake-demo-browser {
   --hero-demo-base-width: 1440;
   --hero-demo-base-height: 900;
-  --hero-demo-visible-height: 850;
   --hero-demo-scale: 1;
   position: relative;
-  width: min(100%, calc(var(--hero-demo-base-width) * 1px * var(--hero-demo-scale)));
-  margin: 0 auto;
+  width: 100%;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid rgba(17, 18, 20, 0.1);
@@ -388,21 +384,24 @@ a {
   margin: 0 auto;
 }
 
+.hero-fake-demo-scaler {
+  width: calc(var(--hero-demo-base-width) * 1px);
+  transform: scale(var(--hero-demo-scale));
+  transform-origin: top left;
+}
+
 .hero-fake-demo-frame {
   display: block;
   width: calc(var(--hero-demo-base-width) * 1px);
   height: calc(var(--hero-demo-base-height) * 1px);
   border: none;
   background: #fff;
-  transform: scale(var(--hero-demo-scale));
-  transform-origin: top left;
 }
 
 .hero-fake-demo-stage {
   position: relative;
   width: 100%;
-  height: min(calc(var(--hero-demo-visible-height) * 1px * var(--hero-demo-scale)), calc(100vh - 300px));
-  height: min(calc(var(--hero-demo-visible-height) * 1px * var(--hero-demo-scale)), calc(100svh - 300px));
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #fff;
 }
@@ -1973,8 +1972,7 @@ a {
     padding: 24px 0 84px;
   }
 
-  .hero-nav,
-  .hero-fake-demo {
+  .hero-nav {
     width: min(1120px, calc(100% - 48px));
     margin-right: auto;
     margin-left: auto;
@@ -2153,8 +2151,7 @@ a {
     padding: 18px 0 72px;
   }
 
-  .hero-nav,
-  .hero-fake-demo {
+  .hero-nav {
     width: min(100%, calc(100% - 32px));
     margin-right: auto;
     margin-left: auto;
