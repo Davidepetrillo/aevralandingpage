@@ -14,6 +14,8 @@ const trackEvent = (eventName, properties = {}) => {
 
 const HERO_DEMO_EMBED_MESSAGE_TYPE = "aevra-demo-embed-analytics";
 const HERO_DEMO_EMBED_STATE_REQUEST = "aevra-demo-embed-analytics-request-state";
+const HERO_DEMO_SAVE_MESSAGE_TYPE = "nari-save";
+const HERO_DEMO_STEPS_STORAGE_KEY = "nari_demo_steps";
 const HERO_DEMO_STALL_MS = 15000;
 const HERO_DEMO_SURFACE = "landing_page_hero";
 
@@ -166,6 +168,29 @@ const handleHeroDemoSnapshot = (properties = {}) => {
   armHeroDemoStallTimer();
 };
 
+const handleHeroDemoSave = (steps, targetUrl) => {
+  if (!Array.isArray(steps) || steps.length === 0) {
+    return;
+  }
+
+  try {
+    localStorage.setItem(HERO_DEMO_STEPS_STORAGE_KEY, JSON.stringify(steps));
+  } catch {
+    return;
+  }
+
+  trackEvent(
+    "hero demo saved from landing page",
+    enrichHeroDemoProperties({
+      step_count: steps.length,
+    })
+  );
+
+  if (heroDemoFrame) {
+    heroDemoFrame.src = targetUrl || new URL("/demo/app.html", window.location.origin).href;
+  }
+};
+
 const demoBookingLinks = Array.from(document.querySelectorAll('a[href*="calendly.com"]'));
 demoBookingLinks.forEach((link) => {
   link.addEventListener("click", () => {
@@ -288,6 +313,11 @@ window.addEventListener("message", (event) => {
   }
 
   if (heroDemoFrame && event.source !== heroDemoFrame.contentWindow) {
+    return;
+  }
+
+  if (event.data?.type === HERO_DEMO_SAVE_MESSAGE_TYPE) {
+    handleHeroDemoSave(event.data.steps, event.data.targetUrl);
     return;
   }
 
