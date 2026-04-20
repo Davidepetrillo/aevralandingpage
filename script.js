@@ -225,7 +225,7 @@ const syncHeroDemoScale = () => {
 
   const availableWidth = heroDemoContainer.clientWidth;
   const viewportHeight = window.visualViewport?.height || window.innerHeight;
-  const maxStageHeight = Math.min(viewportHeight * 0.72, 760);
+  const maxStageHeight = Math.max(viewportHeight - 300, 400);
   const widthScale = availableWidth / baseWidth;
   const heightScale = maxStageHeight / visibleHeight;
   const scale = Math.min(1, widthScale, heightScale);
@@ -248,6 +248,7 @@ if (heroDemoBrowser && heroDemoContainer) {
 
 if (heroDemoFrame) {
   heroDemoFrame.addEventListener("load", () => {
+    syncHeroDemoScale();
     trackEvent("hero demo iframe loaded", enrichHeroDemoProperties());
 
     try {

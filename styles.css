@@ -194,13 +194,11 @@ a {
 .hero {
   position: relative;
   isolation: isolate;
-  min-height: 100svh;
   padding: 0;
 }
 
 .hero-frame {
   position: relative;
-  min-height: 100svh;
   overflow: hidden;
   padding: 28px 0 92px;
   background: #ffffff;
@@ -298,6 +296,30 @@ a {
   color: rgba(17, 18, 20, 0.95);
 }
 
+.hero-copy {
+  text-align: center;
+  margin-bottom: clamp(32px, 5vh, 56px);
+}
+
+.hero-heading {
+  font-family: var(--font-brand);
+  font-size: clamp(1.75rem, 2.8vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  margin: 0;
+}
+
+.hero-heading__line {
+  display: block;
+  color: rgba(17, 18, 20, 0.94);
+}
+
+.hero-heading__line--muted {
+  color: rgba(17, 18, 20, 0.32);
+  font-weight: 500;
+}
+
 .hero-fake-demo {
   width: min(1480px, calc(100% - 48px));
   margin-top: clamp(28px, 5vh, 56px);
@@ -379,8 +401,8 @@ a {
 .hero-fake-demo-stage {
   position: relative;
   width: 100%;
-  height: min(calc(var(--hero-demo-visible-height) * 1px * var(--hero-demo-scale)), min(72vh, 760px));
-  height: min(calc(var(--hero-demo-visible-height) * 1px * var(--hero-demo-scale)), min(72svh, 760px));
+  height: min(calc(var(--hero-demo-visible-height) * 1px * var(--hero-demo-scale)), calc(100vh - 300px));
+  height: min(calc(var(--hero-demo-visible-height) * 1px * var(--hero-demo-scale)), calc(100svh - 300px));
   overflow: hidden;
   background: #fff;
 }

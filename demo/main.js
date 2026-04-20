@@ -232,6 +232,14 @@ function startRecording() {
 
 function stopRecording() {
   if (!isRecording && recordedSteps.length === 0) return;
+
+  // During guided replay, the embed overlay drives page-to-page navigation.
+  // Letting the fake "Save recording" control mutate the demo underneath the
+  // overlay leaves the Jira surface in a broken intermediate state.
+  if (isEmbedPlaying()) {
+    return;
+  }
+
   isRecording = false;
   isPaused = false;
   sidepanelSandbox.classList.remove("recording-mode");
