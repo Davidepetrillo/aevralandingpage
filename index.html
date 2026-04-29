@@ -35,52 +35,54 @@
   <body>
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
+    <nav class="nav hero-nav" id="nav">
+      <div class="nav-inner">
+        <a class="nav-brand" href="#">
+          <img src="./thelogo.png" alt="Aevra" width="30" height="30" />
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="#how">How it works</a>
+          <a class="nav-link" href="#use-cases">Use cases</a>
+          <a class="nav-link" href="#benefits">Impact</a>
+          <a class="nav-link" href="#integrations">Integrations</a>
+          <a class="nav-link" href="#pricing">Pricing</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </div>
+        <div class="nav-actions">
+          <a class="btn-primary" href="https://calendly.com/davide-aevra/30min">Book a demo</a>
+        </div>
+      </div>
+    </nav>
+
     <main>
       <section class="section hero" id="hero">
         <div class="hero-frame">
-          <nav class="nav hero-nav" id="nav">
-            <div class="nav-inner">
-              <a class="nav-brand" href="#">
-                <img src="./thelogo.png" alt="Aevra" width="30" height="30" />
-              </a>
-              <div class="nav-links">
-                <a class="nav-link" href="#how">How it works</a>
-                <a class="nav-link" href="#use-cases">Use cases</a>
-                <a class="nav-link" href="#benefits">Impact</a>
-                <a class="nav-link" href="#integrations">Integrations</a>
-                <a class="nav-link" href="#pricing">Pricing</a>
-                <a class="nav-link" href="#contact">Contact</a>
-              </div>
-              <div class="nav-actions">
-                <a class="btn-primary magnetic" href="https://calendly.com/davide-aevra/30min">Book a demo</a>
-              </div>
-            </div>
-          </nav>
-
-          <div class="hero-fake-demo">
-            <div class="hero-copy">
-              <h1 class="hero-heading">
-                <span class="hero-heading__line">Capture any workflow.</span>
-                <span class="hero-heading__line hero-heading__line--muted">Replay it live, inside every tool your team uses.</span>
-              </h1>
+          <div class="hero-startup">
+            <div class="hero-copy" data-hero-reveal>
+              <p class="hero-kicker">The operating memory behind your company</p>
+              <h1 class="hero-heading" data-hero-type="Your company brain for operational execution.">Your company brain for operational execution.</h1>
+              <p class="hero-subtitle">
+                Aevra captures how work gets done, builds your company-owned operational brain, and executes workflows safely across the tools your team already uses.
+              </p>
             </div>
 
-            <div class="hero-fake-demo-browser">
-              <div class="hero-fake-demo-chrome" aria-hidden="true">
-                <span class="hero-fake-demo-dot"></span>
-                <span class="hero-fake-demo-dot"></span>
-                <span class="hero-fake-demo-dot"></span>
-                <span class="hero-fake-demo-url">app.jira.com/projects/NOVA</span>
-              </div>
-              <div class="hero-fake-demo-stage">
-                <div class="hero-fake-demo-scaler">
-                  <iframe
-                    src="./demo/?embed=1"
-                    class="hero-fake-demo-frame"
-                    title="Aevra live demo"
-                  ></iframe>
-                </div>
-              </div>
+            <div class="hero-conversion" data-hero-reveal>
+              <form
+                class="hero-email-form"
+                action="https://formsubmit.co/davide@aevra.co"
+                method="POST"
+                data-hero-email-form
+              >
+                <input type="hidden" name="_subject" value="New Aevra waitlist signup" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+                <label class="hero-email-field">
+                  <span class="sr-only">Work email</span>
+                  <input type="email" name="email" autocomplete="email" placeholder="Enter your work email" required />
+                  <button type="submit">Join waitlist</button>
+                </label>
+                <p class="hero-email-status" data-hero-email-status hidden></p>
+              </form>
             </div>
           </div>
 
@@ -105,37 +107,241 @@
 
           <div class="story-grid">
             <article class="story-card" data-reveal>
-              <div class="story-media">
-                <img src="./framer.jpg" alt="Aevra product placeholder" loading="lazy" decoding="async" />
+              <div class="story-media story-media--capture">
+                <svg class="capture-svg" viewBox="0 0 400 336" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="capBgGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#f8f5ed"/>
+                      <stop offset="1" stop-color="#ece6d8"/>
+                    </linearGradient>
+                    <filter id="capBlobBlur"><feGaussianBlur stdDeviation="22"/></filter>
+                    <filter id="capCardShadow" x="-10%" y="-10%" width="120%" height="130%">
+                      <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="#1c2330" flood-opacity="0.06"/>
+                    </filter>
+                    <filter id="capDropShadow" x="-20%" y="-20%" width="140%" height="160%">
+                      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1c2330" flood-opacity="0.18"/>
+                    </filter>
+                  </defs>
+
+                  <rect x="0" y="0" width="400" height="336" fill="url(#capBgGrad)"/>
+                  <g filter="url(#capBlobBlur)" opacity="0.85">
+                    <circle cx="80"  cy="50"  r="90"  fill="#fff0d0"/>
+                    <circle cx="340" cy="280" r="110" fill="#dce6f5"/>
+                    <circle cx="280" cy="40"  r="60"  fill="#ffd0ad"/>
+                  </g>
+
+                  <g class="cap-stage">
+                    <rect x="24" y="24" width="224" height="288" rx="12"
+                          fill="#ffffff" fill-opacity="0.86"
+                          stroke="#1112140d" stroke-width="1"
+                          filter="url(#capCardShadow)"/>
+
+                    <circle cx="38" cy="42" r="3" fill="#1112141a"/>
+                    <circle cx="48" cy="42" r="3" fill="#1112141a"/>
+                    <circle cx="58" cy="42" r="3" fill="#1112141a"/>
+
+                    <rect x="38" y="58" width="34" height="4" rx="2" fill="#11121430"/>
+                    <rect class="cap-input cap-input--title" x="38" y="66" width="196" height="20" rx="5"
+                          fill="#f7f4ec" stroke="#11121414" stroke-width="1"/>
+                    <rect class="cap-fill cap-fill--title" x="44" y="74" width="0" height="4" rx="2" fill="#11121499"/>
+                    <rect class="cap-caret cap-caret--title" x="44" y="71" width="1.2" height="10" fill="#1112149c" opacity="0"/>
+
+                    <rect x="38"  y="98" width="26" height="4" rx="2" fill="#11121430"/>
+                    <rect x="142" y="98" width="32" height="4" rx="2" fill="#11121430"/>
+
+                    <rect class="cap-input cap-input--priority" x="38" y="106" width="92" height="20" rx="5"
+                          fill="#f7f4ec" stroke="#11121414" stroke-width="1"/>
+                    <rect class="cap-fill cap-fill--priority" x="44" y="114" width="34" height="4" rx="2" fill="#11121438"/>
+                    <path d="M 119 114 l 4 4 l 4 -4" stroke="#11121466" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <rect class="cap-input cap-input--category" x="142" y="106" width="92" height="20" rx="5"
+                          fill="#f7f4ec" stroke="#11121414" stroke-width="1"/>
+                    <rect class="cap-fill cap-fill--category" x="148" y="114" width="30" height="4" rx="2" fill="#11121438"/>
+                    <path d="M 223 114 l 4 4 l 4 -4" stroke="#11121466" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <rect x="38" y="138" width="44" height="4" rx="2" fill="#11121430"/>
+                    <rect class="cap-input cap-input--desc" x="38" y="146" width="196" height="64" rx="5"
+                          fill="#f7f4ec" stroke="#11121414" stroke-width="1"/>
+                    <rect class="cap-line cap-line--1" x="46" y="156" width="0" height="3.5" rx="1.5" fill="#11121499"/>
+                    <rect class="cap-line cap-line--2" x="46" y="170" width="0" height="3.5" rx="1.5" fill="#11121499"/>
+                    <rect class="cap-line cap-line--3" x="46" y="184" width="0" height="3.5" rx="1.5" fill="#11121499"/>
+
+                    <rect class="cap-attach" x="38" y="222" width="26" height="22" rx="5"
+                          fill="#f7f4ec" stroke="#11121414" stroke-width="1"/>
+                    <path d="M 47 230 Q 47 227 50.5 227 Q 54 227 54 230 L 54 238 Q 54 240.5 50.5 240.5 Q 47 240.5 47 238 L 47 232"
+                          stroke="#11121480" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <rect class="cap-submit" x="70" y="222" width="164" height="22" rx="5" fill="#111214e6"/>
+                    <rect x="84"  y="231" width="22" height="4" rx="2" fill="#ffffffb5"/>
+                    <rect x="110" y="231" width="14" height="4" rx="2" fill="#ffffffb5"/>
+
+                    <g class="cap-drop cap-drop--priority" opacity="0">
+                      <rect x="38" y="130" width="92" height="58" rx="5"
+                            fill="#ffffff" stroke="#11121414" stroke-width="1" filter="url(#capDropShadow)"/>
+                      <rect x="44" y="138" width="48" height="6" rx="2" fill="#11121420"/>
+                      <rect class="cap-pick cap-pick--priority" x="44" y="150" width="60" height="6" rx="2" fill="#11121420"/>
+                      <rect x="44" y="162" width="40" height="6" rx="2" fill="#11121420"/>
+                      <rect x="44" y="174" width="50" height="6" rx="2" fill="#11121420"/>
+                    </g>
+
+                    <g class="cap-drop cap-drop--category" opacity="0">
+                      <rect x="142" y="130" width="92" height="58" rx="5"
+                            fill="#ffffff" stroke="#11121414" stroke-width="1" filter="url(#capDropShadow)"/>
+                      <rect x="148" y="138" width="40" height="6" rx="2" fill="#11121420"/>
+                      <rect x="148" y="150" width="55" height="6" rx="2" fill="#11121420"/>
+                      <rect class="cap-pick cap-pick--category" x="148" y="162" width="50" height="6" rx="2" fill="#11121420"/>
+                      <rect x="148" y="174" width="35" height="6" rx="2" fill="#11121420"/>
+                    </g>
+
+                    <rect x="260" y="24" width="116" height="288" rx="12"
+                          fill="#ffffff" fill-opacity="0.55"
+                          stroke="#11121424" stroke-dasharray="4 3" stroke-width="1"/>
+
+                    <circle class="cap-rec" cx="272" cy="44" r="3" fill="#d94a4a"/>
+                    <rect x="280" y="42" width="50" height="4" rx="2" fill="#11121438"/>
+
+                    <g class="cap-step cap-step--1" opacity="0">
+                      <rect x="266" y="56" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="70" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 70.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="73.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Open ticket</text>
+                    </g>
+
+                    <g class="cap-step cap-step--2" opacity="0">
+                      <rect x="266" y="90" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="104" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 104.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="107.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Set priority</text>
+                    </g>
+
+                    <g class="cap-step cap-step--3" opacity="0">
+                      <rect x="266" y="124" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="138" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 138.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="141.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Set category</text>
+                    </g>
+
+                    <g class="cap-step cap-step--4" opacity="0">
+                      <rect x="266" y="158" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="172" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 172.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="175.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Add description</text>
+                    </g>
+
+                    <g class="cap-step cap-step--5" opacity="0">
+                      <rect x="266" y="192" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="206" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 206.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="209.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Capture context</text>
+                    </g>
+
+                    <g class="cap-step cap-step--6" opacity="0">
+                      <rect x="266" y="226" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="240" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 240.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="243.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Save workflow</text>
+                    </g>
+
+                    <g class="cap-cursor">
+                      <circle cx="0" cy="0" r="11" fill="#ffffff" fill-opacity="0.6"/>
+                      <circle cx="0" cy="0" r="6.5" fill="#111214ee"/>
+                    </g>
+                  </g>
+                </svg>
               </div>
               <div class="story-copy">
-                <h3 class="story-title">Time Reclaimed</h3>
+                <h3 class="story-title">Capture workflows</h3>
                 <p class="story-desc">
-                  Capture a workflow once, then generate live guidance instantly so teams move faster without writing and maintaining static docs by hand.
+                  Record any workflow in one click, exactly as it happens. No documentation effort, no process audits. Aevra turns real execution into structured knowledge your whole team can build on.
                 </p>
               </div>
             </article>
 
             <article class="story-card" data-reveal>
               <div class="story-media story-media--guidance">
-                <img src="./replay.jpg" alt="Aevra product placeholder" loading="lazy" decoding="async" />
+                <div class="execute-anim" aria-hidden="true">
+                  <div class="execute-anim__bg"></div>
+                  <div class="exec-prompt-alone">
+                    <div class="exec-prompt-row">
+                      <span class="exec-prompt-text">Process Jurnee's refund request and update the CRM.</span>
+                      <span class="exec-caret"></span>
+                    </div>
+                    <div class="exec-send">&uarr;</div>
+                  </div>
+
+                  <div class="exec-flow">
+                    <div class="exec-flow-list">
+                      <div class="exec-act exec-act--1">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Find account</strong>
+                          <small>Jurnee Operations</small>
+                        </span>
+                      </div>
+                      <div class="exec-act exec-act--2">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Verify invoice</strong>
+                          <small>INV-2048 checked</small>
+                        </span>
+                      </div>
+                      <div class="exec-act exec-act--3">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Open finance ticket</strong>
+                          <small>FIN-4821 created</small>
+                        </span>
+                      </div>
+                      <div class="exec-act exec-act--4">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Update CRM record</strong>
+                          <small>Note synced with audit trail</small>
+                        </span>
+                      </div>
+                      <div class="exec-act exec-act--5">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Notify finance team</strong>
+                          <small>Summary email delivered</small>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="story-copy">
-                <h3 class="story-title">In-Product Guidance</h3>
+                <h3 class="story-title">Execute automatically</h3>
                 <p class="story-desc">
-                  Replay every process directly inside the browser with contextual guidance layered on top of the actual workflow, so work stays clear and easy to follow.
+                  Every captured workflow becomes something Aevra can execute for you. Repetitive tasks that drain hours each week get handled, consistently, without errors, without reminders.
                 </p>
               </div>
             </article>
 
             <article class="story-card" data-reveal>
-              <div class="story-media">
-                <img src="./automate2.jpg" alt="Aevra product placeholder" loading="lazy" decoding="async" />
+              <div class="story-media story-media--memory">
+                <div class="memory-anim" aria-hidden="true">
+                  <div class="memory-anim__bg"></div>
+                  <div class="memory-source memory-source--crm">CRM context</div>
+                  <div class="memory-source memory-source--slack">Slack decisions</div>
+                  <div class="memory-source memory-source--sop">SOP changes</div>
+                  <div class="memory-source memory-source--docs">Policy notes</div>
+                  <div class="memory-source memory-source--support">Support signals</div>
+                  <div class="memory-source memory-source--finance">Finance rules</div>
+                  <div class="memory-core">
+                    <img src="./thelogo.png" alt="" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="memory-link"><span></span></div>
+                  <div class="memory-update">
+                    <span></span>
+                    Knowledge update
+                  </div>
+                </div>
               </div>
               <div class="story-copy">
-                <h3 class="story-title">Workflow Automation</h3>
+                <h3 class="story-title">Never forget</h3>
                 <p class="story-desc">
-                  Turn repeated browser work into automation that runs for your team, eliminates manual steps, and keeps people focused on decisions instead of routine execution.
+                  Aevra connects to the tools your team already uses, pulls live context, and builds a persistent memory of how your company operates. Every process becomes company knowledge, owned, searchable, always up to date.
                 </p>
               </div>
             </article>
