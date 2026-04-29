@@ -528,6 +528,7 @@ storyCards.forEach((el, i) => {
 const useCaseTabs = Array.from(document.querySelectorAll("[data-use-case-tab]"));
 const useCasePanels = Array.from(document.querySelectorAll("[data-use-case-panel]"));
 const useCaseCopies = Array.from(document.querySelectorAll("[data-use-case-copy]"));
+const useCaseSection = document.querySelector(".use-cases-section");
 const pricingSwitch = document.querySelector("[data-pricing-switch]");
 const pricingLabels = Array.from(document.querySelectorAll("[data-pricing-label]"));
 const pricingValues = Array.from(document.querySelectorAll("[data-price-monthly]"));
@@ -536,7 +537,14 @@ const contactForm = document.querySelector("[data-contact-form]");
 const heroEmailForm = document.querySelector("[data-hero-email-form]");
 
 if (useCaseTabs.length && useCasePanels.length && useCaseCopies.length) {
+  const useCaseIds = useCaseTabs.map((tab) => tab.dataset.useCaseTab);
+  let activeUseCaseId = useCaseIds[0];
+  let useCaseScrollQueued = false;
+
   const activateUseCase = (id) => {
+    if (!useCaseIds.includes(id) || activeUseCaseId === id) return;
+    activeUseCaseId = id;
+
     useCaseTabs.forEach((tab) => {
       const active = tab.dataset.useCaseTab === id;
       tab.classList.toggle("is-active", active);
@@ -554,12 +562,58 @@ if (useCaseTabs.length && useCasePanels.length && useCaseCopies.length) {
     });
   };
 
+  const getUseCaseScrollMetrics = () => {
+    if (!useCaseSection) return null;
+
+    const sectionTop = window.scrollY + useCaseSection.getBoundingClientRect().top;
+    const scrollRange = Math.max(1, useCaseSection.offsetHeight - window.innerHeight);
+
+    return { sectionTop, scrollRange };
+  };
+
+  const syncUseCaseToScroll = () => {
+    useCaseScrollQueued = false;
+
+    const metrics = getUseCaseScrollMetrics();
+    if (!metrics) return;
+
+    const rawProgress = (window.scrollY - metrics.sectionTop) / metrics.scrollRange;
+    const progress = Math.min(0.999, Math.max(0, rawProgress));
+    const nextIndex = Math.min(useCaseIds.length - 1, Math.floor(progress * useCaseIds.length));
+
+    activateUseCase(useCaseIds[nextIndex]);
+  };
+
+  const requestUseCaseScrollSync = () => {
+    if (useCaseScrollQueued) return;
+
+    useCaseScrollQueued = true;
+    requestAnimationFrame(syncUseCaseToScroll);
+  };
+
   useCaseTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      activateUseCase(tab.dataset.useCaseTab);
+      const targetId = tab.dataset.useCaseTab;
+      const targetIndex = useCaseIds.indexOf(targetId);
+      const metrics = getUseCaseScrollMetrics();
+
+      if (metrics && targetIndex >= 0) {
+        const segmentProgress = (targetIndex + 0.5) / useCaseIds.length;
+
+        window.scrollTo({
+          top: metrics.sectionTop + metrics.scrollRange * segmentProgress,
+          behavior: "smooth",
+        });
+      }
+
+      activateUseCase(targetId);
       trackEvent("use case tab clicked", { use_case: tab.dataset.useCaseTab });
     });
   });
+
+  window.addEventListener("scroll", requestUseCaseScrollSync, { passive: true });
+  window.addEventListener("resize", requestUseCaseScrollSync);
+  requestUseCaseScrollSync();
 }
 
 if (pricingSwitch && pricingLabels.length && pricingValues.length) {

@@ -42,8 +42,8 @@
         </a>
         <div class="nav-links">
           <a class="nav-link" href="#how">How it works</a>
-          <a class="nav-link" href="#use-cases">Use cases</a>
-          <a class="nav-link" href="#benefits">Impact</a>
+          <a class="nav-link" href="#use-cases">Operational impact</a>
+          <a class="nav-link" href="#benefits">Benefits</a>
           <a class="nav-link" href="#integrations">Integrations</a>
           <a class="nav-link" href="#pricing">Pricing</a>
           <a class="nav-link" href="#contact">Contact</a>
@@ -262,7 +262,13 @@
               <div class="story-media story-media--guidance">
                 <div class="execute-anim" aria-hidden="true">
                   <div class="execute-anim__bg"></div>
+                  <div class="execute-anim__mesh"></div>
+                  <div class="exec-signal-line"><span></span></div>
                   <div class="exec-prompt-alone">
+                    <div class="exec-prompt-alone__head">
+                      <span class="exec-brand"></span>
+                      <span>Operator instruction</span>
+                    </div>
                     <div class="exec-prompt-row">
                       <span class="exec-prompt-text">Process Jurnee's refund request and update the CRM.</span>
                       <span class="exec-caret"></span>
@@ -271,6 +277,11 @@
                   </div>
 
                   <div class="exec-flow">
+                    <div class="exec-flow__head">
+                      <span class="exec-brand"></span>
+                      <span>Aevra executing</span>
+                      <span class="exec-flow__state">Live</span>
+                    </div>
                     <div class="exec-flow-list">
                       <div class="exec-act exec-act--1">
                         <span class="exec-status"></span>
@@ -353,78 +364,118 @@
       <section class="section use-cases-section" id="use-cases">
         <div class="container use-cases-shell">
           <div class="section-lead use-cases-lead" data-reveal>
-            <span class="section-kicker">Use cases</span>
+            <span class="section-kicker">Operational impact</span>
             <h2 class="section-title">
-              <span class="title-line">Different teams can move faster,</span>
-              <span class="title-line title-line--muted">all guided by one execution layer.</span>
+              <span class="title-line">Where Aevra changes how companies operate,</span>
+              <span class="title-line title-line--muted">from daily execution to serious automation.</span>
             </h2>
           </div>
 
-          <div class="use-cases-tabs" role="tablist" aria-label="Use cases" data-reveal>
+          <div class="use-cases-tabs" role="tablist" aria-label="Operational impact" data-reveal>
             <button
               class="use-case-tab is-active"
               type="button"
               role="tab"
               aria-selected="true"
-              data-use-case-tab="onboarding"
+              data-use-case-tab="execution"
             >
-              Onboarding
+              Execution standard
             </button>
             <button
               class="use-case-tab"
               type="button"
               role="tab"
               aria-selected="false"
-              data-use-case-tab="sop"
+              data-use-case-tab="procedures"
             >
-              SOP Execution
+              Complex procedures
             </button>
             <button
               class="use-case-tab"
               type="button"
               role="tab"
               aria-selected="false"
-              data-use-case-tab="support"
+              data-use-case-tab="control"
             >
-              Support Ops
+              Human control
+            </button>
+            <button
+              class="use-case-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-use-case-tab="changes"
+            >
+              Process changes
+            </button>
+            <button
+              class="use-case-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-use-case-tab="day-one"
+            >
+              Day-one productivity
             </button>
           </div>
 
           <div class="use-cases-stage" data-reveal>
             <div class="use-cases-media">
-              <figure class="use-case-visual is-active" data-use-case-panel="onboarding" aria-hidden="false">
-                <img src="./onboarding.jpg" alt="Onboarding use case placeholder" loading="lazy" decoding="async" />
+              <figure class="use-case-visual is-active" data-use-case-panel="execution" aria-hidden="false">
+                <img src="./replay.jpg" alt="Execution standard workflow replay" loading="lazy" decoding="async" />
               </figure>
-              <figure class="use-case-visual" data-use-case-panel="sop" aria-hidden="true">
-                <img src="./SOP3.jpg" alt="SOP execution use case placeholder" loading="lazy" decoding="async" />
+              <figure class="use-case-visual" data-use-case-panel="procedures" aria-hidden="true">
+                <img src="./complex.jpg" alt="Complex multi-tool company procedure" loading="lazy" decoding="async" />
               </figure>
-              <figure class="use-case-visual" data-use-case-panel="support" aria-hidden="true">
-                <img src="./Ops.jpg" alt="Support operations use case placeholder" loading="lazy" decoding="async" />
+              <figure class="use-case-visual" data-use-case-panel="control" aria-hidden="true">
+                <img src="./Ops.jpg" alt="Sensitive operation with human review" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="use-case-visual" data-use-case-panel="changes" aria-hidden="true">
+                <img src="./capture.jpg" alt="Updated process captured in Aevra" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="use-case-visual" data-use-case-panel="day-one" aria-hidden="true">
+                <img src="./onboarding.jpg" alt="New teammate onboarding workflow" loading="lazy" decoding="async" />
               </figure>
             </div>
 
             <div class="use-cases-detail">
-              <article class="use-case-copy is-active" data-use-case-copy="onboarding">
-                <span class="use-case-eyebrow">Onboarding</span>
-                <h3 class="use-case-title">Get new hires productive inside the workflow, not beside it.</h3>
+              <article class="use-case-copy is-active" data-use-case-copy="execution">
+                <span class="use-case-eyebrow">Execution standard</span>
+                <h3 class="use-case-title">Help every team member work closer to your best operator.</h3>
                 <p class="use-case-desc">
-                  Turn real tasks into guided onboarding flows so every teammate can learn the process directly in the browser, without shadowing and without static docs.
+                  Your best people know what to check, which order matters, when to stop, and what a wrong result looks like. Aevra makes that working method available during execution, so quality depends less on who is doing the task.
                 </p>
               </article>
 
-              <article class="use-case-copy" data-use-case-copy="sop">
-                <span class="use-case-eyebrow">SOP Execution</span>
-                <h3 class="use-case-title">Standardize repeatable work across teams with live operational guidance.</h3>
+              <article class="use-case-copy" data-use-case-copy="procedures">
+                <span class="use-case-eyebrow">Complex procedures</span>
+                <h3 class="use-case-title">Complete work that moves across tools, screens, and decisions.</h3>
                 <p class="use-case-desc">
-                  Give operators step-by-step guidance inside every workflow so execution stays consistent, updates roll out instantly, and critical processes are easier to follow.
+                  Many company procedures cannot be solved by one prompt or one app action. Aevra follows the real sequence across browser tools, carries context forward, and helps complete the procedure from start to finish.
                 </p>
               </article>
 
-              <article class="use-case-copy" data-use-case-copy="support">
-                <span class="use-case-eyebrow">Support Ops</span>
-                <h3 class="use-case-title">Resolve complex tasks faster with guidance that appears in the exact moment it is needed.</h3>
+              <article class="use-case-copy" data-use-case-copy="control">
+                <span class="use-case-eyebrow">Human control</span>
+                <h3 class="use-case-title">Automate serious work without giving up judgment.</h3>
                 <p class="use-case-desc">
-                  Help support and operations teams navigate escalations, account changes, and exception flows without breaking focus or searching through documentation.
+                  Aevra does not need to act blindly. You decide which steps it can complete, which steps require confirmation, and which steps stay human. That makes it useful where speed matters but unchecked automation is not acceptable.
+                </p>
+              </article>
+
+              <article class="use-case-copy" data-use-case-copy="changes">
+                <span class="use-case-eyebrow">Process changes</span>
+                <h3 class="use-case-title">Update how work is done without retraining everyone from scratch.</h3>
+                <p class="use-case-desc">
+                  When a procedure changes, the work should change with it. Update the workflow in Aevra and the new version appears where execution happens, instead of depending on meetings, docs, or people remembering the latest rule.
+                </p>
+              </article>
+
+              <article class="use-case-copy" data-use-case-copy="day-one">
+                <span class="use-case-eyebrow">Day-one productivity</span>
+                <h3 class="use-case-title">Let new people do real work with the company brain beside them.</h3>
+                <p class="use-case-desc">
+                  New team members can start contributing before they have memorized every procedure. Aevra supports them in context with the right steps, checks, and company-specific way of working while they execute real tasks.
                 </p>
               </article>
 
@@ -849,8 +900,8 @@
 
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="#how">How it works</a>
-          <a href="#use-cases">Use cases</a>
-          <a href="#benefits">Impact</a>
+          <a href="#use-cases">Operational impact</a>
+          <a href="#benefits">Benefits</a>
           <a href="#integrations">Integrations</a>
           <a href="#pricing">Pricing</a>
           <a href="#faq">FAQ</a>
