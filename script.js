@@ -231,6 +231,31 @@ heroEls.forEach((el, i) => {
   el.style.transitionDelay = `${i * 120}ms`;
 });
 
+const storyAnimationMedia = Array.from(
+  document.querySelectorAll(".story-media--capture, .story-media--guidance, .story-media--memory")
+);
+
+if (!prefersReducedMotion) {
+  storyAnimationMedia.forEach((media) => {
+    const trigger = media.closest(".story-card") || media;
+
+    const restartAnimation = () => {
+      media.classList.remove("is-animating");
+      void media.offsetWidth;
+      media.classList.add("is-animating");
+    };
+
+    const resetAnimation = () => {
+      media.classList.remove("is-animating");
+    };
+
+    trigger.addEventListener("pointerenter", restartAnimation);
+    trigger.addEventListener("pointerleave", resetAnimation);
+    trigger.addEventListener("focusin", restartAnimation);
+    trigger.addEventListener("focusout", resetAnimation);
+  });
+}
+
 const heroDemoFrame = document.querySelector(".hero-fake-demo-frame");
 const heroDemoBrowser = document.querySelector(".hero-fake-demo-browser");
 const heroDemoContainer = document.querySelector(".hero-fake-demo");
