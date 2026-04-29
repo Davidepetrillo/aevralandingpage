@@ -5113,6 +5113,38 @@ body::before {
   -webkit-backdrop-filter: none;
 }
 
+.hero-heading.is-typing {
+  display: block;
+}
+
+.hero-heading__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.hero-heading__space {
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.hero-heading__char {
+  opacity: 0;
+  transition:
+    opacity 0.46s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.46s cubic-bezier(0.16, 1, 0.3, 1);
+  color: rgba(17, 20, 26, 0.3);
+  will-change: opacity;
+}
+
+.hero-heading__space.is-visible,
+.hero-heading__char.is-visible {
+  opacity: 1;
+}
+
+.hero-heading__char.is-visible {
+  color: rgba(17, 20, 26, 0.9);
+}
+
 .exec-flow__head {
   justify-content: center;
   gap: 7px;

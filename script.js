@@ -231,11 +231,103 @@ heroEls.forEach((el, i) => {
   el.style.transitionDelay = `${i * 120}ms`;
 });
 
+const heroTypingHeading = document.querySelector("[data-hero-type]");
+const runHeroTitleTyping = () => {
+  if (!heroTypingHeading) {
+    return;
+  }
+
+  const text = heroTypingHeading.dataset.heroType || heroTypingHeading.textContent.trim();
+
+  if (prefersReducedMotion || !text) {
+    heroTypingHeading.textContent = text;
+    return;
+  }
+
+  heroTypingHeading.setAttribute("aria-label", text);
+  heroTypingHeading.classList.add("is-typing");
+  heroTypingHeading.textContent = "";
+
+  const characterEls = [];
+  const tokens = text.match(/\S+|\s+/g) || [];
+
+  tokens.forEach((token) => {
+    if (/^\s+$/.test(token)) {
+      const space = document.createElement("span");
+
+      space.className = "hero-heading__space";
+      space.textContent = token;
+      space.setAttribute("aria-hidden", "true");
+      heroTypingHeading.append(space);
+      characterEls.push(space);
+      return;
+    }
+
+    const word = document.createElement("span");
+    word.className = "hero-heading__word";
+    word.setAttribute("aria-hidden", "true");
+
+    Array.from(token).forEach((character) => {
+      const span = document.createElement("span");
+
+      span.className = "hero-heading__char";
+      span.textContent = character;
+      word.append(span);
+      characterEls.push(span);
+    });
+
+    heroTypingHeading.append(word);
+  });
+
+  let index = 0;
+  const typeNextCharacter = () => {
+    if (index >= characterEls.length) {
+      heroTypingHeading.classList.add("is-typing-complete");
+      return;
+    }
+
+    const currentEl = characterEls[index];
+    const current = currentEl.textContent || "";
+    currentEl.classList.add("is-visible");
+    index += 1;
+    const delay = /^\s+$/.test(current) ? 76 : current === "." ? 320 : 82;
+    window.setTimeout(typeNextCharacter, delay);
+  };
+
+  window.setTimeout(typeNextCharacter, 520);
+};
+
 const storyAnimationMedia = Array.from(
   document.querySelectorAll(".story-media--capture, .story-media--guidance, .story-media--memory")
 );
 
 if (!prefersReducedMotion) {
+  const mobileAnimationQuery = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 760px)");
+  const storyAnimationObserver = "IntersectionObserver" in window
+    ? new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const media = entry.target;
+
+          if (!mobileAnimationQuery.matches) {
+            media.classList.remove("is-animating");
+            return;
+          }
+
+          if (entry.isIntersecting) {
+            media.restartStoryAnimation?.();
+          } else {
+            media.classList.remove("is-animating");
+          }
+        });
+      },
+      {
+        threshold: 0.52,
+        rootMargin: "0px 0px -12% 0px",
+      }
+    )
+    : null;
+
   storyAnimationMedia.forEach((media) => {
     const trigger = media.closest(".story-card") || media;
 
@@ -246,13 +338,21 @@ if (!prefersReducedMotion) {
     };
 
     const resetAnimation = () => {
-      media.classList.remove("is-animating");
+      if (!mobileAnimationQuery.matches) {
+        media.classList.remove("is-animating");
+      }
     };
 
+    media.restartStoryAnimation = restartAnimation;
     trigger.addEventListener("pointerenter", restartAnimation);
     trigger.addEventListener("pointerleave", resetAnimation);
     trigger.addEventListener("focusin", restartAnimation);
     trigger.addEventListener("focusout", resetAnimation);
+    storyAnimationObserver?.observe(media);
+  });
+
+  mobileAnimationQuery.addEventListener?.("change", () => {
+    storyAnimationMedia.forEach((media) => media.classList.remove("is-animating"));
   });
 }
 
@@ -373,6 +473,7 @@ window.addEventListener("message", (event) => {
 requestAnimationFrame(() => {
   requestAnimationFrame(() => {
     heroEls.forEach((el) => el.classList.add("is-visible"));
+    runHeroTitleTyping();
   });
 });
 
