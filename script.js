@@ -231,6 +231,131 @@ heroEls.forEach((el, i) => {
   el.style.transitionDelay = `${i * 120}ms`;
 });
 
+const heroTypingHeading = document.querySelector("[data-hero-type]");
+const runHeroTitleTyping = () => {
+  if (!heroTypingHeading) {
+    return;
+  }
+
+  const text = heroTypingHeading.dataset.heroType || heroTypingHeading.textContent.trim();
+
+  if (prefersReducedMotion || !text) {
+    heroTypingHeading.textContent = text;
+    return;
+  }
+
+  heroTypingHeading.setAttribute("aria-label", text);
+  heroTypingHeading.classList.add("is-typing");
+  heroTypingHeading.textContent = "";
+
+  const characterEls = [];
+  const tokens = text.match(/\S+|\s+/g) || [];
+
+  tokens.forEach((token) => {
+    if (/^\s+$/.test(token)) {
+      const space = document.createElement("span");
+
+      space.className = "hero-heading__space";
+      space.textContent = token;
+      space.setAttribute("aria-hidden", "true");
+      heroTypingHeading.append(space);
+      characterEls.push(space);
+      return;
+    }
+
+    const word = document.createElement("span");
+    word.className = "hero-heading__word";
+    word.setAttribute("aria-hidden", "true");
+
+    Array.from(token).forEach((character) => {
+      const span = document.createElement("span");
+
+      span.className = "hero-heading__char";
+      span.textContent = character;
+      word.append(span);
+      characterEls.push(span);
+    });
+
+    heroTypingHeading.append(word);
+  });
+
+  let index = 0;
+  const typeNextCharacter = () => {
+    if (index >= characterEls.length) {
+      heroTypingHeading.classList.add("is-typing-complete");
+      return;
+    }
+
+    const currentEl = characterEls[index];
+    const current = currentEl.textContent || "";
+    currentEl.classList.add("is-visible");
+    index += 1;
+    const delay = /^\s+$/.test(current) ? 76 : current === "." ? 320 : 82;
+    window.setTimeout(typeNextCharacter, delay);
+  };
+
+  window.setTimeout(typeNextCharacter, 520);
+};
+
+const storyAnimationMedia = Array.from(
+  document.querySelectorAll(".story-media--capture, .story-media--guidance, .story-media--memory")
+);
+
+if (!prefersReducedMotion) {
+  const mobileAnimationQuery = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 760px)");
+  const storyAnimationObserver = "IntersectionObserver" in window
+    ? new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const media = entry.target;
+
+          if (!mobileAnimationQuery.matches) {
+            media.classList.remove("is-animating");
+            return;
+          }
+
+          if (entry.isIntersecting) {
+            media.restartStoryAnimation?.();
+          } else {
+            media.classList.remove("is-animating");
+          }
+        });
+      },
+      {
+        threshold: 0.52,
+        rootMargin: "0px 0px -12% 0px",
+      }
+    )
+    : null;
+
+  storyAnimationMedia.forEach((media) => {
+    const trigger = media.closest(".story-card") || media;
+
+    const restartAnimation = () => {
+      media.classList.remove("is-animating");
+      void media.offsetWidth;
+      media.classList.add("is-animating");
+    };
+
+    const resetAnimation = () => {
+      if (!mobileAnimationQuery.matches) {
+        media.classList.remove("is-animating");
+      }
+    };
+
+    media.restartStoryAnimation = restartAnimation;
+    trigger.addEventListener("pointerenter", restartAnimation);
+    trigger.addEventListener("pointerleave", resetAnimation);
+    trigger.addEventListener("focusin", restartAnimation);
+    trigger.addEventListener("focusout", resetAnimation);
+    storyAnimationObserver?.observe(media);
+  });
+
+  mobileAnimationQuery.addEventListener?.("change", () => {
+    storyAnimationMedia.forEach((media) => media.classList.remove("is-animating"));
+  });
+}
+
 const heroDemoFrame = document.querySelector(".hero-fake-demo-frame");
 const heroDemoBrowser = document.querySelector(".hero-fake-demo-browser");
 const heroDemoContainer = document.querySelector(".hero-fake-demo");
@@ -308,11 +433,15 @@ if (heroDemoContainer) {
 }
 
 window.addEventListener("message", (event) => {
+  if (!heroDemoFrame) {
+    return;
+  }
+
   if (event.origin !== window.location.origin) {
     return;
   }
 
-  if (heroDemoFrame && event.source !== heroDemoFrame.contentWindow) {
+  if (event.source !== heroDemoFrame.contentWindow) {
     return;
   }
 
@@ -344,6 +473,7 @@ window.addEventListener("message", (event) => {
 requestAnimationFrame(() => {
   requestAnimationFrame(() => {
     heroEls.forEach((el) => el.classList.add("is-visible"));
+    runHeroTitleTyping();
   });
 });
 
@@ -415,6 +545,7 @@ const pricingLabels = Array.from(document.querySelectorAll("[data-pricing-label]
 const pricingValues = Array.from(document.querySelectorAll("[data-price-monthly]"));
 const faqQuestions = Array.from(document.querySelectorAll(".faq-question"));
 const contactForm = document.querySelector("[data-contact-form]");
+const heroEmailForm = document.querySelector("[data-hero-email-form]");
 
 if (useCaseTabs.length && useCasePanels.length && useCaseCopies.length) {
   const activateUseCase = (id) => {
@@ -601,6 +732,76 @@ if (contactForm) {
         reason: error instanceof Error ? error.message : "unknown",
       });
     }
+  });
+}
+
+if (heroEmailForm) {
+  heroEmailForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const heroEmailInput = heroEmailForm.querySelector("input[type='email']");
+    const heroEmailButton = heroEmailForm.querySelector("button[type='submit']");
+    const heroEmailStatus = heroEmailForm.querySelector("[data-hero-email-status]");
+    const submittedEmail = heroEmailInput?.value?.trim().toLowerCase();
+
+    if (!submittedEmail || !heroEmailInput.checkValidity()) {
+      heroEmailInput?.reportValidity();
+      return;
+    }
+
+    const submitWaitlist = async () => {
+      if (heroEmailButton) {
+        heroEmailButton.disabled = true;
+        heroEmailButton.textContent = "Joining...";
+      }
+
+      if (heroEmailStatus) {
+        heroEmailStatus.hidden = true;
+        heroEmailStatus.classList.remove("is-error");
+      }
+
+      try {
+        const response = await fetch(heroEmailForm.action, {
+          method: "POST",
+          body: new FormData(heroEmailForm),
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Request failed");
+        }
+
+        heroEmailForm.reset();
+
+        if (heroEmailStatus) {
+          heroEmailStatus.textContent = "You are on the waitlist.";
+          heroEmailStatus.hidden = false;
+        }
+
+        trackEvent("hero waitlist submitted", {
+          email_domain: submittedEmail.split("@")[1] || null,
+        });
+      } catch (error) {
+        if (heroEmailStatus) {
+          heroEmailStatus.textContent = "We could not submit your email. Please try again.";
+          heroEmailStatus.classList.add("is-error");
+          heroEmailStatus.hidden = false;
+        }
+
+        trackEvent("hero waitlist submission failed", {
+          reason: error instanceof Error ? error.message : "unknown",
+        });
+      } finally {
+        if (heroEmailButton) {
+          heroEmailButton.disabled = false;
+          heroEmailButton.textContent = "Join waitlist";
+        }
+      }
+    };
+
+    submitWaitlist();
   });
 }
 
