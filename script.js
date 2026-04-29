@@ -302,17 +302,11 @@ const storyAnimationMedia = Array.from(
 );
 
 if (!prefersReducedMotion) {
-  const mobileAnimationQuery = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 760px)");
   const storyAnimationObserver = "IntersectionObserver" in window
     ? new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const media = entry.target;
-
-          if (!mobileAnimationQuery.matches) {
-            media.classList.remove("is-animating");
-            return;
-          }
 
           if (entry.isIntersecting) {
             media.restartStoryAnimation?.();
@@ -322,15 +316,13 @@ if (!prefersReducedMotion) {
         });
       },
       {
-        threshold: 0.52,
-        rootMargin: "0px 0px -12% 0px",
+        threshold: 0.01,
+        rootMargin: "0px",
       }
     )
     : null;
 
   storyAnimationMedia.forEach((media) => {
-    const trigger = media.closest(".story-card") || media;
-
     const restartAnimation = () => {
       media.classList.remove("is-animating");
       void media.offsetWidth;
@@ -338,21 +330,17 @@ if (!prefersReducedMotion) {
     };
 
     const resetAnimation = () => {
-      if (!mobileAnimationQuery.matches) {
-        media.classList.remove("is-animating");
-      }
+      media.classList.remove("is-animating");
     };
 
     media.restartStoryAnimation = restartAnimation;
-    trigger.addEventListener("pointerenter", restartAnimation);
-    trigger.addEventListener("pointerleave", resetAnimation);
-    trigger.addEventListener("focusin", restartAnimation);
-    trigger.addEventListener("focusout", resetAnimation);
-    storyAnimationObserver?.observe(media);
-  });
+    media.resetStoryAnimation = resetAnimation;
 
-  mobileAnimationQuery.addEventListener?.("change", () => {
-    storyAnimationMedia.forEach((media) => media.classList.remove("is-animating"));
+    if (storyAnimationObserver) {
+      storyAnimationObserver.observe(media);
+    } else {
+      restartAnimation();
+    }
   });
 }
 
