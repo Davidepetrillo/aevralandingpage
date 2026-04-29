@@ -260,82 +260,52 @@
               <div class="story-media story-media--guidance">
                 <div class="execute-anim" aria-hidden="true">
                   <div class="execute-anim__bg"></div>
-                  <div class="execute-anim__stage">
-                    <div class="exec-prompt">
-                      <div class="exec-prompt__top">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                      </div>
-                      <div class="exec-prompt__label">Ask Aevra</div>
-                      <div class="exec-prompt__text">
-                        <span class="exec-type exec-type--1">Process Acme's refund request</span>
-                        <span class="exec-type exec-type--2">create the finance ticket and update CRM.</span>
-                      </div>
-                      <div class="exec-prompt__run">Send task</div>
+                  <div class="exec-prompt-alone">
+                    <div class="exec-prompt-row">
+                      <span class="exec-prompt-text">Process Jurnee's refund request and update the CRM.</span>
+                      <span class="exec-caret"></span>
                     </div>
+                    <div class="exec-send">&uarr;</div>
+                  </div>
 
-                    <div class="cap-form exec-saas">
-                      <div class="cap-form-bar exec-saas__bar">
-                        <span class="exec-saas__title"></span>
-                        <span class="exec-saas__status">Agent active</span>
+                  <div class="exec-flow">
+                    <div class="exec-flow-list">
+                      <div class="exec-act exec-act--1">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Find account</strong>
+                          <small>Jurnee Operations</small>
+                        </span>
                       </div>
-                      <div class="exec-saas__body">
-                        <div class="cap-field exec-field exec-field--customer">
-                          <span class="exec-field__label">Account</span>
-                          <span class="exec-field__value">Acme Operations</span>
-                        </div>
-                        <div class="cap-field exec-field exec-field--reason">
-                          <span class="exec-field__label">Invoice</span>
-                          <span class="exec-field__value">INV-2048 checked</span>
-                        </div>
-                        <div class="cap-field exec-field exec-field--amount">
-                          <span class="exec-field__label">Status</span>
-                          <span class="exec-field__value">Refund approved</span>
-                        </div>
-                        <div class="cap-field exec-message">
-                          <span>CRM note added with refund reason and approval context.</span>
-                          <span>Finance notified with ticket, invoice, and audit trail.</span>
-                          <div class="exec-actions">
-                            <span class="exec-action exec-action--crm">Update CRM</span>
-                            <span class="exec-action exec-action--notify">Notify finance</span>
-                          </div>
-                        </div>
+                      <div class="exec-act exec-act--2">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Verify invoice</strong>
+                          <small>INV-2048 checked</small>
+                        </span>
                       </div>
-                    </div>
-
-                    <div class="cap-panel exec-agent">
-                      <div class="cap-panel-head exec-agent__head">
-                        <span class="cap-rec exec-agent__pulse"></span>
-                        <span>Steps to do</span>
+                      <div class="exec-act exec-act--3">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Open finance ticket</strong>
+                          <small>FIN-4821 created</small>
+                        </span>
                       </div>
-                      <div class="cap-step exec-step exec-step--1">
-                        <span class="cap-check exec-check"></span>
-                        <span class="cap-step-text"><strong>Find account</strong><small>Match request to Acme workspace</small></span>
+                      <div class="exec-act exec-act--4">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Update CRM record</strong>
+                          <small>Note synced with audit trail</small>
+                        </span>
                       </div>
-                      <div class="cap-step exec-step exec-step--2">
-                        <span class="cap-check exec-check"></span>
-                        <span class="cap-step-text"><strong>Verify invoice</strong><small>Read renewal and payment status</small></span>
-                      </div>
-                      <div class="cap-step exec-step exec-step--3">
-                        <span class="cap-check exec-check"></span>
-                        <span class="cap-step-text"><strong>Check policy</strong><small>Confirm refund is allowed</small></span>
-                      </div>
-                      <div class="cap-step exec-step exec-step--4">
-                        <span class="cap-check exec-check"></span>
-                        <span class="cap-step-text"><strong>Open ticket</strong><small>Create finance task with context</small></span>
-                      </div>
-                      <div class="cap-step exec-step exec-step--5">
-                        <span class="cap-check exec-check"></span>
-                        <span class="cap-step-text"><strong>Update CRM</strong><small>Write note and link ticket</small></span>
-                      </div>
-                      <div class="cap-step exec-step exec-step--6">
-                        <span class="cap-check exec-check"></span>
-                        <span class="cap-step-text"><strong>Notify team</strong><small>Send summary and audit trail</small></span>
+                      <div class="exec-act exec-act--5">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Notify finance team</strong>
+                          <small>Summary email delivered</small>
+                        </span>
                       </div>
                     </div>
-
-                    <span class="cap-cursor exec-cursor"></span>
                   </div>
                 </div>
               </div>
