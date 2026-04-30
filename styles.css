@@ -313,6 +313,7 @@ a {
 .hero-heading__line {
   display: block;
   color: rgba(17, 18, 20, 0.94);
+  white-space: nowrap;
 }
 
 .hero-heading__line--muted {

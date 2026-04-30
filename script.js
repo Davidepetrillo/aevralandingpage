@@ -237,10 +237,22 @@ const runHeroTitleTyping = () => {
     return;
   }
 
-  const text = heroTypingHeading.dataset.heroType || heroTypingHeading.textContent.trim();
+  const rawText = heroTypingHeading.dataset.heroType || heroTypingHeading.textContent.trim();
+  const lineTexts = rawText
+    .split("|")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const text = lineTexts.join(" ");
 
   if (prefersReducedMotion || !text) {
-    heroTypingHeading.textContent = text;
+    heroTypingHeading.textContent = "";
+    lineTexts.forEach((lineText) => {
+      const line = document.createElement("span");
+
+      line.className = "hero-heading__line";
+      line.textContent = lineText;
+      heroTypingHeading.append(line);
+    });
     return;
   }
 
@@ -249,34 +261,44 @@ const runHeroTitleTyping = () => {
   heroTypingHeading.textContent = "";
 
   const characterEls = [];
-  const tokens = text.match(/\S+|\s+/g) || [];
+  const renderTypingTokens = (container, lineText) => {
+    const tokens = lineText.match(/\S+|\s+/g) || [];
 
-  tokens.forEach((token) => {
-    if (/^\s+$/.test(token)) {
-      const space = document.createElement("span");
+    tokens.forEach((token) => {
+      if (/^\s+$/.test(token)) {
+        const space = document.createElement("span");
 
-      space.className = "hero-heading__space";
-      space.textContent = token;
-      space.setAttribute("aria-hidden", "true");
-      heroTypingHeading.append(space);
-      characterEls.push(space);
-      return;
-    }
+        space.className = "hero-heading__space";
+        space.textContent = token;
+        space.setAttribute("aria-hidden", "true");
+        container.append(space);
+        characterEls.push(space);
+        return;
+      }
 
-    const word = document.createElement("span");
-    word.className = "hero-heading__word";
-    word.setAttribute("aria-hidden", "true");
+      const word = document.createElement("span");
+      word.className = "hero-heading__word";
+      word.setAttribute("aria-hidden", "true");
 
-    Array.from(token).forEach((character) => {
-      const span = document.createElement("span");
+      Array.from(token).forEach((character) => {
+        const span = document.createElement("span");
 
-      span.className = "hero-heading__char";
-      span.textContent = character;
-      word.append(span);
-      characterEls.push(span);
+        span.className = "hero-heading__char";
+        span.textContent = character;
+        word.append(span);
+        characterEls.push(span);
+      });
+
+      container.append(word);
     });
+  };
 
-    heroTypingHeading.append(word);
+  lineTexts.forEach((lineText) => {
+    const line = document.createElement("span");
+
+    line.className = "hero-heading__line";
+    heroTypingHeading.append(line);
+    renderTypingTokens(line, lineText);
   });
 
   let index = 0;
