@@ -237,10 +237,22 @@ const runHeroTitleTyping = () => {
     return;
   }
 
-  const text = heroTypingHeading.dataset.heroType || heroTypingHeading.textContent.trim();
+  const rawText = heroTypingHeading.dataset.heroType || heroTypingHeading.textContent.trim();
+  const lineTexts = rawText
+    .split("|")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const text = lineTexts.join(" ");
 
   if (prefersReducedMotion || !text) {
-    heroTypingHeading.textContent = text;
+    heroTypingHeading.textContent = "";
+    lineTexts.forEach((lineText) => {
+      const line = document.createElement("span");
+
+      line.className = "hero-heading__line";
+      line.textContent = lineText;
+      heroTypingHeading.append(line);
+    });
     return;
   }
 
@@ -249,34 +261,44 @@ const runHeroTitleTyping = () => {
   heroTypingHeading.textContent = "";
 
   const characterEls = [];
-  const tokens = text.match(/\S+|\s+/g) || [];
+  const renderTypingTokens = (container, lineText) => {
+    const tokens = lineText.match(/\S+|\s+/g) || [];
 
-  tokens.forEach((token) => {
-    if (/^\s+$/.test(token)) {
-      const space = document.createElement("span");
+    tokens.forEach((token) => {
+      if (/^\s+$/.test(token)) {
+        const space = document.createElement("span");
 
-      space.className = "hero-heading__space";
-      space.textContent = token;
-      space.setAttribute("aria-hidden", "true");
-      heroTypingHeading.append(space);
-      characterEls.push(space);
-      return;
-    }
+        space.className = "hero-heading__space";
+        space.textContent = token;
+        space.setAttribute("aria-hidden", "true");
+        container.append(space);
+        characterEls.push(space);
+        return;
+      }
 
-    const word = document.createElement("span");
-    word.className = "hero-heading__word";
-    word.setAttribute("aria-hidden", "true");
+      const word = document.createElement("span");
+      word.className = "hero-heading__word";
+      word.setAttribute("aria-hidden", "true");
 
-    Array.from(token).forEach((character) => {
-      const span = document.createElement("span");
+      Array.from(token).forEach((character) => {
+        const span = document.createElement("span");
 
-      span.className = "hero-heading__char";
-      span.textContent = character;
-      word.append(span);
-      characterEls.push(span);
+        span.className = "hero-heading__char";
+        span.textContent = character;
+        word.append(span);
+        characterEls.push(span);
+      });
+
+      container.append(word);
     });
+  };
 
-    heroTypingHeading.append(word);
+  lineTexts.forEach((lineText) => {
+    const line = document.createElement("span");
+
+    line.className = "hero-heading__line";
+    heroTypingHeading.append(line);
+    renderTypingTokens(line, lineText);
   });
 
   let index = 0;
@@ -302,17 +324,11 @@ const storyAnimationMedia = Array.from(
 );
 
 if (!prefersReducedMotion) {
-  const mobileAnimationQuery = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 760px)");
   const storyAnimationObserver = "IntersectionObserver" in window
     ? new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const media = entry.target;
-
-          if (!mobileAnimationQuery.matches) {
-            media.classList.remove("is-animating");
-            return;
-          }
 
           if (entry.isIntersecting) {
             media.restartStoryAnimation?.();
@@ -322,15 +338,13 @@ if (!prefersReducedMotion) {
         });
       },
       {
-        threshold: 0.52,
-        rootMargin: "0px 0px -12% 0px",
+        threshold: 0.01,
+        rootMargin: "0px",
       }
     )
     : null;
 
   storyAnimationMedia.forEach((media) => {
-    const trigger = media.closest(".story-card") || media;
-
     const restartAnimation = () => {
       media.classList.remove("is-animating");
       void media.offsetWidth;
@@ -338,21 +352,17 @@ if (!prefersReducedMotion) {
     };
 
     const resetAnimation = () => {
-      if (!mobileAnimationQuery.matches) {
-        media.classList.remove("is-animating");
-      }
+      media.classList.remove("is-animating");
     };
 
     media.restartStoryAnimation = restartAnimation;
-    trigger.addEventListener("pointerenter", restartAnimation);
-    trigger.addEventListener("pointerleave", resetAnimation);
-    trigger.addEventListener("focusin", restartAnimation);
-    trigger.addEventListener("focusout", resetAnimation);
-    storyAnimationObserver?.observe(media);
-  });
+    media.resetStoryAnimation = resetAnimation;
 
-  mobileAnimationQuery.addEventListener?.("change", () => {
-    storyAnimationMedia.forEach((media) => media.classList.remove("is-animating"));
+    if (storyAnimationObserver) {
+      storyAnimationObserver.observe(media);
+    } else {
+      restartAnimation();
+    }
   });
 }
 
@@ -540,6 +550,7 @@ storyCards.forEach((el, i) => {
 const useCaseTabs = Array.from(document.querySelectorAll("[data-use-case-tab]"));
 const useCasePanels = Array.from(document.querySelectorAll("[data-use-case-panel]"));
 const useCaseCopies = Array.from(document.querySelectorAll("[data-use-case-copy]"));
+const useCaseSection = document.querySelector(".use-cases-section");
 const pricingSwitch = document.querySelector("[data-pricing-switch]");
 const pricingLabels = Array.from(document.querySelectorAll("[data-pricing-label]"));
 const pricingValues = Array.from(document.querySelectorAll("[data-price-monthly]"));
@@ -548,7 +559,14 @@ const contactForm = document.querySelector("[data-contact-form]");
 const heroEmailForm = document.querySelector("[data-hero-email-form]");
 
 if (useCaseTabs.length && useCasePanels.length && useCaseCopies.length) {
+  const useCaseIds = useCaseTabs.map((tab) => tab.dataset.useCaseTab);
+  let activeUseCaseId = useCaseIds[0];
+  let useCaseScrollQueued = false;
+
   const activateUseCase = (id) => {
+    if (!useCaseIds.includes(id) || activeUseCaseId === id) return;
+    activeUseCaseId = id;
+
     useCaseTabs.forEach((tab) => {
       const active = tab.dataset.useCaseTab === id;
       tab.classList.toggle("is-active", active);
@@ -566,12 +584,58 @@ if (useCaseTabs.length && useCasePanels.length && useCaseCopies.length) {
     });
   };
 
+  const getUseCaseScrollMetrics = () => {
+    if (!useCaseSection) return null;
+
+    const sectionTop = window.scrollY + useCaseSection.getBoundingClientRect().top;
+    const scrollRange = Math.max(1, useCaseSection.offsetHeight - window.innerHeight);
+
+    return { sectionTop, scrollRange };
+  };
+
+  const syncUseCaseToScroll = () => {
+    useCaseScrollQueued = false;
+
+    const metrics = getUseCaseScrollMetrics();
+    if (!metrics) return;
+
+    const rawProgress = (window.scrollY - metrics.sectionTop) / metrics.scrollRange;
+    const progress = Math.min(0.999, Math.max(0, rawProgress));
+    const nextIndex = Math.min(useCaseIds.length - 1, Math.floor(progress * useCaseIds.length));
+
+    activateUseCase(useCaseIds[nextIndex]);
+  };
+
+  const requestUseCaseScrollSync = () => {
+    if (useCaseScrollQueued) return;
+
+    useCaseScrollQueued = true;
+    requestAnimationFrame(syncUseCaseToScroll);
+  };
+
   useCaseTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      activateUseCase(tab.dataset.useCaseTab);
+      const targetId = tab.dataset.useCaseTab;
+      const targetIndex = useCaseIds.indexOf(targetId);
+      const metrics = getUseCaseScrollMetrics();
+
+      if (metrics && targetIndex >= 0) {
+        const segmentProgress = (targetIndex + 0.5) / useCaseIds.length;
+
+        window.scrollTo({
+          top: metrics.sectionTop + metrics.scrollRange * segmentProgress,
+          behavior: "smooth",
+        });
+      }
+
+      activateUseCase(targetId);
       trackEvent("use case tab clicked", { use_case: tab.dataset.useCaseTab });
     });
   });
+
+  window.addEventListener("scroll", requestUseCaseScrollSync, { passive: true });
+  window.addEventListener("resize", requestUseCaseScrollSync);
+  requestUseCaseScrollSync();
 }
 
 if (pricingSwitch && pricingLabels.length && pricingValues.length) {

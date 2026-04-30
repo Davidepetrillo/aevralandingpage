@@ -42,8 +42,8 @@
         </a>
         <div class="nav-links">
           <a class="nav-link" href="#how">How it works</a>
-          <a class="nav-link" href="#use-cases">Use cases</a>
-          <a class="nav-link" href="#benefits">Impact</a>
+          <a class="nav-link" href="#use-cases">Operational impact</a>
+          <a class="nav-link" href="#benefits">Benefits</a>
           <a class="nav-link" href="#integrations">Integrations</a>
           <a class="nav-link" href="#pricing">Pricing</a>
           <a class="nav-link" href="#contact">Contact</a>
@@ -60,7 +60,10 @@
           <div class="hero-startup">
             <div class="hero-copy" data-hero-reveal>
               <p class="hero-kicker">The operating memory behind your company</p>
-              <h1 class="hero-heading" data-hero-type="Your company brain for operational execution.">Your company brain for operational execution.</h1>
+              <h1 class="hero-heading" data-hero-type="Your company brain for|autonomous execution.">
+                <span class="hero-heading__line">Your company brain for</span>
+                <span class="hero-heading__line">autonomous execution.</span>
+              </h1>
               <p class="hero-subtitle">
                 Aevra captures how work gets done, builds your company-owned operational brain, and executes workflows safely across the tools your team already uses.
               </p>
@@ -83,6 +86,7 @@
                 </label>
                 <p class="hero-email-status" data-hero-email-status hidden></p>
               </form>
+              <a class="hero-demo-link" href="https://calendly.com/davide-aevra/30min">Book a demo</a>
             </div>
           </div>
 
@@ -261,10 +265,10 @@
               <div class="story-media story-media--guidance">
                 <div class="execute-anim" aria-hidden="true">
                   <div class="execute-anim__bg"></div>
+                  <div class="execute-anim__mesh"></div>
                   <div class="exec-prompt-alone">
                     <div class="exec-prompt-row">
                       <span class="exec-prompt-text">Process Jurnee's refund request and update the CRM.</span>
-                      <span class="exec-caret"></span>
                     </div>
                     <div class="exec-send">&uarr;</div>
                   </div>
@@ -333,7 +337,6 @@
                   </div>
                   <div class="memory-link"><span></span></div>
                   <div class="memory-update">
-                    <span></span>
                     Knowledge update
                   </div>
                 </div>
@@ -349,96 +352,13 @@
         </div>
       </section>
 
-      <section class="section use-cases-section" id="use-cases">
-        <div class="container use-cases-shell">
-          <div class="section-lead use-cases-lead" data-reveal>
-            <span class="section-kicker">Use cases</span>
-            <h2 class="section-title">
-              <span class="title-line">Different teams can move faster,</span>
-              <span class="title-line title-line--muted">all guided by one execution layer.</span>
-            </h2>
-          </div>
-
-          <div class="use-cases-tabs" role="tablist" aria-label="Use cases" data-reveal>
-            <button
-              class="use-case-tab is-active"
-              type="button"
-              role="tab"
-              aria-selected="true"
-              data-use-case-tab="onboarding"
-            >
-              Onboarding
-            </button>
-            <button
-              class="use-case-tab"
-              type="button"
-              role="tab"
-              aria-selected="false"
-              data-use-case-tab="sop"
-            >
-              SOP Execution
-            </button>
-            <button
-              class="use-case-tab"
-              type="button"
-              role="tab"
-              aria-selected="false"
-              data-use-case-tab="support"
-            >
-              Support Ops
-            </button>
-          </div>
-
-          <div class="use-cases-stage" data-reveal>
-            <div class="use-cases-media">
-              <figure class="use-case-visual is-active" data-use-case-panel="onboarding" aria-hidden="false">
-                <img src="./onboarding.jpg" alt="Onboarding use case placeholder" loading="lazy" decoding="async" />
-              </figure>
-              <figure class="use-case-visual" data-use-case-panel="sop" aria-hidden="true">
-                <img src="./SOP3.jpg" alt="SOP execution use case placeholder" loading="lazy" decoding="async" />
-              </figure>
-              <figure class="use-case-visual" data-use-case-panel="support" aria-hidden="true">
-                <img src="./Ops.jpg" alt="Support operations use case placeholder" loading="lazy" decoding="async" />
-              </figure>
-            </div>
-
-            <div class="use-cases-detail">
-              <article class="use-case-copy is-active" data-use-case-copy="onboarding">
-                <span class="use-case-eyebrow">Onboarding</span>
-                <h3 class="use-case-title">Get new hires productive inside the workflow, not beside it.</h3>
-                <p class="use-case-desc">
-                  Turn real tasks into guided onboarding flows so every teammate can learn the process directly in the browser, without shadowing and without static docs.
-                </p>
-              </article>
-
-              <article class="use-case-copy" data-use-case-copy="sop">
-                <span class="use-case-eyebrow">SOP Execution</span>
-                <h3 class="use-case-title">Standardize repeatable work across teams with live operational guidance.</h3>
-                <p class="use-case-desc">
-                  Give operators step-by-step guidance inside every workflow so execution stays consistent, updates roll out instantly, and critical processes are easier to follow.
-                </p>
-              </article>
-
-              <article class="use-case-copy" data-use-case-copy="support">
-                <span class="use-case-eyebrow">Support Ops</span>
-                <h3 class="use-case-title">Resolve complex tasks faster with guidance that appears in the exact moment it is needed.</h3>
-                <p class="use-case-desc">
-                  Help support and operations teams navigate escalations, account changes, and exception flows without breaking focus or searching through documentation.
-                </p>
-              </article>
-
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section class="section benefits-section" id="benefits">
         <div class="container benefits-shell">
           <div class="section-lead benefits-lead" data-reveal>
             <span class="section-kicker">Benefits</span>
             <h2 class="section-title benefits-title">
-              <span class="title-line">Invisible execution power,</span>
-              <span class="title-line title-line--muted">delivering measurable gains every day.</span>
+              <span class="title-line">Your company brain,</span>
+              <span class="title-line title-line--muted">measured in operational gains.</span>
             </h2>
           </div>
 
@@ -449,10 +369,10 @@
                   <path d="M7 5h10M8 5c0 3 1.6 4.7 4 6 2.4-1.3 4-3 4-6M8 19c0-3 1.6-4.7 4-6 2.4 1.3 4 3 4 6M7 19h10" />
                 </svg>
               </span>
-              <p class="benefit-metric" data-countup data-countup-value="60" data-countup-suffix="%">60%</p>
-              <h3 class="benefit-title">Faster onboarding</h3>
+              <p class="benefit-metric" data-countup data-countup-value="100" data-countup-suffix="%">100%</p>
+              <h3 class="benefit-title">Captured operational memory</h3>
               <p class="benefit-desc">
-                New hires learn by doing inside the real workflow, so ramp time drops and managers spend less time repeating the same process explanations.
+                Your company keeps the knowledge behind every workflow, even when people move, forget, or leave.
               </p>
             </article>
 
@@ -462,10 +382,10 @@
                   <path d="M12 6v6l4 2M12 3.5a8.5 8.5 0 1 1 0 17a8.5 8.5 0 0 1 0-17Z" />
                 </svg>
               </span>
-              <p class="benefit-metric" data-countup data-countup-value="30" data-countup-suffix="h">30h</p>
-              <h3 class="benefit-title">Saved per employee / month</h3>
+              <p class="benefit-metric" data-countup data-countup-value="0">0</p>
+              <h3 class="benefit-title">Knowledge gaps between tools</h3>
               <p class="benefit-desc">
-                Repetitive guidance, shadowing, and manual walkthroughs get replaced by reusable live workflows that free up hours for higher-value work.
+                Aevra keeps process context connected across the browser, from CRMs and HR tools to support systems and internal platforms.
               </p>
             </article>
 
@@ -476,9 +396,9 @@
                 </svg>
               </span>
               <p class="benefit-metric" data-countup data-countup-value="3" data-countup-suffix=" min">3 min</p>
-              <h3 class="benefit-title">Average workflow creation</h3>
+              <h3 class="benefit-title">Workflow creation</h3>
               <p class="benefit-desc">
-                Capture a process once and turn it into guided execution fast, without long documentation cycles or heavy setup before teams can use it.
+                Capture a process once and turn it into reusable guided execution without writing long SOPs.
               </p>
             </article>
 
@@ -488,10 +408,10 @@
                   <path d="M12 4.75a7.25 7.25 0 1 0 0 14.5a7.25 7.25 0 0 0 0-14.5Zm0 0c1.84 1.71 2.75 4.13 2.75 7.25c0 3.12-.91 5.54-2.75 7.25m0-14.5c-1.84 1.71-2.75 4.13-2.75 7.25c0 3.12.91 5.54 2.75 7.25M5.25 12h13.5" />
                 </svg>
               </span>
-              <p class="benefit-metric" data-countup data-countup-value="100" data-countup-suffix="+">100+</p>
-              <h3 class="benefit-title">Platforms across the web</h3>
+              <p class="benefit-metric" data-countup data-countup-value="30" data-countup-suffix="h">30h</p>
+              <h3 class="benefit-title">Saved per employee / month</h3>
               <p class="benefit-desc">
-                Aevra works across the browser where teams already operate, so processes can be guided inside CRMs, HR tools, ops systems, support tools, and more.
+                Teams spend less time asking, explaining, searching, shadowing, and repeating manual steps.
               </p>
             </article>
 
@@ -501,12 +421,135 @@
                   <path d="M8 8.5A4 4 0 0 1 15 6l1.5-1.5M16 15.5A4 4 0 0 1 9 18l-1.5 1.5M4 10h6M14 14h6" />
                 </svg>
               </span>
-              <p class="benefit-metric" data-countup data-countup-value="0">0</p>
-              <h3 class="benefit-title">Context switching required</h3>
+              <p class="benefit-metric" data-countup data-countup-value="60" data-countup-suffix="%">60%</p>
+              <h3 class="benefit-title">Faster operational execution</h3>
               <p class="benefit-desc">
-                Guidance appears in the exact moment and place work happens, which keeps teams focused instead of jumping between docs, Slack messages, and training calls.
+                Workflows move faster because employees are guided or assisted directly where the work happens.
               </p>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section use-cases-section" id="use-cases">
+        <div class="container use-cases-shell">
+          <div class="section-lead use-cases-lead" data-reveal>
+            <span class="section-kicker">Operational impact</span>
+            <h2 class="section-title">
+              <span class="title-line">Where Aevra changes how companies operate,</span>
+              <span class="title-line title-line--muted">from daily execution to serious automation.</span>
+            </h2>
+          </div>
+
+          <div class="use-cases-tabs" role="tablist" aria-label="Operational impact" data-reveal>
+            <button
+              class="use-case-tab is-active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-use-case-tab="execution"
+            >
+              Execution standard
+            </button>
+            <button
+              class="use-case-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-use-case-tab="procedures"
+            >
+              Complex procedures
+            </button>
+            <button
+              class="use-case-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-use-case-tab="control"
+            >
+              Human control
+            </button>
+            <button
+              class="use-case-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-use-case-tab="changes"
+            >
+              Process changes
+            </button>
+            <button
+              class="use-case-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-use-case-tab="day-one"
+            >
+              Day-one productivity
+            </button>
+          </div>
+
+          <div class="use-cases-stage" data-reveal>
+            <div class="use-cases-media">
+              <figure class="use-case-visual is-active" data-use-case-panel="execution" aria-hidden="false">
+                <img src="./replay.jpg" alt="Execution standard workflow replay" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="use-case-visual" data-use-case-panel="procedures" aria-hidden="true">
+                <img src="./complex.jpg" alt="Complex multi-tool company procedure" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="use-case-visual" data-use-case-panel="control" aria-hidden="true">
+                <img src="./Ops.jpg" alt="Sensitive operation with human review" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="use-case-visual" data-use-case-panel="changes" aria-hidden="true">
+                <img src="./capture.jpg" alt="Updated process captured in Aevra" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="use-case-visual" data-use-case-panel="day-one" aria-hidden="true">
+                <img src="./onboarding.jpg" alt="New teammate onboarding workflow" loading="lazy" decoding="async" />
+              </figure>
+            </div>
+
+            <div class="use-cases-detail">
+              <article class="use-case-copy is-active" data-use-case-copy="execution">
+                <span class="use-case-eyebrow">Execution standard</span>
+                <h3 class="use-case-title">Help every team member work closer to your best operator.</h3>
+                <p class="use-case-desc">
+                  Your best people know what to check, which order matters, when to stop, and what a wrong result looks like. Aevra makes that working method available during execution, so quality depends less on who is doing the task.
+                </p>
+              </article>
+
+              <article class="use-case-copy" data-use-case-copy="procedures">
+                <span class="use-case-eyebrow">Complex procedures</span>
+                <h3 class="use-case-title">Complete work that moves across tools, screens, and decisions.</h3>
+                <p class="use-case-desc">
+                  Many company procedures cannot be solved by one prompt or one app action. Aevra follows the real sequence across browser tools, carries context forward, and helps complete the procedure from start to finish.
+                </p>
+              </article>
+
+              <article class="use-case-copy" data-use-case-copy="control">
+                <span class="use-case-eyebrow">Human control</span>
+                <h3 class="use-case-title">Automate serious work without giving up judgment.</h3>
+                <p class="use-case-desc">
+                  Aevra does not need to act blindly. You decide which steps it can complete, which steps require confirmation, and which steps stay human. That makes it useful where speed matters but unchecked automation is not acceptable.
+                </p>
+              </article>
+
+              <article class="use-case-copy" data-use-case-copy="changes">
+                <span class="use-case-eyebrow">Process changes</span>
+                <h3 class="use-case-title">Update how work is done without retraining everyone from scratch.</h3>
+                <p class="use-case-desc">
+                  When a procedure changes, the work should change with it. Update the workflow in Aevra and the new version appears where execution happens, instead of depending on meetings, docs, or people remembering the latest rule.
+                </p>
+              </article>
+
+              <article class="use-case-copy" data-use-case-copy="day-one">
+                <span class="use-case-eyebrow">Day-one productivity</span>
+                <h3 class="use-case-title">Let new people do real work with the company brain beside them.</h3>
+                <p class="use-case-desc">
+                  New team members can start contributing before they have memorized every procedure. Aevra supports them in context with the right steps, checks, and company-specific way of working while they execute real tasks.
+                </p>
+              </article>
+
+            </div>
           </div>
         </div>
       </section>
@@ -848,8 +891,8 @@
 
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="#how">How it works</a>
-          <a href="#use-cases">Use cases</a>
-          <a href="#benefits">Impact</a>
+          <a href="#use-cases">Operational impact</a>
+          <a href="#benefits">Benefits</a>
           <a href="#integrations">Integrations</a>
           <a href="#pricing">Pricing</a>
           <a href="#faq">FAQ</a>
