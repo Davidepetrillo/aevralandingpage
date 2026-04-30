@@ -194,7 +194,7 @@ const handleHeroDemoSave = (steps, targetUrl) => {
 const demoBookingLinks = Array.from(document.querySelectorAll('a[href*="calendly.com"]'));
 demoBookingLinks.forEach((link) => {
   link.addEventListener("click", () => {
-    trackEvent("demo booking clicked", { source: link.closest("section")?.id || "unknown" });
+    trackEvent("demo booking clicked", { source: link.dataset.demoSource || "unknown" });
   });
 });
 
