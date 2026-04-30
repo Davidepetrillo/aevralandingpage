@@ -675,8 +675,8 @@ a {
 
 .benefits-section {
   overflow: hidden;
-  padding-top: clamp(18px, 2.6vw, 32px);
-  padding-bottom: clamp(68px, 7vw, 92px);
+  padding-top: clamp(84px, 9vw, 128px);
+  padding-bottom: clamp(92px, 10vw, 140px);
 }
 
 .benefits-section::before {
@@ -711,22 +711,22 @@ a {
 }
 
 .benefits-title {
-  max-width: 22ch;
-  font-size: clamp(1.9rem, 2.55vw, 2.45rem);
+  max-width: 24ch;
+  font-size: clamp(2.1rem, 3vw, 3rem);
   line-height: 0.98;
 }
 
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 28px;
+  gap: 16px;
+  margin-top: 40px;
 }
 
 .benefit-card {
   position: relative;
-  min-height: 236px;
-  padding: 22px 20px 20px;
+  min-height: 292px;
+  padding: 30px 24px 26px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.01)),
@@ -767,8 +767,8 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   color: rgba(236, 241, 248, 0.44);
@@ -788,10 +788,10 @@ a {
 }
 
 .benefit-metric {
-  margin-top: 22px;
+  margin-top: 34px;
   color: rgba(247, 249, 252, 0.98);
   font-family: var(--font-brand);
-  font-size: clamp(1.7rem, 2.3vw, 2.2rem);
+  font-size: clamp(2.25rem, 3.35vw, 3.35rem);
   font-weight: 500;
   line-height: 0.92;
   letter-spacing: -0.06em;
@@ -799,21 +799,21 @@ a {
 }
 
 .benefit-title {
-  margin-top: 12px;
+  margin-top: 18px;
   color: rgba(247, 249, 252, 0.95);
   font-family: var(--font-brand);
-  font-size: clamp(1rem, 1vw, 1.18rem);
+  font-size: clamp(1.08rem, 1.12vw, 1.34rem);
   font-weight: 500;
-  line-height: 1.02;
+  line-height: 1.08;
   letter-spacing: -0.04em;
 }
 
 .benefit-desc {
-  max-width: 30ch;
-  margin-top: 10px;
+  max-width: 32ch;
+  margin-top: 12px;
   color: rgba(236, 241, 248, 0.46);
-  font-size: 0.88rem;
-  line-height: 1.4;
+  font-size: clamp(0.94rem, 0.92vw, 1rem);
+  line-height: 1.5;
   letter-spacing: -0.018em;
   text-wrap: pretty;
 }
@@ -2326,30 +2326,30 @@ a {
   }
 
   .benefit-card {
-    min-height: 0;
-    padding: 20px 17px 18px;
+    min-height: 252px;
+    padding: 24px 20px 22px;
   }
 
   .benefit-badge {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     font-size: 0.74rem;
   }
 
   .benefit-metric {
-    margin-top: 18px;
-    font-size: clamp(1.55rem, 8vw, 1.95rem);
+    margin-top: 24px;
+    font-size: clamp(2.1rem, 11vw, 2.7rem);
   }
 
   .benefit-title {
-    margin-top: 10px;
-    font-size: 1rem;
+    margin-top: 14px;
+    font-size: 1.16rem;
   }
 
   .benefit-desc {
     max-width: none;
-    font-size: 0.84rem;
-    line-height: 1.38;
+    font-size: 0.96rem;
+    line-height: 1.5;
   }
 
   .integrations-shell {
@@ -3000,8 +3000,8 @@ body::after {
 
 .benefit-badge {
   border-color: rgba(17, 18, 20, 0.1);
-  color: rgba(17, 18, 20, 0.6);
-  background: rgba(247, 243, 236, 0.95);
+  color: rgba(17, 18, 20, 0.64);
+  background: rgba(255, 255, 255, 0.72);
 }
 
 .benefit-metric {
