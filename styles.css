@@ -2502,23 +2502,23 @@ a {
   }
 
   .orbit-core {
-    width: 62px;
-    height: 62px;
+    width: 42px;
+    height: 42px;
   }
 
   .orbit-core img {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
   }
 
   .orbit-badge {
-    width: 58px;
-    height: 58px;
+    width: 40px;
+    height: 40px;
   }
 
   .orbit-badge img {
-    width: 26px;
-    height: 26px;
+    width: 18px;
+    height: 18px;
   }
 
   .integrations-title {
@@ -3038,6 +3038,25 @@ body::after {
 
 .orbit-badge:hover {
   border-color: rgba(17, 18, 20, 0.14);
+}
+
+@media (max-width: 700px) {
+  .orbit-core,
+  .orbit-badge {
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(17, 18, 20, 0.055);
+    box-shadow: 0 8px 18px rgba(17, 18, 20, 0.045);
+  }
+
+  .orbit-ring {
+    border-color: rgba(17, 18, 20, 0.055);
+  }
+
+  .orbit-ring--mid,
+  .orbit-ring--inner,
+  .orbit-ring--core {
+    border-color: rgba(17, 18, 20, 0.045);
+  }
 }
 
 .pricing-toggle__label,
