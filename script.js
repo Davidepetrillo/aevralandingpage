@@ -556,7 +556,6 @@ const pricingLabels = Array.from(document.querySelectorAll("[data-pricing-label]
 const pricingValues = Array.from(document.querySelectorAll("[data-price-monthly]"));
 const faqQuestions = Array.from(document.querySelectorAll(".faq-question"));
 const contactForm = document.querySelector("[data-contact-form]");
-const heroEmailForm = document.querySelector("[data-hero-email-form]");
 
 if (useCaseTabs.length && useCasePanels.length && useCaseCopies.length) {
   const useCaseIds = useCaseTabs.map((tab) => tab.dataset.useCaseTab);
@@ -796,76 +795,6 @@ if (contactForm) {
         reason: error instanceof Error ? error.message : "unknown",
       });
     }
-  });
-}
-
-if (heroEmailForm) {
-  heroEmailForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const heroEmailInput = heroEmailForm.querySelector("input[type='email']");
-    const heroEmailButton = heroEmailForm.querySelector("button[type='submit']");
-    const heroEmailStatus = heroEmailForm.querySelector("[data-hero-email-status]");
-    const submittedEmail = heroEmailInput?.value?.trim().toLowerCase();
-
-    if (!submittedEmail || !heroEmailInput.checkValidity()) {
-      heroEmailInput?.reportValidity();
-      return;
-    }
-
-    const submitWaitlist = async () => {
-      if (heroEmailButton) {
-        heroEmailButton.disabled = true;
-        heroEmailButton.textContent = "Joining...";
-      }
-
-      if (heroEmailStatus) {
-        heroEmailStatus.hidden = true;
-        heroEmailStatus.classList.remove("is-error");
-      }
-
-      try {
-        const response = await fetch(heroEmailForm.action, {
-          method: "POST",
-          body: new FormData(heroEmailForm),
-          headers: {
-            Accept: "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Request failed");
-        }
-
-        heroEmailForm.reset();
-
-        if (heroEmailStatus) {
-          heroEmailStatus.textContent = "You are on the waitlist.";
-          heroEmailStatus.hidden = false;
-        }
-
-        trackEvent("hero waitlist submitted", {
-          email_domain: submittedEmail.split("@")[1] || null,
-        });
-      } catch (error) {
-        if (heroEmailStatus) {
-          heroEmailStatus.textContent = "We could not submit your email. Please try again.";
-          heroEmailStatus.classList.add("is-error");
-          heroEmailStatus.hidden = false;
-        }
-
-        trackEvent("hero waitlist submission failed", {
-          reason: error instanceof Error ? error.message : "unknown",
-        });
-      } finally {
-        if (heroEmailButton) {
-          heroEmailButton.disabled = false;
-          heroEmailButton.textContent = "Join waitlist";
-        }
-      }
-    };
-
-    submitWaitlist();
   });
 }
 
