@@ -45,7 +45,6 @@
           <a class="nav-link" href="#use-cases">Operational impact</a>
           <a class="nav-link" href="#benefits">Benefits</a>
           <a class="nav-link" href="#integrations">Integrations</a>
-          <a class="nav-link" href="#pricing">Pricing</a>
           <a class="nav-link" href="#contact">Contact</a>
         </div>
         <div class="nav-actions">
@@ -398,7 +397,7 @@
               <p class="benefit-metric" data-countup data-countup-value="3" data-countup-suffix=" min">3 min</p>
               <h3 class="benefit-title">Workflow creation</h3>
               <p class="benefit-desc">
-                Capture a process once and turn it into reusable guided execution without writing long SOPs.
+                Capture a process once. Aevra turns it into a structured SOP and executes it autonomously from there.
               </p>
             </article>
 
@@ -424,7 +423,7 @@
               <p class="benefit-metric" data-countup data-countup-value="60" data-countup-suffix="%">60%</p>
               <h3 class="benefit-title">Faster operational execution</h3>
               <p class="benefit-desc">
-                Workflows move faster because employees are guided or assisted directly where the work happens.
+                Agents handle the execution so your team has room for the work that needs judgment.
               </p>
             </article>
           </div>
@@ -615,119 +614,7 @@
         </div>
       </section>
 
-      <section class="section pricing-section" id="pricing">
-        <div class="container pricing-shell">
-          <div class="section-lead pricing-lead" data-reveal>
-            <span class="section-kicker">Pricing</span>
-            <h2 class="section-title pricing-title">
-              <span class="title-line">Choose the layer that fits your team,</span>
-              <span class="title-line title-line--muted">from first workflows to enterprise control.</span>
-            </h2>
-          </div>
-
-          <div class="pricing-toggle" data-reveal>
-            <span class="pricing-toggle__label is-active" data-pricing-label="monthly">Monthly</span>
-            <button
-              class="pricing-toggle__switch"
-              type="button"
-              role="switch"
-              aria-checked="false"
-              aria-label="Toggle yearly pricing"
-              data-pricing-switch
-            >
-              <span class="pricing-toggle__knob"></span>
-            </button>
-            <span class="pricing-toggle__label" data-pricing-label="yearly">Yearly</span>
-            <span class="pricing-toggle__badge">20% off</span>
-          </div>
-
-          <div class="pricing-grid">
-            <article class="pricing-card" data-reveal>
-              <div class="pricing-card__head">
-                <h3 class="pricing-card__title">Starter</h3>
-              </div>
-              <div class="pricing-card__price-block">
-                <p class="pricing-card__price">Free</p>
-                <p class="pricing-card__summary">For getting started with workflow capture and replay.</p>
-              </div>
-              <ul class="pricing-card__features">
-                <li>Up to 10 workflows</li>
-                <li>1 workspace</li>
-                <li>Capture</li>
-                <li>Replay</li>
-                <li>Core workflow basics</li>
-              </ul>
-            </article>
-
-            <article class="pricing-card" data-reveal>
-              <div class="pricing-card__head">
-                <h3 class="pricing-card__title">Plus</h3>
-              </div>
-              <div class="pricing-card__price-block">
-                <p class="pricing-card__price">
-                  <span data-price-monthly="19&euro;" data-price-yearly="15&euro;">19&euro;</span>
-                  <span class="pricing-card__period">/ user / month</span>
-                </p>
-                <p class="pricing-card__summary">For teams that want to standardize and share workflows.</p>
-              </div>
-              <ul class="pricing-card__features">
-                <li>Everything in Starter</li>
-                <li>Up to 6 workspaces</li>
-                <li>Capture and replay</li>
-                <li>Task management</li>
-                <li>Blur sensitive inputs</li>
-                <li>Basic analytics</li>
-                <li>Export workflows</li>
-                <li>Share workflows</li>
-              </ul>
-            </article>
-
-            <article class="pricing-card pricing-card--featured" data-reveal>
-              <div class="pricing-card__head">
-                <h3 class="pricing-card__title">Pro</h3>
-                <span class="pricing-card__tag">Popular</span>
-              </div>
-              <div class="pricing-card__price-block">
-                <p class="pricing-card__price">
-                  <span data-price-monthly="39&euro;" data-price-yearly="30&euro;">39&euro;</span>
-                  <span class="pricing-card__period">/ user / month</span>
-                </p>
-                <p class="pricing-card__summary">For teams that want workflow execution, automations, and integrations.</p>
-              </div>
-              <ul class="pricing-card__features">
-                <li>Everything in Plus</li>
-                <li>Nari agent</li>
-                <li>Human-in-the-loop automations</li>
-                <li>MCP</li>
-                <li>Integrations: Gmail, Outlook, Notion, and more</li>
-                <li>Advanced connected workflows</li>
-              </ul>
-            </article>
-
-            <article class="pricing-card" data-reveal>
-              <div class="pricing-card__head">
-                <h3 class="pricing-card__title">Enterprise</h3>
-              </div>
-              <div class="pricing-card__price-block">
-                <p class="pricing-card__price">Custom</p>
-                <p class="pricing-card__summary">For organizations that need governance, security, and dedicated setup.</p>
-              </div>
-              <ul class="pricing-card__features">
-                <li>Everything in Pro</li>
-                <li>Advanced security controls</li>
-                <li>SOP export</li>
-                <li>Audit logs</li>
-                <li>Dedicated server or private setup</li>
-                <li>Priority support</li>
-                <li>Enterprise governance and compliance features</li>
-              </ul>
-              <a class="pricing-card__cta" href="https://calendly.com/davide-aevra/30min" data-demo-source="pricing">Book a demo</a>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section faq-section" id="faq">
+      <section class="section faq-section" id="faq" hidden style="display:none">
         <div class="container faq-shell">
           <div class="section-lead faq-lead" data-reveal>
             <span class="section-kicker">FAQ</span>
@@ -755,7 +642,7 @@
                   <span class="faq-plus" aria-hidden="true">+</span>
                 </button>
                 <div class="faq-answer" hidden>
-                  No heavy setup is required. Aevra works as a browser extension, so teams can use it directly in the tools they already open every day. That means you do not need a long implementation project before testing workflow capture, replay, or guided execution.
+                  No heavy setup is required. Aevra works as a browser extension, so teams can use it directly in the tools they already open every day. That means you do not need a long implementation project before testing workflow capture, replay, or autonomous agent execution.
                 </div>
               </article>
 
@@ -894,8 +781,6 @@
           <a href="#use-cases">Operational impact</a>
           <a href="#benefits">Benefits</a>
           <a href="#integrations">Integrations</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#faq">FAQ</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>
