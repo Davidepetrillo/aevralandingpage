@@ -1001,44 +1001,119 @@ if (!prefersReducedMotion) {
     }
   }
 
+  const modal = document.querySelector("[data-contact-modal]");
+  const modalForm = document.querySelector("[data-contact-modal-form]");
+  const modalWorkflowField = document.querySelector("[data-modal-workflow-field]");
+  const modalFormView = document.querySelector('[data-modal-view="form"]');
+  const modalSuccessView = document.querySelector('[data-modal-view="success"]');
+  const modalSubmitBtn = document.querySelector("[data-modal-submit]");
+  let lastFocused = null;
+
+  function openModal(prefillValue) {
+    if (!modal) return;
+    lastFocused = document.activeElement;
+    if (modalWorkflowField) {
+      modalWorkflowField.value = prefillValue || "";
+    }
+    if (modalFormView) modalFormView.hidden = false;
+    if (modalSuccessView) modalSuccessView.hidden = true;
+    if (modalSubmitBtn) {
+      modalSubmitBtn.disabled = false;
+      modalSubmitBtn.textContent = "Get in touch";
+    }
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    document.documentElement.style.overflow = "hidden";
+    window.setTimeout(() => {
+      const firstField = modal.querySelector("input, select, textarea");
+      if (firstField) firstField.focus();
+    }, 80);
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+    document.documentElement.style.overflow = "";
+    if (lastFocused && typeof lastFocused.focus === "function") {
+      lastFocused.focus();
+    }
+  }
+
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     if (!input || !input.value.trim()) return;
+    openModal(input.value.trim());
+  });
 
-    if (submit) submit.disabled = true;
-    if (status) {
-      status.hidden = false;
-      status.textContent = "Sending...";
-      status.removeAttribute("data-state");
-    }
+  if (modal) {
+    modal.querySelectorAll("[data-contact-close]").forEach((el) => {
+      el.addEventListener("click", closeModal);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !modal.hidden) closeModal();
+    });
+  }
 
-    const formData = new FormData(form);
-    fetch(form.action.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
-      method: "POST",
-      headers: { Accept: "application/json" },
-      body: formData,
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error("Network");
-        return response.json();
-      })
-      .then(() => {
-        form.classList.add("is-success");
-        if (status) {
-          status.hidden = false;
-          status.textContent = "Thanks — we'll be in touch shortly.";
-          status.removeAttribute("data-state");
-        }
-      })
-      .catch(() => {
-        if (submit) submit.disabled = false;
-        if (status) {
-          status.hidden = false;
-          status.textContent = "Something went wrong. Please try again.";
-          status.setAttribute("data-state", "error");
+  if (modalForm) {
+    const requiredFields = modalForm.querySelectorAll("[required]");
+
+    requiredFields.forEach((field) => {
+      const clear = () => {
+        if (field.value && field.value.trim()) field.classList.remove("is-invalid");
+      };
+      field.addEventListener("input", clear);
+      field.addEventListener("change", clear);
+    });
+
+    modalForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      let firstInvalid = null;
+      requiredFields.forEach((field) => {
+        const value = (field.value || "").trim();
+        const valid = field.tagName === "SELECT" ? value !== "" : value.length > 0;
+        if (!valid) {
+          field.classList.add("is-invalid");
+          if (!firstInvalid) firstInvalid = field;
+        } else {
+          field.classList.remove("is-invalid");
         }
       });
-  });
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      if (modalSubmitBtn) {
+        modalSubmitBtn.disabled = true;
+        modalSubmitBtn.textContent = "Sending...";
+      }
+      const formData = new FormData(modalForm);
+      fetch(modalForm.action.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: formData,
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error("Network");
+          return response.json();
+        })
+        .then(() => {
+          if (modalFormView) modalFormView.hidden = true;
+          if (modalSuccessView) modalSuccessView.hidden = false;
+          if (input) input.value = "";
+          modalForm.reset();
+        })
+        .catch(() => {
+          if (modalSubmitBtn) {
+            modalSubmitBtn.disabled = false;
+            modalSubmitBtn.textContent = "Try again";
+          }
+        });
+    });
+  }
 })();
 
 (function pageDotSpotlight() {

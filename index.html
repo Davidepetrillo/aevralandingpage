@@ -659,6 +659,87 @@
 
     <a class="privacy-link" href="./privacy-policy.html">Privacy &amp; Policy</a>
 
+    <div class="contact-modal" data-contact-modal hidden aria-hidden="true">
+      <div class="contact-modal__backdrop" data-contact-close></div>
+      <div class="contact-modal__panel" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+        <button class="contact-modal__close" type="button" aria-label="Close" data-contact-close>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+
+        <div class="contact-modal__view contact-modal__view--form" data-modal-view="form">
+          <h3 id="contact-modal-title" class="contact-modal__title">Get in touch</h3>
+          <p class="contact-modal__desc">Leave a few details and we will reach out to show you what Aevra can do for your team. No pitch deck, just a real conversation.</p>
+
+          <form
+            class="contact-modal__form"
+            action="https://formsubmit.co/davide@aevra.co"
+            method="POST"
+            data-contact-modal-form
+          >
+            <input type="hidden" name="_subject" value="New Aevra contact request" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+
+            <div class="contact-modal__field">
+              <label for="cm-email" class="sr-only">Work email</label>
+              <input id="cm-email" type="email" name="email" placeholder="Your work email *" autocomplete="email" required />
+            </div>
+
+            <div class="contact-modal__field">
+              <label for="cm-role" class="sr-only">Your role</label>
+              <input id="cm-role" type="text" name="role" placeholder="Your role *" autocomplete="organization-title" required />
+            </div>
+
+            <div class="contact-modal__field-row">
+              <div class="contact-modal__field">
+                <label for="cm-size" class="sr-only">Company size</label>
+                <select id="cm-size" name="company_size" required>
+                  <option value="" disabled selected>Company size *</option>
+                  <option>1 to 10</option>
+                  <option>11 to 50</option>
+                  <option>51 to 200</option>
+                  <option>201 to 500</option>
+                  <option>501 to 1000</option>
+                  <option>1001 to 5000</option>
+                  <option>5000+</option>
+                </select>
+              </div>
+              <div class="contact-modal__field">
+                <label for="cm-industry" class="sr-only">Industry</label>
+                <input id="cm-industry" type="text" name="industry" placeholder="Industry *" required />
+              </div>
+            </div>
+
+            <div class="contact-modal__field">
+              <label for="cm-workflow" class="sr-only">Workflow you want to automate</label>
+              <textarea id="cm-workflow" name="workflow" rows="3" placeholder="Tell us about the workflow" data-modal-workflow-field></textarea>
+            </div>
+
+            <label class="contact-modal__checkbox">
+              <input type="checkbox" name="newsletter" value="yes" />
+              <span>Send me occasional updates from Aevra. <a href="./privacy-policy.html" target="_blank" rel="noopener">Privacy policy</a></span>
+            </label>
+
+            <button class="contact-modal__submit" type="submit" data-modal-submit>Get in touch</button>
+          </form>
+        </div>
+
+        <div class="contact-modal__view contact-modal__view--success" data-modal-view="success" hidden>
+          <div class="contact-modal__check" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="30" fill="rgba(40, 180, 99, 0.12)" />
+              <circle cx="32" cy="32" r="22" fill="rgba(40, 180, 99, 0.20)" />
+              <path d="M22 33 l8 8 l14 -14" stroke="#28b463" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3 class="contact-modal__title">Thanks for reaching out</h3>
+          <p class="contact-modal__desc">We will get in touch soon.</p>
+        </div>
+      </div>
+    </div>
+
     <script src="./script.js"></script>
   </body>
 </html>
