@@ -1664,12 +1664,28 @@ a {
   max-width: 56px;
 }
 
+.testimonial-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.testimonial-card__name {
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 0.93rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: rgba(20, 24, 32, 0.92);
+}
+
 .testimonial-card__role {
   font-family: "DM Sans", system-ui, sans-serif;
-  font-size: 0.88rem;
-  font-weight: 500;
+  font-size: 0.83rem;
+  font-weight: 400;
   letter-spacing: -0.005em;
-  color: rgba(20, 24, 32, 0.62);
+  color: rgba(20, 24, 32, 0.55);
 }
 
 .closing-shell {
