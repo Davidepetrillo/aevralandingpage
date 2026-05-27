@@ -844,3 +844,238 @@ if (!prefersReducedMotion) {
     });
   }
 }
+
+(function heroThinkingCycle() {
+  const el = document.querySelector(".hero-thinking");
+  if (!el) return;
+
+  const sentences = [
+    "Learning context...",
+    "Mapping your workflows...",
+    "Spotting patterns...",
+    "Connecting systems...",
+    "Building memory...",
+    "Tracing decisions...",
+    "Recalling past runs...",
+    "Inferring next steps...",
+    "Reading between tools...",
+    "Understanding intent...",
+  ];
+
+  function renderChars(text) {
+    el.setAttribute("aria-label", text);
+    el.textContent = "";
+    Array.from(text).forEach((ch, i) => {
+      const span = document.createElement("span");
+      span.className = "hero-thinking__char";
+      span.style.setProperty("--i", i);
+      span.setAttribute("aria-hidden", "true");
+      if (ch === " ") {
+        span.innerHTML = "&nbsp;";
+      } else {
+        span.textContent = ch;
+      }
+      el.appendChild(span);
+    });
+  }
+
+  let idx = 0;
+  renderChars(sentences[idx]);
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) return;
+
+  function advance() {
+    el.dataset.state = "out";
+    window.setTimeout(() => {
+      idx = (idx + 1) % sentences.length;
+      renderChars(sentences[idx]);
+      el.dataset.state = "in";
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          delete el.dataset.state;
+        });
+      });
+    }, 500);
+  }
+
+  window.setInterval(advance, 5000);
+})();
+
+(function closingFormBehavior() {
+  const form = document.querySelector("[data-closing-form]");
+  if (!form) return;
+  const input = form.querySelector("[data-rotating-placeholder]");
+  const status = form.querySelector("[data-closing-status]");
+  const submit = form.querySelector("[data-closing-submit]");
+
+  const workflows = [
+    "Submitting weekly timesheets and expense reports",
+    "Checking invoices against PO, VAT, and payment terms",
+    "Updating inventory across warehouse and ERP portals",
+    "Reviewing receipts and flagging missing expense info",
+    "Reconciling supplier invoices in the finance system",
+    "Validating new vendor data before approval",
+    "Posting daily stock movements to the internal portal",
+    "Approving consultant hours across multiple projects",
+    "Closing expense reports in the HR portal",
+    "Logging maintenance jobs across warehouse systems",
+  ];
+
+  if (input) {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) {
+      input.placeholder = workflows[0] + "...";
+    } else {
+      let workflowIdx = 0;
+      let timeoutId = 0;
+
+      const userBusy = () =>
+        input.value.trim().length > 0 || document.activeElement === input;
+
+      const schedule = (fn, delay) => {
+        timeoutId = window.setTimeout(fn, delay);
+      };
+
+      function startTyping() {
+        if (userBusy()) {
+          schedule(startTyping, 1200);
+          return;
+        }
+
+        const current = workflows[workflowIdx];
+        let charIdx = 0;
+        input.placeholder = "";
+
+        function typeChar() {
+          if (userBusy()) {
+            schedule(startTyping, 1500);
+            return;
+          }
+          if (charIdx < current.length) {
+            charIdx += 1;
+            input.placeholder = current.substring(0, charIdx);
+            schedule(typeChar, 38 + Math.random() * 36);
+          } else {
+            schedule(() => {
+              input.placeholder = current + ".";
+              schedule(() => {
+                input.placeholder = current + "..";
+                schedule(() => {
+                  input.placeholder = current + "...";
+                  schedule(startBackspace, 2400);
+                }, 220);
+              }, 220);
+            }, 260);
+          }
+        }
+
+        typeChar();
+      }
+
+      function startBackspace() {
+        if (userBusy()) {
+          schedule(startBackspace, 1200);
+          return;
+        }
+
+        function eraseChar() {
+          if (userBusy()) {
+            schedule(startTyping, 1500);
+            return;
+          }
+          const current = input.placeholder;
+          if (current.length > 0) {
+            input.placeholder = current.slice(0, -1);
+            schedule(eraseChar, 22 + Math.random() * 18);
+          } else {
+            workflowIdx = (workflowIdx + 1) % workflows.length;
+            schedule(startTyping, 320);
+          }
+        }
+
+        eraseChar();
+      }
+
+      schedule(startTyping, 500);
+    }
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!input || !input.value.trim()) return;
+
+    if (submit) submit.disabled = true;
+    if (status) {
+      status.hidden = false;
+      status.textContent = "Sending...";
+      status.removeAttribute("data-state");
+    }
+
+    const formData = new FormData(form);
+    fetch(form.action.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: formData,
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Network");
+        return response.json();
+      })
+      .then(() => {
+        form.classList.add("is-success");
+        if (status) {
+          status.hidden = false;
+          status.textContent = "Thanks — we'll be in touch shortly.";
+          status.removeAttribute("data-state");
+        }
+      })
+      .catch(() => {
+        if (submit) submit.disabled = false;
+        if (status) {
+          status.hidden = false;
+          status.textContent = "Something went wrong. Please try again.";
+          status.setAttribute("data-state", "error");
+        }
+      });
+  });
+})();
+
+(function pageDotSpotlight() {
+  const layer = document.querySelector(".page-dots");
+  if (!layer) return;
+
+  let targetX = 50;
+  let targetY = 50;
+  let currentX = 50;
+  let currentY = 50;
+  let rafId = 0;
+  let running = false;
+
+  function tick() {
+    const ease = 0.16;
+    currentX += (targetX - currentX) * ease;
+    currentY += (targetY - currentY) * ease;
+    layer.style.setProperty("--mouse-x", currentX.toFixed(2) + "%");
+    layer.style.setProperty("--mouse-y", currentY.toFixed(2) + "%");
+
+    if (Math.abs(targetX - currentX) > 0.05 || Math.abs(targetY - currentY) > 0.05) {
+      rafId = window.requestAnimationFrame(tick);
+    } else {
+      running = false;
+    }
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    rafId = window.requestAnimationFrame(tick);
+  }
+
+  window.addEventListener("pointermove", (event) => {
+    targetX = (event.clientX / window.innerWidth) * 100;
+    targetY = (event.clientY / window.innerHeight) * 100;
+    start();
+  });
+})();
+

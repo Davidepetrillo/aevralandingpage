@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
@@ -33,19 +33,19 @@
     </script>
   </head>
   <body>
+    <div class="page-dots" aria-hidden="true"></div>
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
     <nav class="nav hero-nav" id="nav">
       <div class="nav-inner">
         <a class="nav-brand" href="#">
-          <img src="./thelogo.png" alt="Aevra" width="30" height="30" />
+          <img src="./newlogo.svg" alt="Aevra" width="30" height="30" />
         </a>
         <div class="nav-links">
           <a class="nav-link" href="#how">How it works</a>
-          <a class="nav-link" href="#use-cases">Operational impact</a>
           <a class="nav-link" href="#benefits">Benefits</a>
-          <a class="nav-link" href="#integrations">Integrations</a>
-          <a class="nav-link" href="#contact">Contact</a>
+          <a class="nav-link" href="#testimonials">Customers</a>
+          <a class="nav-link" href="#closing">Contact</a>
         </div>
         <div class="nav-actions">
           <a class="btn-primary" href="https://calendly.com/davide-aevra/30min" data-demo-source="navbar">Book a demo</a>
@@ -58,34 +58,29 @@
         <div class="hero-frame">
           <div class="hero-startup">
             <div class="hero-copy" data-hero-reveal>
-              <p class="hero-kicker">The operating memory behind your company</p>
-              <h1 class="hero-heading" data-hero-type="Your company brain for|autonomous execution.">
-                <span class="hero-heading__line">Your company brain for</span>
-                <span class="hero-heading__line">autonomous execution.</span>
+              <div class="hero-emblem" aria-hidden="true">
+                <img src="./newlogo.svg" alt="" width="120" height="120" />
+              </div>
+              <p class="hero-thinking" aria-label="Learning context...">Learning context...</p>
+              <h1 class="hero-heading">
+                <span class="hero-heading__line">AI that learns your workflows</span>
+                <span class="hero-heading__line">and runs them for you</span>
               </h1>
               <p class="hero-subtitle">
-                Aevra captures how work gets done, builds your company-owned operational brain, and executes workflows safely across the tools your team already uses.
+                <span class="hero-subtitle__line">Works inside the software your business already depends on.</span>
+                <span class="hero-subtitle__line">No rebuild. No migration. No API required.</span>
               </p>
             </div>
 
             <div class="hero-conversion" data-hero-reveal>
-              <form
-                class="hero-email-form"
-                action="https://formsubmit.co/davide@aevra.co"
-                method="POST"
-                data-hero-email-form
-              >
-                <input type="hidden" name="_subject" value="New Aevra waitlist signup" />
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="hidden" name="_template" value="table" />
-                <label class="hero-email-field">
-                  <span class="sr-only">Work email</span>
-                  <input type="email" name="email" autocomplete="email" placeholder="Enter your work email" required />
-                  <button type="submit">Join waitlist</button>
-                </label>
-                <p class="hero-email-status" data-hero-email-status hidden></p>
-              </form>
               <a class="hero-demo-link" href="https://calendly.com/davide-aevra/30min">Book a demo</a>
+            </div>
+
+            <div class="hero-clients" aria-label="Trusted by" data-hero-reveal>
+              <img class="hero-clients__logo" src="./clients/tiger.webp" alt="Tiger" loading="lazy" />
+              <img class="hero-clients__logo" src="./clients/client-2.avif" alt="Client" loading="lazy" />
+              <img class="hero-clients__logo" src="./clients/client-3.avif" alt="Client" loading="lazy" />
+              <img class="hero-clients__logo hero-clients__logo--square" src="./clients/emmefer.svg" alt="Emmefer" loading="lazy" />
             </div>
           </div>
 
@@ -351,6 +346,47 @@
         </div>
       </section>
 
+      <section class="section trust-badges-section" aria-label="Security & trust">
+        <div class="container">
+          <div class="trust-badges">
+            <span class="trust-badges__item">
+              <svg class="trust-badges__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="8" cy="15" r="3"/>
+                <path d="M10 13l9-9"/>
+                <path d="M15.5 7.5l3 3"/>
+                <path d="M13 10l3 3"/>
+              </svg>
+              SSO
+            </span>
+            <span class="trust-badges__item">
+              <svg class="trust-badges__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="9" cy="8" r="3"/>
+                <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+                <circle cx="17" cy="9" r="2.4"/>
+                <path d="M15 15c2.2.5 6 1.7 6 5"/>
+              </svg>
+              role-based access
+            </span>
+            <span class="trust-badges__item">
+              <svg class="trust-badges__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="5" y="3" width="14" height="18" rx="1.5"/>
+                <line x1="8" y1="8" x2="16" y2="8"/>
+                <line x1="8" y1="12" x2="16" y2="12"/>
+                <line x1="8" y1="16" x2="13" y2="16"/>
+              </svg>
+              full audit trails
+            </span>
+            <span class="trust-badges__item">
+              <svg class="trust-badges__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="10" rx="1.5"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+              </svg>
+              tenant isolation
+            </span>
+          </div>
+        </div>
+      </section>
+
       <section class="section benefits-section" id="benefits">
         <div class="container benefits-shell">
           <div class="section-lead benefits-lead" data-reveal>
@@ -430,186 +466,45 @@
         </div>
       </section>
 
-      <section class="section use-cases-section" id="use-cases">
-        <div class="container use-cases-shell">
-          <div class="section-lead use-cases-lead" data-reveal>
-            <span class="section-kicker">Operational impact</span>
-            <h2 class="section-title">
-              <span class="title-line">Where Aevra changes how companies operate,</span>
-              <span class="title-line title-line--muted">from daily execution to serious automation.</span>
-            </h2>
+      <section class="section testimonials-section" id="testimonials">
+        <div class="container testimonials-shell">
+          <div class="section-lead testimonials-lead" data-reveal>
+            <h2 class="section-title testimonials-title">What our customers say</h2>
           </div>
 
-          <div class="use-cases-tabs" role="tablist" aria-label="Operational impact" data-reveal>
-            <button
-              class="use-case-tab is-active"
-              type="button"
-              role="tab"
-              aria-selected="true"
-              data-use-case-tab="execution"
-            >
-              Execution standard
-            </button>
-            <button
-              class="use-case-tab"
-              type="button"
-              role="tab"
-              aria-selected="false"
-              data-use-case-tab="procedures"
-            >
-              Complex procedures
-            </button>
-            <button
-              class="use-case-tab"
-              type="button"
-              role="tab"
-              aria-selected="false"
-              data-use-case-tab="control"
-            >
-              Human control
-            </button>
-            <button
-              class="use-case-tab"
-              type="button"
-              role="tab"
-              aria-selected="false"
-              data-use-case-tab="changes"
-            >
-              Process changes
-            </button>
-            <button
-              class="use-case-tab"
-              type="button"
-              role="tab"
-              aria-selected="false"
-              data-use-case-tab="day-one"
-            >
-              Day-one productivity
-            </button>
-          </div>
+          <div class="testimonials-grid" data-reveal>
+            <article class="testimonial-card">
+              <blockquote class="testimonial-card__quote">
+                <p>“Timesheets and expenses were creating admin every single week. Consultants had to submit everything manually, and HR still had to check receipts, limits, and missing information.</p>
+                <p>Aevra took the standard cases out of the team’s hands. Now people deal with exceptions, not every submission.”</p>
+              </blockquote>
+              <footer class="testimonial-card__footer">
+                <img class="testimonial-card__logo" src="./clients/tiger.webp" alt="Tiger Consulting" loading="lazy" />
+                <span class="testimonial-card__role">CEO</span>
+              </footer>
+            </article>
 
-          <div class="use-cases-stage" data-reveal>
-            <div class="use-cases-media">
-              <figure class="use-case-visual is-active" data-use-case-panel="execution" aria-hidden="false">
-                <img src="./replay.jpg" alt="Execution standard workflow replay" loading="lazy" decoding="async" />
-              </figure>
-              <figure class="use-case-visual" data-use-case-panel="procedures" aria-hidden="true">
-                <img src="./complex.jpg" alt="Complex multi-tool company procedure" loading="lazy" decoding="async" />
-              </figure>
-              <figure class="use-case-visual" data-use-case-panel="control" aria-hidden="true">
-                <img src="./Ops.jpg" alt="Sensitive operation with human review" loading="lazy" decoding="async" />
-              </figure>
-              <figure class="use-case-visual" data-use-case-panel="changes" aria-hidden="true">
-                <img src="./capture.jpg" alt="Updated process captured in Aevra" loading="lazy" decoding="async" />
-              </figure>
-              <figure class="use-case-visual" data-use-case-panel="day-one" aria-hidden="true">
-                <img src="./onboarding.jpg" alt="New teammate onboarding workflow" loading="lazy" decoding="async" />
-              </figure>
-            </div>
+            <article class="testimonial-card">
+              <blockquote class="testimonial-card__quote">
+                <p>“Invoice review was one of those processes that looked simple, but kept taking time from finance.</p>
+                <p>Every invoice meant checking the PDF, supplier, amount, PO, VAT, and payment terms before updating the system. Aevra removed the repetitive part, so the team only focuses on invoices that need a decision.”</p>
+              </blockquote>
+              <footer class="testimonial-card__footer">
+                <img class="testimonial-card__logo" src="./clients/client-2.avif" alt="PAS" loading="lazy" />
+                <span class="testimonial-card__role">CEO</span>
+              </footer>
+            </article>
 
-            <div class="use-cases-detail">
-              <article class="use-case-copy is-active" data-use-case-copy="execution">
-                <span class="use-case-eyebrow">Execution standard</span>
-                <h3 class="use-case-title">Help every team member work closer to your best operator.</h3>
-                <p class="use-case-desc">
-                  Your best people know what to check, which order matters, when to stop, and what a wrong result looks like. Aevra makes that working method available during execution, so quality depends less on who is doing the task.
-                </p>
-              </article>
-
-              <article class="use-case-copy" data-use-case-copy="procedures">
-                <span class="use-case-eyebrow">Complex procedures</span>
-                <h3 class="use-case-title">Complete work that moves across tools, screens, and decisions.</h3>
-                <p class="use-case-desc">
-                  Many company procedures cannot be solved by one prompt or one app action. Aevra follows the real sequence across browser tools, carries context forward, and helps complete the procedure from start to finish.
-                </p>
-              </article>
-
-              <article class="use-case-copy" data-use-case-copy="control">
-                <span class="use-case-eyebrow">Human control</span>
-                <h3 class="use-case-title">Automate serious work without giving up judgment.</h3>
-                <p class="use-case-desc">
-                  Aevra does not need to act blindly. You decide which steps it can complete, which steps require confirmation, and which steps stay human. That makes it useful where speed matters but unchecked automation is not acceptable.
-                </p>
-              </article>
-
-              <article class="use-case-copy" data-use-case-copy="changes">
-                <span class="use-case-eyebrow">Process changes</span>
-                <h3 class="use-case-title">Update how work is done without retraining everyone from scratch.</h3>
-                <p class="use-case-desc">
-                  When a procedure changes, the work should change with it. Update the workflow in Aevra and the new version appears where execution happens, instead of depending on meetings, docs, or people remembering the latest rule.
-                </p>
-              </article>
-
-              <article class="use-case-copy" data-use-case-copy="day-one">
-                <span class="use-case-eyebrow">Day-one productivity</span>
-                <h3 class="use-case-title">Let new people do real work with the company brain beside them.</h3>
-                <p class="use-case-desc">
-                  New team members can start contributing before they have memorized every procedure. Aevra supports them in context with the right steps, checks, and company-specific way of working while they execute real tasks.
-                </p>
-              </article>
-
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section integrations-section" id="integrations">
-        <div class="container integrations-shell">
-          <div class="integrations-layout" data-reveal>
-            <div class="integrations-visual-wrap">
-              <div class="integrations-orbit" data-integrations-orbit aria-hidden="true">
-                <div class="orbit-ring orbit-ring--outer"></div>
-                <div class="orbit-ring orbit-ring--mid"></div>
-                <div class="orbit-ring orbit-ring--inner"></div>
-                <div class="orbit-ring orbit-ring--core"></div>
-
-                <div class="orbit-core">
-                  <img src="./thelogo.png" alt="" loading="lazy" decoding="async" />
-                </div>
-
-                <div class="orbit-badge orbit-badge--salesforce" data-depth="1.2">
-                  <img src="./logos/salesforce.svg" alt="Salesforce" loading="lazy" decoding="async" />
-                </div>
-                <div class="orbit-badge orbit-badge--google" data-depth="0.9">
-                  <img src="./logos/google-workspace.svg" alt="Google Workspace" loading="lazy" decoding="async" />
-                </div>
-                <div class="orbit-badge orbit-badge--microsoft" data-depth="1.1">
-                  <img src="./logos/microsoft.svg" alt="Microsoft" loading="lazy" decoding="async" />
-                </div>
-                <div class="orbit-badge orbit-badge--hubspot" data-depth="0.85">
-                  <img src="./logos/hubspot.svg" alt="HubSpot" loading="lazy" decoding="async" />
-                </div>
-                <div class="orbit-badge orbit-badge--jira" data-depth="1">
-                  <img src="./logos/jira.svg" alt="Jira" loading="lazy" decoding="async" />
-                </div>
-                <div class="orbit-badge orbit-badge--slack" data-depth="1.02">
-                  <img src="./slack.png" alt="Slack" loading="lazy" decoding="async" />
-                </div>
-                <div class="orbit-badge orbit-badge--notion" data-depth="1.15">
-                  <img src="./notion.png" alt="Notion" loading="lazy" decoding="async" />
-                </div>
-                <div class="orbit-badge orbit-badge--workday" data-depth="0.95">
-                  <img src="./logos/workday.svg" alt="Workday" loading="lazy" decoding="async" />
-                </div>
-                <div class="orbit-badge orbit-badge--servicenow" data-depth="1.05">
-                  <img src="./servicenow.png" alt="ServiceNow" loading="lazy" decoding="async" />
-                </div>
-              </div>
-            </div>
-
-            <div class="integrations-copy">
-              <span class="section-kicker">Integrations</span>
-              <h2 class="integrations-title">
-                <span>Work directly inside your</span>
-                <span>existing stack.</span>
-              </h2>
-              <p class="integrations-desc">
-                Aevra runs across the browser, so teams can capture, guide, and automate work directly inside the tools they already use every day.
-              </p>
-              <p class="integrations-desc integrations-desc--muted">
-                Salesforce, Deel, HubSpot, Slack, Google Workspace, Workday, Jira, Microsoft, and the rest of your web-based workflow can all live inside the same execution layer.
-              </p>
-            </div>
+            <article class="testimonial-card">
+              <blockquote class="testimonial-card__quote">
+                <p>“Our inventory updates were still too manual. Same warehouse system, same internal portal, same checks every day.</p>
+                <p>We did not want to replace the tools. We wanted the manual work around them gone. That is what Aevra solved for us.”</p>
+              </blockquote>
+              <footer class="testimonial-card__footer">
+                <img class="testimonial-card__logo" src="./clients/client-3.avif" alt="Italia Manutenzioni" loading="lazy" />
+                <span class="testimonial-card__role">Head of Operations</span>
+              </footer>
+            </article>
           </div>
         </div>
       </section>
@@ -692,70 +587,38 @@
         </div>
       </section>
 
-      <section class="section contact-section" id="contact">
-        <div class="container contact-shell">
-          <div class="contact-layout" data-reveal>
-            <div class="contact-copy-block">
-              <span class="section-kicker">Contact</span>
-              <h2 class="contact-title">Need a direct conversation?</h2>
-              <p class="contact-copy">
-                Share a few details and we will get back to you directly about workflows, pricing, deployment, or rollout planning.
-              </p>
-            </div>
-            <form
-              class="contact-form"
-              action="https://formsubmit.co/davide@aevra.co"
-              method="POST"
-              novalidate
-              data-contact-form
-            >
-              <input type="hidden" name="_subject" value="New Aevra website contact" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_template" value="table" />
-
-              <label class="contact-field">
-                <span>Name</span>
-                <input type="text" name="name" autocomplete="name" required data-contact-name />
-                <span class="contact-error" data-error-for="name" hidden>Please enter your name.</span>
-              </label>
-
-              <label class="contact-field">
-                <span>Work email</span>
-                <input type="email" name="email" autocomplete="email" required data-contact-email />
-                <span class="contact-error" data-error-for="email" hidden>Please enter a valid work email.</span>
-              </label>
-
-              <label class="contact-field">
-                <span>Company</span>
-                <input type="text" name="company" autocomplete="organization" />
-              </label>
-
-              <label class="contact-field contact-field--full">
-                <span>How can we help?</span>
-                <textarea name="message" rows="4" required></textarea>
-                <span class="contact-error" data-error-for="message" hidden>Please add a short message.</span>
-              </label>
-
-              <div class="contact-form__actions">
-                <button class="contact-submit" type="submit" data-contact-submit>Send</button>
-                <p class="contact-success" data-contact-success hidden>Thank you for your request.</p>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
-
       <section class="section closing-section" id="closing">
         <div class="container closing-shell">
-          <div class="closing-hero" data-reveal>
-            <div class="closing-hero__copy">
-              <h2 class="closing-hero__title">See Aevra in your workflow.</h2>
-              <p class="closing-hero__desc">
-                A short walkthrough of capture, guidance, and connected execution.
-              </p>
-              <a class="closing-hero__cta" href="https://calendly.com/davide-aevra/30min" data-demo-source="bottom_cta">Book a demo</a>
-            </div>
+          <div class="closing-lead" data-reveal>
+            <h2 class="section-title closing-title">Tell us which workflow you would like to automate.</h2>
           </div>
+          <form
+            class="closing-form"
+            action="https://formsubmit.co/davide@aevra.co"
+            method="POST"
+            data-closing-form
+          >
+            <input type="hidden" name="_subject" value="New Aevra workflow inquiry" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <label class="sr-only" for="closing-workflow">Describe a workflow</label>
+            <input
+              id="closing-workflow"
+              class="closing-form__input"
+              type="text"
+              name="workflow"
+              placeholder="Onboarding a new hire"
+              autocomplete="off"
+              required
+              data-rotating-placeholder
+            />
+            <button class="closing-form__submit" type="submit" aria-label="Send" data-closing-submit>
+              <svg class="closing-form__submit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+              </svg>
+            </button>
+            <p class="closing-form__status" data-closing-status hidden></p>
+          </form>
         </div>
       </section>
 
@@ -778,10 +641,9 @@
 
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="#how">How it works</a>
-          <a href="#use-cases">Operational impact</a>
           <a href="#benefits">Benefits</a>
-          <a href="#integrations">Integrations</a>
-          <a href="#contact">Contact</a>
+          <a href="#testimonials">Customers</a>
+          <a href="#closing">Contact</a>
         </nav>
       </div>
     </footer>
