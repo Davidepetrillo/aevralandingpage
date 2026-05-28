@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aevra — Stop losing hours to portal hell</title>
+    <meta
+      name="description"
+      content="Aevra captures how your freight team works across every carrier portal, customs system, and booking platform — then automates it, consistently, across all of them."
+    />
+    <link rel="icon" type="image/png" href="./thelogo.png" />
+    <link rel="shortcut icon" type="image/png" href="./thelogo.png" />
+    <link rel="apple-touch-icon" href="./thelogo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script>
+      const posthogHosts = new Set(["aevra.co", "www.aevra.co"]);
+
+      if (posthogHosts.has(window.location.hostname)) {
+        !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+        posthog.init("phc_wBcaqGEUZD4TdiML73EExC5M6eX93NFW7Z4PCvcmsSTR", {
+          api_host: "https://eu.i.posthog.com",
+          defaults: "2026-01-30",
+          person_profiles: "always",
+          capture_pageview: true,
+        });
+        posthog.register({ icp_variant: "logistics", page_variant: "logistics_freight" });
+      }
+    </script>
+  </head>
+  <body>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+    <nav class="nav hero-nav" id="nav">
+      <div class="nav-inner">
+        <a class="nav-brand" href="#">
+          <img src="./thelogo.png" alt="Aevra" width="30" height="30" />
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="#how">How it works</a>
+          <a class="nav-link" href="#use-cases">Use cases</a>
+          <a class="nav-link" href="#benefits">Benefits</a>
+          <a class="nav-link" href="#integrations">Integrations</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </div>
+        <div class="nav-actions">
+          <a class="btn-primary" href="https://calendly.com/davide-aevra/30min" data-demo-source="navbar">Book a demo</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="section hero" id="hero">
+        <div class="hero-frame">
+          <div class="hero-startup">
+            <div class="hero-copy" data-hero-reveal>
+              <p class="hero-kicker">Built for logistics &amp; freight operations</p>
+              <h1 class="hero-heading" data-hero-type="Your team wasn't hired to|copy-paste between portals.">
+                <span class="hero-heading__line">Your team wasn't hired to</span>
+                <span class="hero-heading__line">copy-paste between portals.</span>
+              </h1>
+              <p class="hero-subtitle">
+                Aevra captures how your freight team works across every carrier portal, customs system, and booking platform — then executes it automatically, without errors, every time.
+              </p>
+            </div>
+
+            <div class="hero-conversion" data-hero-reveal>
+              <form
+                class="hero-email-form"
+                action="https://formsubmit.co/davide@aevra.co"
+                method="POST"
+                data-hero-email-form
+              >
+                <input type="hidden" name="_subject" value="New Aevra signup — Logistics ICP" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="icp_variant" value="logistics_freight" />
+                <label class="hero-email-field">
+                  <span class="sr-only">Work email</span>
+                  <input type="email" name="email" autocomplete="email" placeholder="Enter your work email" required />
+                  <button type="submit">Join waitlist</button>
+                </label>
+                <p class="hero-email-status" data-hero-email-status hidden></p>
+              </form>
+              <a class="hero-demo-link" href="https://calendly.com/davide-aevra/30min">Book a demo</a>
+            </div>
+          </div>
+
+          <a class="hero-scroll-cue" href="#how" data-hero-reveal>
+            <span class="hero-scroll-cue__mouse" aria-hidden="true">
+              <span class="hero-scroll-cue__wheel"></span>
+            </span>
+            <span class="hero-scroll-cue__label">Scroll to explore</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Pain statement -->
+      <section class="section story-section" id="how">
+        <div class="container story-shell">
+          <div class="section-lead" data-reveal>
+            <span class="section-kicker">The portal problem</span>
+            <h2 class="section-title">
+              <span class="title-line">Your ops team logs into 8 portals a day.</span>
+              <span class="title-line title-line--muted">Aevra makes that one workflow.</span>
+            </h2>
+          </div>
+
+          <div class="story-grid">
+            <article class="story-card" data-reveal>
+              <div class="story-media story-media--capture">
+                <svg class="capture-svg" viewBox="0 0 400 336" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="capBgGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#f8f5ed"/>
+                      <stop offset="1" stop-color="#ece6d8"/>
+                    </linearGradient>
+                    <filter id="capBlobBlur"><feGaussianBlur stdDeviation="22"/></filter>
+                    <filter id="capCardShadow" x="-10%" y="-10%" width="120%" height="130%">
+                      <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="#1c2330" flood-opacity="0.06"/>
+                    </filter>
+                    <filter id="capDropShadow" x="-20%" y="-20%" width="140%" height="160%">
+                      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1c2330" flood-opacity="0.18"/>
+                    </filter>
+                  </defs>
+
+                  <rect x="0" y="0" width="400" height="336" fill="url(#capBgGrad)"/>
+                  <g filter="url(#capBlobBlur)" opacity="0.85">
+                    <circle cx="80"  cy="50"  r="90"  fill="#fff0d0"/>
+                    <circle cx="340" cy="280" r="110" fill="#dce6f5"/>
+                    <circle cx="280" cy="40"  r="60"  fill="#ffd0ad"/>
+                  </g>
+
+                  <g class="cap-stage">
+                    <rect x="24" y="24" width="224" height="288" rx="12"
+                          fill="#ffffff" fill-opacity="0.86"
+                          stroke="#1112140d" stroke-width="1"
+                          filter="url(#capCardShadow)"/>
+
+                    <circle cx="38" cy="42" r="3" fill="#1112141a"/>
+                    <circle cx="48" cy="42" r="3" fill="#1112141a"/>
+                    <circle cx="58" cy="42" r="3" fill="#1112141a"/>
+
+                    <rect x="38" y="58" width="44" height="4" rx="2" fill="#11121430"/>
+                    <rect class="cap-input cap-input--title" x="38" y="66" width="196" height="20" rx="5"
+                          fill="#f7f4ec" stroke="#11121414" stroke-width="1"/>
+                    <rect class="cap-fill cap-fill--title" x="44" y="74" width="0" height="4" rx="2" fill="#11121499"/>
+                    <rect class="cap-caret cap-caret--title" x="44" y="71" width="1.2" height="10" fill="#1112149c" opacity="0"/>
+
+                    <rect x="38"  y="98" width="32" height="4" rx="2" fill="#11121430"/>
+                    <rect x="142" y="98" width="36" height="4" rx="2" fill="#11121430"/>
+
+                    <rect class="cap-input cap-input--priority" x="38" y="106" width="92" height="20" rx="5"
+                          fill="#f7f4ec" stroke="#11121414" stroke-width="1"/>
+                    <rect class="cap-fill cap-fill--priority" x="44" y="114" width="40" height="4" rx="2" fill="#11121438"/>
+                    <path d="M 119 114 l 4 4 l 4 -4" stroke="#11121466" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <rect class="cap-input cap-input--category" x="142" y="106" width="92" height="20" rx="5"
+                          fill="#f7f4ec" stroke="#11121414" stroke-width="1"/>
+                    <rect class="cap-fill cap-fill--category" x="148" y="114" width="36" height="4" rx="2" fill="#11121438"/>
+                    <path d="M 223 114 l 4 4 l 4 -4" stroke="#11121466" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <rect x="38" y="138" width="56" height="4" rx="2" fill="#11121430"/>
+                    <rect class="cap-input cap-input--desc" x="38" y="146" width="196" height="64" rx="5"
+                          fill="#f7f4ec" stroke="#11121414" stroke-width="1"/>
+                    <rect class="cap-line cap-line--1" x="46" y="156" width="0" height="3.5" rx="1.5" fill="#11121499"/>
+                    <rect class="cap-line cap-line--2" x="46" y="170" width="0" height="3.5" rx="1.5" fill="#11121499"/>
+                    <rect class="cap-line cap-line--3" x="46" y="184" width="0" height="3.5" rx="1.5" fill="#11121499"/>
+
+                    <rect class="cap-attach" x="38" y="222" width="26" height="22" rx="5"
+                          fill="#f7f4ec" stroke="#11121414" stroke-width="1"/>
+                    <path d="M 47 230 Q 47 227 50.5 227 Q 54 227 54 230 L 54 238 Q 54 240.5 50.5 240.5 Q 47 240.5 47 238 L 47 232"
+                          stroke="#11121480" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <rect class="cap-submit" x="70" y="222" width="164" height="22" rx="5" fill="#111214e6"/>
+                    <rect x="84"  y="231" width="22" height="4" rx="2" fill="#ffffffb5"/>
+                    <rect x="110" y="231" width="14" height="4" rx="2" fill="#ffffffb5"/>
+
+                    <g class="cap-drop cap-drop--priority" opacity="0">
+                      <rect x="38" y="130" width="92" height="58" rx="5"
+                            fill="#ffffff" stroke="#11121414" stroke-width="1" filter="url(#capDropShadow)"/>
+                      <rect x="44" y="138" width="48" height="6" rx="2" fill="#11121420"/>
+                      <rect class="cap-pick cap-pick--priority" x="44" y="150" width="60" height="6" rx="2" fill="#11121420"/>
+                      <rect x="44" y="162" width="40" height="6" rx="2" fill="#11121420"/>
+                      <rect x="44" y="174" width="50" height="6" rx="2" fill="#11121420"/>
+                    </g>
+
+                    <g class="cap-drop cap-drop--category" opacity="0">
+                      <rect x="142" y="130" width="92" height="58" rx="5"
+                            fill="#ffffff" stroke="#11121414" stroke-width="1" filter="url(#capDropShadow)"/>
+                      <rect x="148" y="138" width="40" height="6" rx="2" fill="#11121420"/>
+                      <rect x="148" y="150" width="55" height="6" rx="2" fill="#11121420"/>
+                      <rect class="cap-pick cap-pick--category" x="148" y="162" width="50" height="6" rx="2" fill="#11121420"/>
+                      <rect x="148" y="174" width="35" height="6" rx="2" fill="#11121420"/>
+                    </g>
+
+                    <rect x="260" y="24" width="116" height="288" rx="12"
+                          fill="#ffffff" fill-opacity="0.55"
+                          stroke="#11121424" stroke-dasharray="4 3" stroke-width="1"/>
+
+                    <circle class="cap-rec" cx="272" cy="44" r="3" fill="#d94a4a"/>
+                    <rect x="280" y="42" width="50" height="4" rx="2" fill="#11121438"/>
+
+                    <g class="cap-step cap-step--1" opacity="0">
+                      <rect x="266" y="56" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="70" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 70.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="73.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Open portal</text>
+                    </g>
+
+                    <g class="cap-step cap-step--2" opacity="0">
+                      <rect x="266" y="90" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="104" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 104.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="107.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Enter shipment</text>
+                    </g>
+
+                    <g class="cap-step cap-step--3" opacity="0">
+                      <rect x="266" y="124" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="138" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 138.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="141.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Set carrier</text>
+                    </g>
+
+                    <g class="cap-step cap-step--4" opacity="0">
+                      <rect x="266" y="158" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="172" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 172.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="175.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Add cargo details</text>
+                    </g>
+
+                    <g class="cap-step cap-step--5" opacity="0">
+                      <rect x="266" y="192" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="206" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 206.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="209.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Submit booking</text>
+                    </g>
+
+                    <g class="cap-step cap-step--6" opacity="0">
+                      <rect x="266" y="226" width="104" height="28" rx="5" fill="#ffffff" stroke="#11121412" stroke-width="1"/>
+                      <circle cx="278" cy="240" r="5" fill="#111214dc"/>
+                      <path d="M 275.4 240.2 l 2.1 2.1 l 4.4 -4.4" stroke="#ffffff" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="290" y="243.5" font-size="8" font-family="Manrope, system-ui, sans-serif" font-weight="500" fill="#111214c2">Confirm booking</text>
+                    </g>
+
+                    <g class="cap-cursor">
+                      <circle cx="0" cy="0" r="11" fill="#ffffff" fill-opacity="0.6"/>
+                      <circle cx="0" cy="0" r="6.5" fill="#111214ee"/>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <div class="story-copy">
+                <h3 class="story-title">Capture portal workflows</h3>
+                <p class="story-desc">
+                  Record how your ops team books a shipment, files customs, or updates a carrier portal. Once, exactly as it happens. Aevra turns real execution into a structured workflow the whole team runs from.
+                </p>
+              </div>
+            </article>
+
+            <article class="story-card" data-reveal>
+              <div class="story-media story-media--guidance">
+                <div class="execute-anim" aria-hidden="true">
+                  <div class="execute-anim__bg"></div>
+                  <div class="execute-anim__mesh"></div>
+                  <div class="exec-prompt-alone">
+                    <div class="exec-prompt-row">
+                      <span class="exec-prompt-text">Book SHP-4821 with DHL and update the customs system.</span>
+                    </div>
+                    <div class="exec-send">&uarr;</div>
+                  </div>
+
+                  <div class="exec-flow">
+                    <div class="exec-flow-list">
+                      <div class="exec-act exec-act--1">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Open carrier portal</strong>
+                          <small>DHL MyFreight logged in</small>
+                        </span>
+                      </div>
+                      <div class="exec-act exec-act--2">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Enter shipment data</strong>
+                          <small>SHP-4821 fields filled</small>
+                        </span>
+                      </div>
+                      <div class="exec-act exec-act--3">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Confirm booking</strong>
+                          <small>Tracking #DE849201 issued</small>
+                        </span>
+                      </div>
+                      <div class="exec-act exec-act--4">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>File customs entry</strong>
+                          <small>HS codes verified &amp; submitted</small>
+                        </span>
+                      </div>
+                      <div class="exec-act exec-act--5">
+                        <span class="exec-status"></span>
+                        <span class="exec-act-text">
+                          <strong>Notify ops team</strong>
+                          <small>Status update delivered</small>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="story-copy">
+                <h3 class="story-title">Execute across every portal</h3>
+                <p class="story-desc">
+                  Every captured workflow becomes something Aevra can execute for you — across carrier portals, customs systems, and TMS platforms. No tab switching. No missed fields. No re-entry.
+                </p>
+              </div>
+            </article>
+
+            <article class="story-card" data-reveal>
+              <div class="story-media story-media--memory">
+                <div class="memory-anim" aria-hidden="true">
+                  <div class="memory-anim__bg"></div>
+                  <div class="memory-source memory-source--crm">Carrier portals</div>
+                  <div class="memory-source memory-source--slack">Customs systems</div>
+                  <div class="memory-source memory-source--sop">TMS rules</div>
+                  <div class="memory-source memory-source--docs">Freight docs</div>
+                  <div class="memory-source memory-source--support">Tracking feeds</div>
+                  <div class="memory-source memory-source--finance">Tariff data</div>
+                  <div class="memory-core">
+                    <img src="./thelogo.png" alt="" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="memory-link"><span></span></div>
+                  <div class="memory-update">
+                    Workflow updated
+                  </div>
+                </div>
+              </div>
+              <div class="story-copy">
+                <h3 class="story-title">One brain for every system</h3>
+                <p class="story-desc">
+                  Aevra connects to the portals and platforms your logistics team already uses, builds a persistent memory of how every shipment workflow runs, and keeps it current whenever carriers or procedures change.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section benefits-section" id="benefits">
+        <div class="container benefits-shell">
+          <div class="section-lead benefits-lead" data-reveal>
+            <span class="section-kicker">Benefits</span>
+            <h2 class="section-title benefits-title">
+              <span class="title-line">Less portal hell.</span>
+              <span class="title-line title-line--muted">More shipments out the door.</span>
+            </h2>
+          </div>
+
+          <div class="benefits-grid">
+            <article class="benefit-card" data-reveal>
+              <span class="benefit-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M7 5h10M8 5c0 3 1.6 4.7 4 6 2.4-1.3 4-3 4-6M8 19c0-3 1.6-4.7 4-6 2.4 1.3 4 3 4 6M7 19h10" />
+                </svg>
+              </span>
+              <p class="benefit-metric" data-countup data-countup-value="72" data-countup-suffix="%">72%</p>
+              <h3 class="benefit-title">Of logistics ops time lost to manual portal entry</h3>
+              <p class="benefit-desc">
+                72% of European logistics ops teams cite manual portal data entry as their top pain. Aevra automates it.
+              </p>
+            </article>
+
+            <article class="benefit-card" data-reveal>
+              <span class="benefit-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M12 6v6l4 2M12 3.5a8.5 8.5 0 1 1 0 17a8.5 8.5 0 0 1 0-17Z" />
+                </svg>
+              </span>
+              <p class="benefit-metric" data-countup data-countup-value="0">0</p>
+              <h3 class="benefit-title">Data entry errors on automated bookings</h3>
+              <p class="benefit-desc">
+                Aevra fills every field exactly as your best operator would. No typos, no missing HS codes, no wrong carrier IDs.
+              </p>
+            </article>
+
+            <article class="benefit-card" data-reveal>
+              <span class="benefit-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </span>
+              <p class="benefit-metric" data-countup data-countup-value="3" data-countup-suffix=" min">3 min</p>
+              <h3 class="benefit-title">To capture any portal workflow</h3>
+              <p class="benefit-desc">
+                Record a shipment booking, a customs filing, or a status update once. Aevra replays it for every subsequent shipment.
+              </p>
+            </article>
+
+            <article class="benefit-card" data-reveal>
+              <span class="benefit-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M12 4.75a7.25 7.25 0 1 0 0 14.5a7.25 7.25 0 0 0 0-14.5Zm0 0c1.84 1.71 2.75 4.13 2.75 7.25c0 3.12-.91 5.54-2.75 7.25m0-14.5c-1.84 1.71-2.75 4.13-2.75 7.25c0 3.12.91 5.54 2.75 7.25M5.25 12h13.5" />
+                </svg>
+              </span>
+              <p class="benefit-metric" data-countup data-countup-value="30" data-countup-suffix="h">30h</p>
+              <h3 class="benefit-title">Saved per ops employee / month</h3>
+              <p class="benefit-desc">
+                Hours reclaimed from repetitive portal entry, status checking, and manual cross-system updates.
+              </p>
+            </article>
+
+            <article class="benefit-card" data-reveal>
+              <span class="benefit-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M8 8.5A4 4 0 0 1 15 6l1.5-1.5M16 15.5A4 4 0 0 1 9 18l-1.5 1.5M4 10h6M14 14h6" />
+                </svg>
+              </span>
+              <p class="benefit-metric" data-countup data-countup-value="8" data-countup-suffix="+">8+</p>
+              <h3 class="benefit-title">Portals handled from one place</h3>
+              <p class="benefit-desc">
+                Carrier portals, customs systems, freight platforms — all controlled through a single execution layer your team already knows.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section use-cases-section" id="use-cases">
+        <div class="container use-cases-shell">
+          <div class="section-lead use-cases-lead" data-reveal>
+            <span class="section-kicker">Use cases</span>
+            <h2 class="section-title">
+              <span class="title-line">Every portal workflow your team runs today</span>
+              <span class="title-line title-line--muted">can become one Aevra execution.</span>
+            </h2>
+          </div>
+
+          <div class="use-cases-tabs" role="tablist" aria-label="Logistics use cases" data-reveal>
+            <button
+              class="use-case-tab is-active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-use-case-tab="booking"
+            >
+              Shipment booking
+            </button>
+            <button
+              class="use-case-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-use-case-tab="customs"
+            >
+              Customs filing
+            </button>
+            <button
+              class="use-case-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-use-case-tab="tracking"
+            >
+              Status tracking
+            </button>
+            <button
+              class="use-case-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-use-case-tab="docs"
+            >
+              Freight documentation
+            </button>
+            <button
+              class="use-case-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-use-case-tab="onboarding"
+            >
+              Ops onboarding
+            </button>
+          </div>
+
+          <div class="use-cases-stage" data-reveal>
+            <div class="use-cases-media">
+              <figure class="use-case-visual is-active" data-use-case-panel="booking" aria-hidden="false">
+                <img src="./replay.jpg" alt="Shipment booking workflow automation" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="use-case-visual" data-use-case-panel="customs" aria-hidden="true">
+                <img src="./complex.jpg" alt="Customs filing across multiple portals" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="use-case-visual" data-use-case-panel="tracking" aria-hidden="true">
+                <img src="./Ops.jpg" alt="Carrier status tracking aggregation" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="use-case-visual" data-use-case-panel="docs" aria-hidden="true">
+                <img src="./capture.jpg" alt="Freight documentation generation" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="use-case-visual" data-use-case-panel="onboarding" aria-hidden="true">
+                <img src="./onboarding.jpg" alt="New ops team member onboarding" loading="lazy" decoding="async" />
+              </figure>
+            </div>
+
+            <div class="use-cases-detail">
+              <article class="use-case-copy is-active" data-use-case-copy="booking">
+                <span class="use-case-eyebrow">Shipment booking</span>
+                <h3 class="use-case-title">Book across carriers without switching tabs.</h3>
+                <p class="use-case-desc">
+                  Whether your team books through DHL, DB Schenker, Kuehne+Nagel, or five other carriers, Aevra handles each portal's flow automatically. Same data, right fields, every booking — no manual re-entry.
+                </p>
+              </article>
+
+              <article class="use-case-copy" data-use-case-copy="customs">
+                <span class="use-case-eyebrow">Customs filing</span>
+                <h3 class="use-case-title">File customs once. Not once per portal.</h3>
+                <p class="use-case-desc">
+                  Customs declarations, HS code lookups, and compliance forms require the same data entered into five different government and carrier systems. Aevra captures the full filing sequence and executes it with zero re-keying.
+                </p>
+              </article>
+
+              <article class="use-case-copy" data-use-case-copy="tracking">
+                <span class="use-case-eyebrow">Status tracking</span>
+                <h3 class="use-case-title">Pull shipment status from every portal into one place.</h3>
+                <p class="use-case-desc">
+                  Your team shouldn't spend 40 minutes a day logging into eight carrier portals to check where shipments are. Aevra runs the status check workflow across all of them and surfaces the result where your team works.
+                </p>
+              </article>
+
+              <article class="use-case-copy" data-use-case-copy="docs">
+                <span class="use-case-eyebrow">Freight documentation</span>
+                <h3 class="use-case-title">Generate bills of lading, CMRs, and AWBs without the busywork.</h3>
+                <p class="use-case-desc">
+                  Freight documentation follows fixed rules. Aevra captures how your team fills each template, pulls the right data from the right system, and produces the document correctly — without manual field-by-field entry.
+                </p>
+              </article>
+
+              <article class="use-case-copy" data-use-case-copy="onboarding">
+                <span class="use-case-eyebrow">Ops onboarding</span>
+                <h3 class="use-case-title">New operators booking shipments on their first day.</h3>
+                <p class="use-case-desc">
+                  Learning 8 different portals takes months. Aevra gives new ops team members step-by-step guidance through each portal workflow as they execute it, so they can start contributing before they have every system memorized.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Social proof / stat bar -->
+      <section class="section" style="padding: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+        <div class="container" style="padding-top: 48px; padding-bottom: 48px;">
+          <div data-reveal style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center;">
+            <div>
+              <p style="font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; font-family: var(--font-brand); letter-spacing: -0.04em; color: var(--text);">72%</p>
+              <p style="font-size: 0.8rem; color: var(--text-2); margin-top: 4px;">of EU logistics teams cite manual portal entry as their #1 ops pain</p>
+            </div>
+            <div>
+              <p style="font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; font-family: var(--font-brand); letter-spacing: -0.04em; color: var(--text);">8–12</p>
+              <p style="font-size: 0.8rem; color: var(--text-2); margin-top: 4px;">separate portals the average freight forwarder uses per week</p>
+            </div>
+            <div>
+              <p style="font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; font-family: var(--font-brand); letter-spacing: -0.04em; color: var(--text);">4–6h</p>
+              <p style="font-size: 0.8rem; color: var(--text-2); margin-top: 4px;">per day per ops employee lost to repetitive portal data entry</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section integrations-section" id="integrations">
+        <div class="container integrations-shell">
+          <div class="integrations-layout" data-reveal>
+            <div class="integrations-visual-wrap">
+              <div class="integrations-orbit" data-integrations-orbit aria-hidden="true">
+                <div class="orbit-ring orbit-ring--outer"></div>
+                <div class="orbit-ring orbit-ring--mid"></div>
+                <div class="orbit-ring orbit-ring--inner"></div>
+                <div class="orbit-ring orbit-ring--core"></div>
+
+                <div class="orbit-core">
+                  <img src="./thelogo.png" alt="" loading="lazy" decoding="async" />
+                </div>
+
+                <div class="orbit-badge orbit-badge--salesforce" data-depth="1.2">
+                  <img src="./logos/salesforce.svg" alt="Salesforce" loading="lazy" decoding="async" />
+                </div>
+                <div class="orbit-badge orbit-badge--google" data-depth="0.9">
+                  <img src="./logos/google-workspace.svg" alt="Google Workspace" loading="lazy" decoding="async" />
+                </div>
+                <div class="orbit-badge orbit-badge--microsoft" data-depth="1.1">
+                  <img src="./logos/microsoft.svg" alt="Microsoft" loading="lazy" decoding="async" />
+                </div>
+                <div class="orbit-badge orbit-badge--hubspot" data-depth="0.85">
+                  <img src="./logos/hubspot.svg" alt="HubSpot" loading="lazy" decoding="async" />
+                </div>
+                <div class="orbit-badge orbit-badge--jira" data-depth="1">
+                  <img src="./logos/jira.svg" alt="Jira" loading="lazy" decoding="async" />
+                </div>
+                <div class="orbit-badge orbit-badge--slack" data-depth="1.02">
+                  <img src="./slack.png" alt="Slack" loading="lazy" decoding="async" />
+                </div>
+                <div class="orbit-badge orbit-badge--notion" data-depth="1.15">
+                  <img src="./notion.png" alt="Notion" loading="lazy" decoding="async" />
+                </div>
+                <div class="orbit-badge orbit-badge--workday" data-depth="0.95">
+                  <img src="./logos/workday.svg" alt="Workday" loading="lazy" decoding="async" />
+                </div>
+                <div class="orbit-badge orbit-badge--servicenow" data-depth="1.05">
+                  <img src="./servicenow.png" alt="ServiceNow" loading="lazy" decoding="async" />
+                </div>
+              </div>
+            </div>
+
+            <div class="integrations-copy">
+              <span class="section-kicker">Integrations</span>
+              <h2 class="integrations-title">
+                <span>Works inside every portal</span>
+                <span>your team already uses.</span>
+              </h2>
+              <p class="integrations-desc">
+                Aevra runs as a browser extension, so it works directly inside carrier portals, customs platforms, and freight management systems — no API access required, no IT project to get started.
+              </p>
+              <p class="integrations-desc integrations-desc--muted">
+                DHL MyFreight, DB Schenker, Kuehne+Nagel, Freightos, customs web portals, SAP TM, CargoWise, and any other browser-based system your ops team logs into daily.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="contact">
+        <div class="container contact-shell">
+          <div class="contact-layout" data-reveal>
+            <div class="contact-copy-block">
+              <span class="section-kicker">Contact</span>
+              <h2 class="contact-title">Tell us about your portal stack.</h2>
+              <p class="contact-copy">
+                Share which portals and systems your ops team works with. We'll show you exactly how Aevra automates the workflows that cost the most time.
+              </p>
+            </div>
+            <form
+              class="contact-form"
+              action="https://formsubmit.co/davide@aevra.co"
+              method="POST"
+              novalidate
+              data-contact-form
+            >
+              <input type="hidden" name="_subject" value="New Aevra contact — Logistics ICP" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="icp_variant" value="logistics_freight" />
+
+              <label class="contact-field">
+                <span>Name</span>
+                <input type="text" name="name" autocomplete="name" required data-contact-name />
+                <span class="contact-error" data-error-for="name" hidden>Please enter your name.</span>
+              </label>
+
+              <label class="contact-field">
+                <span>Work email</span>
+                <input type="email" name="email" autocomplete="email" required data-contact-email />
+                <span class="contact-error" data-error-for="email" hidden>Please enter a valid work email.</span>
+              </label>
+
+              <label class="contact-field">
+                <span>Company</span>
+                <input type="text" name="company" autocomplete="organization" />
+              </label>
+
+              <label class="contact-field contact-field--full">
+                <span>Which portals does your team work with?</span>
+                <textarea name="message" rows="4" required></textarea>
+                <span class="contact-error" data-error-for="message" hidden>Please add a short message.</span>
+              </label>
+
+              <div class="contact-form__actions">
+                <button class="contact-submit" type="submit" data-contact-submit>Send</button>
+                <p class="contact-success" data-contact-success hidden>Thank you, we'll be in touch shortly.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="section closing-section" id="closing">
+        <div class="container closing-shell">
+          <div class="closing-hero" data-reveal>
+            <div class="closing-hero__copy">
+              <h2 class="closing-hero__title">See Aevra run your portal workflows.</h2>
+              <p class="closing-hero__desc">
+                A 20-minute walkthrough with your actual carrier portals and workflows.
+              </p>
+              <a class="closing-hero__cta" href="https://calendly.com/davide-aevra/30min" data-demo-source="bottom_cta_logistics">Book a demo</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-shell">
+        <div class="footer-brand">
+          <img class="footer-brand__logo" src="./thelogo.png" alt="Aevra" />
+          <p class="footer-brand__copy">
+            Automate the portals. Free the team.
+          </p>
+          <a class="footer-social" href="https://www.linkedin.com/company/aevraai/" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6.94 8.5a1.56 1.56 0 1 1 0-3.12 1.56 1.56 0 0 1 0 3.12Zm-1.35 1.65h2.7V18h-2.7v-7.85Zm4.4 0h2.59v1.07h.04c.36-.68 1.24-1.4 2.55-1.4 2.73 0 3.24 1.8 3.24 4.14V18h-2.7v-3.58c0-.85-.01-1.95-1.19-1.95-1.19 0-1.38.93-1.38 1.89V18h-2.7v-7.85Z" fill="currentColor"/>
+            </svg>
+            <span class="sr-only">LinkedIn</span>
+          </a>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="#how">How it works</a>
+          <a href="#use-cases">Use cases</a>
+          <a href="#benefits">Benefits</a>
+          <a href="#integrations">Integrations</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </footer>
+
+    <a class="privacy-link" href="./privacy-policy.html">Privacy &amp; Policy</a>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

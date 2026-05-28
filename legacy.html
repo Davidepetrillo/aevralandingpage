@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aevra — We automate legacy software</title>
+    <meta
+      name="description"
+      content="Aevra automates the internal software your team operates by hand. Show it once — in your ERP, your claim portal, your billing system — and it runs that workflow automatically from then on. No developers needed."
+    />
+    <link rel="icon" type="image/png" href="./thelogo.png" />
+    <link rel="shortcut icon" type="image/png" href="./thelogo.png" />
+    <link rel="apple-touch-icon" href="./thelogo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      /* ── Marquee ─────────────────────────────────────────────── */
+      .marquee-section {
+        padding: 40px 0;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        overflow: hidden;
+      }
+      .marquee-label {
+        text-align: center;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--text-3);
+        margin-bottom: 20px;
+      }
+      .marquee-track {
+        display: flex;
+        gap: 64px;
+        animation: marquee-scroll 28s linear infinite;
+        width: max-content;
+      }
+      .marquee-track:hover { animation-play-state: paused; }
+      @keyframes marquee-scroll {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+      }
+      .marquee-item {
+        font-family: var(--font-brand);
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--text-2);
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .marquee-item img {
+        height: 20px;
+        width: auto;
+        opacity: 0.55;
+        filter: brightness(2) saturate(0);
+      }
+
+      /* ── Why grid ────────────────────────────────────────────── */
+      .why-section { padding: var(--py) 0; }
+      .why-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 2px;
+        margin-top: 56px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .why-card {
+        padding: 36px 32px;
+        border-right: 1px solid var(--border);
+        background: var(--bg-soft);
+        transition: background 0.22s ease;
+      }
+      .why-card:last-child { border-right: none; }
+      .why-card:hover { background: rgba(255,255,255,0.035); }
+      .why-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(255,255,255,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .why-icon svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--text-2);
+        fill: none;
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .why-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        font-family: var(--font-brand);
+        color: var(--text);
+        margin-bottom: 10px;
+        letter-spacing: -0.02em;
+      }
+      .why-desc {
+        font-size: 0.83rem;
+        line-height: 1.65;
+        color: var(--text-2);
+      }
+
+      /* ── Steps ───────────────────────────────────────────────── */
+      .steps-section { padding: var(--py) 0; }
+      .steps-list { margin-top: 64px; display: flex; flex-direction: column; gap: 6px; }
+      .step-pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        min-height: 360px;
+      }
+      .step-pair:nth-child(even) .step-img  { order: 2; }
+      .step-pair:nth-child(even) .step-copy { order: 1; }
+      .step-img {
+        background: var(--bg-soft);
+        overflow: hidden;
+        border-right: 1px solid var(--border);
+      }
+      .step-pair:nth-child(even) .step-img {
+        border-right: none;
+        border-left: 1px solid var(--border);
+      }
+      .step-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top left;
+        display: block;
+        opacity: 0.92;
+      }
+      .step-copy {
+        padding: 52px 48px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .step-num {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-3);
+        margin-bottom: 18px;
+      }
+      .step-title {
+        font-size: clamp(1.25rem, 2vw, 1.55rem);
+        font-weight: 700;
+        font-family: var(--font-brand);
+        color: var(--text);
+        letter-spacing: -0.03em;
+        line-height: 1.25;
+        margin-bottom: 16px;
+      }
+      .step-desc {
+        font-size: 0.88rem;
+        line-height: 1.75;
+        color: var(--text-2);
+        max-width: 400px;
+      }
+      .step-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 24px;
+        padding: 6px 14px;
+        border: 1px solid var(--border);
+        border-radius: 99px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-3);
+        width: fit-content;
+      }
+      .step-tag span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(120,200,120,0.7);
+        display: inline-block;
+      }
+
+      /* ── Testimonials ────────────────────────────────────────── */
+      .testimonials-section { padding: var(--py) 0; }
+      .testimonials-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 56px;
+      }
+      .testimonial-card {
+        padding: 40px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--bg-soft);
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+      .testimonial-quote {
+        font-size: 1.05rem;
+        line-height: 1.65;
+        color: var(--text);
+        font-style: italic;
+        flex: 1;
+      }
+      .testimonial-author {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .testimonial-name {
+        font-size: 0.83rem;
+        font-weight: 700;
+        font-family: var(--font-brand);
+        color: var(--text);
+      }
+      .testimonial-role {
+        font-size: 0.75rem;
+        color: var(--text-3);
+      }
+
+      /* ── Industries ──────────────────────────────────────────── */
+      .industries-section { padding: var(--py) 0; }
+      .industries-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 56px;
+      }
+      .industry-card {
+        padding: 32px 28px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--bg-soft);
+        transition: border-color 0.22s ease, background 0.22s ease;
+        cursor: default;
+      }
+      .industry-card:hover {
+        border-color: rgba(255,255,255,0.18);
+        background: rgba(255,255,255,0.04);
+      }
+      .industry-tag {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-3);
+        margin-bottom: 14px;
+      }
+      .industry-title {
+        font-size: 0.98rem;
+        font-weight: 700;
+        font-family: var(--font-brand);
+        color: var(--text);
+        letter-spacing: -0.02em;
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+      .industry-desc {
+        font-size: 0.8rem;
+        line-height: 1.65;
+        color: var(--text-2);
+      }
+
+      /* ── Security row ────────────────────────────────────────── */
+      .security-section {
+        padding: 56px 0;
+        border-top: 1px solid var(--border);
+      }
+      .security-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+      .security-copy p:first-child {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text);
+        font-family: var(--font-brand);
+        margin-bottom: 4px;
+      }
+      .security-copy p:last-child {
+        font-size: 0.75rem;
+        color: var(--text-3);
+      }
+      .security-badges {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .security-badge {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 14px 20px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg-soft);
+      }
+      .security-badge svg {
+        width: 22px;
+        height: 22px;
+        stroke: var(--text-2);
+        fill: none;
+        stroke-width: 1.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .security-badge span {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-3);
+      }
+
+      /* ── Hero product shot ───────────────────────────────────── */
+      .hero-product-shot {
+        margin: 56px auto 0;
+        max-width: 900px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,0.04),
+          0 32px 80px rgba(0,0,0,0.5);
+      }
+      .hero-product-shot img {
+        width: 100%;
+        display: block;
+        opacity: 0.9;
+      }
+
+      /* ── Responsive ──────────────────────────────────────────── */
+      @media (max-width: 760px) {
+        .step-pair { grid-template-columns: 1fr; }
+        .step-pair .step-img { display: none; }
+        .step-pair:nth-child(even) .step-img  { order: 0; }
+        .step-pair:nth-child(even) .step-copy { order: 0; }
+        .testimonials-grid { grid-template-columns: 1fr; }
+        .why-grid { grid-template-columns: 1fr 1fr; }
+        .why-card:nth-child(2) { border-right: none; }
+        .why-card:nth-child(3) { border-right: 1px solid var(--border); }
+        .why-card { border-bottom: 1px solid var(--border); }
+        .why-card:nth-child(3), .why-card:nth-child(4) { border-bottom: none; }
+      }
+    </style>
+    <script>
+      const posthogHosts = new Set(["aevra.co", "www.aevra.co"]);
+      if (posthogHosts.has(window.location.hostname)) {
+        !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+        posthog.init("phc_wBcaqGEUZD4TdiML73EExC5M6eX93NFW7Z4PCvcmsSTR",{api_host:"https://eu.i.posthog.com",defaults:"2026-01-30",person_profiles:"always",capture_pageview:true});
+        posthog.register({ icp_variant: "legacy_software", page_variant: "legacy_enterprise" });
+      }
+    </script>
+  </head>
+  <body>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+    <nav class="nav hero-nav" id="nav">
+      <div class="nav-inner">
+        <a class="nav-brand" href="#">
+          <img src="./thelogo.png" alt="Aevra" width="30" height="30" />
+        </a>
+        <div class="nav-links">
+          <a class="nav-link" href="#why">Why Aevra</a>
+          <a class="nav-link" href="#how">How it works</a>
+          <a class="nav-link" href="#industries">Solutions</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </div>
+        <div class="nav-actions">
+          <a class="btn-primary" href="https://calendly.com/davide-aevra/30min" data-demo-source="navbar">Book a demo</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+
+      <!-- ── HERO ───────────────────────────────────────────────── -->
+      <section class="section hero" id="hero">
+        <div class="hero-frame" style="text-align:center; padding-top: clamp(64px, 10vw, 120px); padding-bottom: 0;">
+          <div data-hero-reveal style="max-width: 720px; margin: 0 auto;">
+            <p class="hero-kicker" style="text-align:center;">We automate legacy software</p>
+            <h1 class="hero-heading" style="text-align:center;" data-hero-type="Human precision.|Agent speed.">
+              <span class="hero-heading__line">Human precision.</span>
+              <span class="hero-heading__line">Agent speed.</span>
+            </h1>
+            <p class="hero-subtitle" style="text-align:center; max-width:580px; margin:0 auto 40px;">
+              Aevra automates internal software where RPA breaks and APIs don't exist. Your ops team demonstrates a workflow once — Aevra runs it at scale, correctly, every time.
+            </p>
+            <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+              <a class="btn-primary" href="https://calendly.com/davide-aevra/30min" data-demo-source="hero" style="font-size:0.9rem; padding:12px 28px;">Book a demo</a>
+              <a href="#how" style="display:inline-flex; align-items:center; gap:8px; font-size:0.85rem; font-weight:600; color:var(--text-2); text-decoration:none; padding:12px 4px; transition:color .2s;">
+                See how it works
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-product-shot" data-hero-reveal style="margin-top:64px;">
+            <img src="./dashboard.jpg" alt="Aevra workflow dashboard" loading="eager" decoding="async" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ── HOW IT WORKS ────────────────────────────────────────── -->
+      <section class="steps-section" id="how">
+        <div class="container">
+          <div class="section-lead" data-reveal>
+            <span class="section-kicker">How it works</span>
+            <h2 class="section-title">
+              <span class="title-line">Three steps. From manual task</span>
+              <span class="title-line title-line--muted">to automated workflow.</span>
+            </h2>
+          </div>
+
+          <div class="steps-list">
+
+            <div class="step-pair" data-reveal>
+              <div class="step-img">
+                <img src="./capture.jpg" alt="Recording a workflow in Aevra" loading="lazy" decoding="async" />
+              </div>
+              <div class="step-copy">
+                <p class="step-num">Step 01 — Record</p>
+                <h3 class="step-title">Your ops team performs the task once, normally.</h3>
+                <p class="step-desc">
+                  An operator logs into your ERP, claim portal, or billing system and completes the task exactly as they always do. Aevra runs in the background, capturing not just the clicks but the intent behind them.
+                </p>
+                <p class="step-desc" style="margin-top:12px;">
+                  No scripts to write. No configuration to set up. No technical knowledge needed at this stage or any other.
+                </p>
+                <div class="step-tag"><span></span> Average recording time: under 5 minutes</div>
+              </div>
+            </div>
+
+            <div class="step-pair" data-reveal>
+              <div class="step-img">
+                <img src="./replay.jpg" alt="Aevra running an automated workflow" loading="lazy" decoding="async" />
+              </div>
+              <div class="step-copy">
+                <p class="step-num">Step 02 — Automate</p>
+                <h3 class="step-title">Aevra runs that workflow on every new case.</h3>
+                <p class="step-desc">
+                  One demonstration covers every future case — different inputs, different data, different outcomes. Aevra executes the workflow the way your best operator would: correctly, completely, every time.
+                </p>
+                <p class="step-desc" style="margin-top:12px;">
+                  Tasks that took minutes per case now run in seconds. Volume your team could never absorb gets handled automatically.
+                </p>
+                <div class="step-tag"><span></span> Execution speed: seconds per case</div>
+              </div>
+            </div>
+
+            <div class="step-pair" data-reveal>
+              <div class="step-img">
+                <img src="./automation.jpg" alt="Operations team managing Aevra workflows" loading="lazy" decoding="async" />
+              </div>
+              <div class="step-copy">
+                <p class="step-num">Step 03 — Own it</p>
+                <h3 class="step-title">Your ops team manages, updates, and scales.</h3>
+                <p class="step-desc">
+                  Workflows are owned by your operations team, not your IT department. When a process changes, your ops manager updates it — no developer needed, no support ticket, no waiting.
+                </p>
+                <p class="step-desc" style="margin-top:12px;">
+                  Every workflow becomes a permanent company asset. When someone who knew that process leaves, the knowledge stays.
+                </p>
+                <div class="step-tag"><span></span> Update time when process changes: minutes</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ── INDUSTRIES ──────────────────────────────────────────── -->
+      <section class="industries-section" id="industries">
+        <div class="container">
+          <div class="section-lead" data-reveal>
+            <span class="section-kicker">Solutions</span>
+            <h2 class="section-title">
+              <span class="title-line">Built for every sector running</span>
+              <span class="title-line title-line--muted">on software that can't be automated.</span>
+            </h2>
+          </div>
+
+          <div class="industries-grid" data-reveal>
+            <div class="industry-card">
+              <p class="industry-tag">Logistics &amp; Freight</p>
+              <h3 class="industry-title">Automate every carrier portal your team logs into.</h3>
+              <p class="industry-desc">Shipment bookings, customs filings, status checks — across 8+ carrier portals. Aevra handles all of them from a single recorded workflow per system.</p>
+            </div>
+            <div class="industry-card">
+              <p class="industry-tag">Manufacturing</p>
+              <h3 class="industry-title">Turn ERP and supplier portal work into automated flows.</h3>
+              <p class="industry-desc">Purchase orders, inventory updates, supplier confirmations — the manual ERP work your production team does every day, running automatically.</p>
+            </div>
+            <div class="industry-card">
+              <p class="industry-tag">Professional Services</p>
+              <h3 class="industry-title">Replace the hours your team spends in internal systems.</h3>
+              <p class="industry-desc">Timesheets, expense approvals, client billing entries, status reports — the repetitive back-office work that grows with headcount, automated instead.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── SECURITY ────────────────────────────────────────────── -->
+      <section class="security-section">
+        <div class="container">
+          <div class="security-inner" data-reveal>
+            <div class="security-copy">
+              <p>Enterprise-ready from day one</p>
+              <p>Runs in your browser. Your data stays in your environment.</p>
+            </div>
+            <div class="security-badges">
+              <div class="security-badge">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Secure</span>
+              </div>
+              <div class="security-badge">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>Browser-only</span>
+              </div>
+              <div class="security-badge">
+                <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>Audit trail</span>
+              </div>
+              <div class="security-badge">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Role access</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CONTACT ─────────────────────────────────────────────── -->
+      <section class="section contact-section" id="contact">
+        <div class="container contact-shell">
+          <div class="contact-layout" data-reveal>
+            <div class="contact-copy-block">
+              <span class="section-kicker">Contact</span>
+              <h2 class="contact-title">Tell us what your team does by hand today.</h2>
+              <p class="contact-copy">
+                Share the internal systems your ops team logs into every day. We'll show you exactly which workflows Aevra can automate — in a 20-minute session, using your actual systems.
+              </p>
+            </div>
+            <form
+              class="contact-form"
+              action="https://formsubmit.co/davide@aevra.co"
+              method="POST"
+              novalidate
+              data-contact-form
+            >
+              <input type="hidden" name="_subject" value="New Aevra contact — Legacy Software ICP" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="icp_variant" value="legacy_enterprise" />
+
+              <label class="contact-field">
+                <span>Name</span>
+                <input type="text" name="name" autocomplete="name" required data-contact-name />
+                <span class="contact-error" data-error-for="name" hidden>Please enter your name.</span>
+              </label>
+              <label class="contact-field">
+                <span>Work email</span>
+                <input type="email" name="email" autocomplete="email" required data-contact-email />
+                <span class="contact-error" data-error-for="email" hidden>Please enter a valid work email.</span>
+              </label>
+              <label class="contact-field">
+                <span>Company</span>
+                <input type="text" name="company" autocomplete="organization" />
+              </label>
+              <label class="contact-field contact-field--full">
+                <span>Which internal systems does your team operate manually?</span>
+                <textarea name="message" rows="4" required></textarea>
+                <span class="contact-error" data-error-for="message" hidden>Please add a short message.</span>
+              </label>
+              <div class="contact-form__actions">
+                <button class="contact-submit" type="submit" data-contact-submit>Send</button>
+                <p class="contact-success" data-contact-success hidden>Thank you, we'll be in touch shortly.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CLOSING CTA ─────────────────────────────────────────── -->
+      <section class="section closing-section" id="closing">
+        <div class="container closing-shell">
+          <div class="closing-hero" data-reveal>
+            <div class="closing-hero__copy">
+              <h2 class="closing-hero__title">See it run inside your actual systems.</h2>
+              <p class="closing-hero__desc">
+                A 20-minute session. Your systems. Your workflows. Your ops team.
+              </p>
+              <a class="closing-hero__cta" href="https://calendly.com/davide-aevra/30min" data-demo-source="bottom_cta_legacy">Book a demo</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-shell">
+        <div class="footer-brand">
+          <img class="footer-brand__logo" src="./thelogo.png" alt="Aevra" />
+          <p class="footer-brand__copy">We automate legacy software.</p>
+          <a class="footer-social" href="https://www.linkedin.com/company/aevraai/" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6.94 8.5a1.56 1.56 0 1 1 0-3.12 1.56 1.56 0 0 1 0 3.12Zm-1.35 1.65h2.7V18h-2.7v-7.85Zm4.4 0h2.59v1.07h.04c.36-.68 1.24-1.4 2.55-1.4 2.73 0 3.24 1.8 3.24 4.14V18h-2.7v-3.58c0-.85-.01-1.95-1.19-1.95-1.19 0-1.38.93-1.38 1.89V18h-2.7v-7.85Z" fill="currentColor"/>
+            </svg>
+            <span class="sr-only">LinkedIn</span>
+          </a>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="#why">Why Aevra</a>
+          <a href="#how">How it works</a>
+          <a href="#industries">Solutions</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </footer>
+
+    <a class="privacy-link" href="./privacy-policy.html">Privacy &amp; Policy</a>
+    <script src="./script.js"></script>
+  </body>
+</html>
