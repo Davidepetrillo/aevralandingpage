@@ -72,8 +72,53 @@
               </p>
             </div>
 
-            <div class="hero-conversion" data-hero-reveal>
-              <a class="hero-demo-link" href="https://calendly.com/davide-aevra/30min">Book a demo</a>
+            <div class="hero-conversion hero-conversion--chat" data-hero-reveal>
+              <div class="hero-chat" data-hero-chat data-state="resting">
+                <div class="hero-chat__thread" data-chat-thread aria-live="polite"></div>
+
+                <form class="hero-chat__form" data-chat-form autocomplete="off" novalidate>
+                  <div class="hero-chat__input-wrap">
+                    <input
+                      class="hero-chat__input"
+                      type="text"
+                      name="prompt"
+                      placeholder=""
+                      autocomplete="off"
+                      aria-label="Describe a workflow"
+                      data-chat-input
+                    />
+                    <span class="hero-chat__placeholder" data-chat-placeholder aria-hidden="true">Describe a workflow to automate...</span>
+                  </div>
+                  <button class="hero-chat__submit" type="submit" aria-label="Send" data-chat-submit disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M12 19V5M5 12l7-7 7 7"/>
+                    </svg>
+                  </button>
+                </form>
+              </div>
+
+              <div class="hero-chat-footer" data-chat-footer>
+                <div class="hero-chat-suggestions" data-chat-suggestions>
+                  <button class="hero-chat-suggestions__pill" type="button" data-chat-pill data-workflow="timesheet">
+                    Weekly timesheet
+                  </button>
+                  <button class="hero-chat-suggestions__pill" type="button" data-chat-pill data-workflow="production">
+                    Production report
+                  </button>
+                  <button class="hero-chat-suggestions__pill" type="button" data-chat-pill data-workflow="inventory">
+                    Inventory reconciliation
+                  </button>
+                  <button class="hero-chat-suggestions__pill" type="button" data-chat-pill data-workflow="invoice">
+                    Supplier invoice
+                  </button>
+                </div>
+                <button class="hero-chat-reset" type="button" data-chat-close aria-label="Start over">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 12H5M11 6l-6 6 6 6"/>
+                  </svg>
+                  Start over
+                </button>
+              </div>
             </div>
 
             <div class="hero-clients" aria-label="Trusted by" data-hero-reveal>
