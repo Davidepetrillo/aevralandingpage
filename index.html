@@ -72,52 +72,47 @@
               </p>
             </div>
 
-            <div class="hero-conversion hero-conversion--chat" data-hero-reveal>
-              <div class="hero-chat" data-hero-chat data-state="resting">
-                <div class="hero-chat__thread" data-chat-thread aria-live="polite"></div>
+            <div class="hero-conversion hero-conversion--runner" data-hero-reveal>
+              <div class="wf" data-wf data-state="idle">
+                <div class="wf__window">
+                  <div class="wf__body">
+                    <nav class="wf__rail" data-wf-rail aria-label="Workflows">
+                      <span class="wf__rail-marker" data-wf-marker aria-hidden="true"></span>
 
-                <form class="hero-chat__form" data-chat-form autocomplete="off" novalidate>
-                  <div class="hero-chat__input-wrap">
-                    <input
-                      class="hero-chat__input"
-                      type="text"
-                      name="prompt"
-                      placeholder=""
-                      autocomplete="off"
-                      aria-label="Describe a workflow"
-                      data-chat-input
-                    />
-                    <span class="hero-chat__placeholder" data-chat-placeholder aria-hidden="true">Describe a workflow to automate...</span>
+                      <button class="wf__nav" data-wf-tab data-workflow="timesheet" type="button">
+                        <svg class="wf__nav-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.5v3.75l2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span class="wf__nav-label">Weekly timesheet</span>
+                        <span class="wf__nav-dot" aria-hidden="true"></span>
+                      </button>
+
+                      <button class="wf__nav" data-wf-tab data-workflow="production" type="button">
+                        <svg class="wf__nav-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="10.5" width="4" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="8" y="7" width="4" height="10.5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="13.5" y="4" width="4" height="13.5" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M1 18.5h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        <span class="wf__nav-label">Production report</span>
+                        <span class="wf__nav-dot" aria-hidden="true"></span>
+                      </button>
+
+                      <button class="wf__nav" data-wf-tab data-workflow="inventory" type="button">
+                        <svg class="wf__nav-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2.5L17.5 6.75V13.25L10 17.5L2.5 13.25V6.75L10 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 2.5v15M2.5 6.75l7.5 4.25 7.5-4.25" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                        <span class="wf__nav-label">Inventory recon.</span>
+                        <span class="wf__nav-dot" aria-hidden="true"></span>
+                      </button>
+
+                      <button class="wf__nav" data-wf-tab data-workflow="invoice" type="button">
+                        <svg class="wf__nav-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4.5 2.5h11a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.5"/><path d="M7 7h6M7 10h6M7 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        <span class="wf__nav-label">Supplier invoice</span>
+                        <span class="wf__nav-dot" aria-hidden="true"></span>
+                      </button>
+                    </nav>
+
+                    <div class="wf__canvas" data-wf-canvas>
+                      <span class="wf__hint" aria-hidden="true">Select a workflow to run</span>
+                      <div data-wf-chat></div>
+                      <div data-wf-reasoning></div>
+                      <div data-wf-graph></div>
+                      <div data-wf-narration></div>
+                    </div>
                   </div>
-                  <button class="hero-chat__submit" type="submit" aria-label="Send" data-chat-submit disabled>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M12 19V5M5 12l7-7 7 7"/>
-                    </svg>
-                  </button>
-                </form>
-              </div>
-
-              <div class="hero-chat-footer" data-chat-footer>
-                <div class="hero-chat-suggestions" data-chat-suggestions>
-                  <button class="hero-chat-suggestions__pill" type="button" data-chat-pill data-workflow="timesheet">
-                    Weekly timesheet
-                  </button>
-                  <button class="hero-chat-suggestions__pill" type="button" data-chat-pill data-workflow="production">
-                    Production report
-                  </button>
-                  <button class="hero-chat-suggestions__pill" type="button" data-chat-pill data-workflow="inventory">
-                    Inventory reconciliation
-                  </button>
-                  <button class="hero-chat-suggestions__pill" type="button" data-chat-pill data-workflow="invoice">
-                    Supplier invoice
-                  </button>
                 </div>
-                <button class="hero-chat-reset" type="button" data-chat-close aria-label="Start over">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M19 12H5M11 6l-6 6 6 6"/>
-                  </svg>
-                  Start over
-                </button>
               </div>
             </div>
 

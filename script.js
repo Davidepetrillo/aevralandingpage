@@ -1154,876 +1154,761 @@ if (!prefersReducedMotion) {
   });
 })();
 
-(function heroChatBehavior() {
-  const root = document.querySelector("[data-hero-chat]");
-  if (!root) return;
+// ── Workflow picker — hero ────────────────────────────────────────────────────
 
-  const form = root.querySelector("[data-chat-form]");
-  const input = root.querySelector("[data-chat-input]");
-  const submit = root.querySelector("[data-chat-submit]");
-  const thread = root.querySelector("[data-chat-thread]");
-  const closeBtn = document.querySelector("[data-chat-close]");
-  const suggestions = document.querySelector("[data-chat-suggestions]");
-  const reset = document.querySelector("[data-chat-close]");
-  const pills = document.querySelectorAll("[data-chat-pill]");
+const REDUCE_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const WORKFLOWS = {
-    timesheet: {
-      prompt:
-        "Submit my weekly timesheet — full days at Client A from Monday to Thursday, half day Friday morning. Receipts are in the attached zip.",
-      card: {
-        title: "Weekly Timesheet + Expenses",
-        meta: "12 nodes · recorded by Marco · timesheet.company.local",
-      },
-      reasoning: [
-        "Reading your request",
-        "Opening attached zip · extracted 12 receipts",
-        "Parsing receipt dates and amounts · €487 total",
-        "Resolving Client A in billable project list",
-        "Mapping schedule · Mon to Thu full · Friday half day",
-        "Sequencing workflow execution",
-      ],
-      graph: {
-        nodes: [
-          { id: "n1",  title: "Open portal",       meta: "timesheet.company.local", col: 0, row: 0 },
-          { id: "n2",  title: "Authenticate",      meta: "SSO · session token",     col: 1, row: 0 },
-          { id: "n3",  title: "Load schedule",     meta: "consultant calendar",     col: 2, row: -1 },
-          { id: "n4",  title: "Load clients",      meta: "billable project list",   col: 2, row: 1 },
-          { id: "n5",  title: "Fill Mon to Thu",   meta: "4 × 8.0h",                col: 3, row: -1 },
-          { id: "n6",  title: "Fill Friday",       meta: "half day · 4.0h",         col: 3, row: 0 },
-          { id: "n7",  title: "Match client code", meta: "billable assignment",     col: 3, row: 1 },
-          { id: "n8",  title: "Policy check",      meta: "limits · overtime",       col: 4, row: 0 },
-          { id: "n9",  title: "Attach receipts",   meta: "3 files",                 col: 5, row: -1 },
-          { id: "n10", title: "Categorize",        meta: "expense codes",           col: 5, row: 1 },
-          { id: "n11", title: "Validate totals",   meta: "36h + expenses",          col: 6, row: 0 },
-          { id: "n12", title: "Submit + route",    meta: "approver assigned",       col: 7, row: 0 },
-        ],
-        edges: [
-          { from: "n1",  to: "n2"  },
-          { from: "n2",  to: "n3"  },
-          { from: "n2",  to: "n4"  },
-          { from: "n3",  to: "n5"  },
-          { from: "n3",  to: "n6"  },
-          { from: "n4",  to: "n7"  },
-          { from: "n5",  to: "n8"  },
-          { from: "n6",  to: "n8"  },
-          { from: "n7",  to: "n8"  },
-          { from: "n8",  to: "n9"  },
-          { from: "n8",  to: "n10" },
-          { from: "n9",  to: "n11" },
-          { from: "n10", to: "n11" },
-          { from: "n11", to: "n12" },
-        ],
-      },
-      narration:
-        "Done. I just ran your weekly timesheet on the internal portal — pulled your schedule and the billable client list at the same time, filled Monday through Friday, ran the policy and overtime check, sorted out the receipts, and routed everything to your approver for sign-off. About 28 seconds.",
-    },
-    production: {
-      prompt:
-        "Close the production report for Line 3's morning shift — pull output, downtime, and quality data from the MES and post the OEE to SAP.",
-      card: {
-        title: "End of shift production report",
-        meta: "12 nodes · recorded by Alessia · MES portal · Line 3",
-      },
-      reasoning: [
-        "Reading your request",
-        "Locating Line 3 · morning shift in MES",
-        "Loading production plan · target 1,500 units",
-        "Connecting PLC tag channels + downtime log",
-        "Sequencing parallel reporting lanes",
-      ],
-      graph: {
-        nodes: [
-          { id: "n1",  title: "Open MES portal", meta: "mes.factory.local",   col: 0, row: 0 },
-          { id: "n2",  title: "Authenticate",    meta: "factory account",     col: 1, row: 0 },
-          { id: "n3",  title: "Select shift",    meta: "Line 3 · 06–14h",     col: 2, row: 0 },
-          { id: "n4",  title: "Load plan",       meta: "1,500 units target",  col: 3, row: 0 },
-          { id: "n5",  title: "Read output",     meta: "OEE counter",         col: 4, row: -1 },
-          { id: "n6",  title: "Read PLC tags",   meta: "4 channels",          col: 4, row: 0 },
-          { id: "n7",  title: "Read downtime",   meta: "cause-coded events",  col: 4, row: 1 },
-          { id: "n8",  title: "Compute units",   meta: "1,240 good · 18 scrap", col: 5, row: -1 },
-          { id: "n9",  title: "Tag quality lot", meta: "12 rejected",         col: 5, row: 0 },
-          { id: "n10", title: "Total downtime",  meta: "37 min · 2 causes",   col: 5, row: 1 },
-          { id: "n11", title: "Compute OEE",     meta: "0.84 vs plan",        col: 6, row: 0 },
-          { id: "n12", title: "Post to SAP MII", meta: "shift closed",        col: 7, row: 0 },
-        ],
-        edges: [
-          { from: "n1",  to: "n2"  },
-          { from: "n2",  to: "n3"  },
-          { from: "n3",  to: "n4"  },
-          { from: "n4",  to: "n5"  },
-          { from: "n4",  to: "n6"  },
-          { from: "n4",  to: "n7"  },
-          { from: "n5",  to: "n8"  },
-          { from: "n6",  to: "n9"  },
-          { from: "n7",  to: "n10" },
-          { from: "n8",  to: "n11" },
-          { from: "n9",  to: "n11" },
-          { from: "n10", to: "n11" },
-          { from: "n11", to: "n12" },
-        ],
-      },
-      narration:
-        "Shift closed. I went into the MES, pulled today's production plan, then captured the output counters, the PLC tag readings, and the downtime events in parallel. OEE came out at 0.84 against plan, and the closed report is posted to SAP MII. About 32 seconds.",
-    },
-    inventory: {
-      prompt:
-        "Run today's reconciliation for aisle B — adjust SAP if anything is outside tolerance and send the audit log to the warehouse controller.",
-      card: {
-        title: "Daily inventory reconciliation",
-        meta: "12 nodes · recorded by Paolo · WMS + SAP MM",
-      },
-      reasoning: [
-        "Reading your request",
-        "Locating aisle B in WMS · 184 SKUs",
-        "Opening SAP MM session for MMBE",
-        "Loading SKU master + UoM conversion tables",
-        "Sequencing dual-lane reconciliation",
-      ],
-      graph: {
-        nodes: [
-          { id: "n1",  title: "Open WMS",         meta: "warehouse.local",    col: 0, row: 0 },
-          { id: "n2",  title: "Authenticate",     meta: "supervisor login",   col: 1, row: 0 },
-          { id: "n3",  title: "Select zone",      meta: "aisle B · 184 SKUs", col: 2, row: -1 },
-          { id: "n4",  title: "Open SAP MMBE",    meta: "MM module",          col: 2, row: 1 },
-          { id: "n5",  title: "Scan SKUs",        meta: "scanner sweep",      col: 3, row: -1 },
-          { id: "n6",  title: "Pull SAP totals",  meta: "stock by SKU",       col: 3, row: 1 },
-          { id: "n7",  title: "Aggregate counts", meta: "by lot + batch",     col: 4, row: -1 },
-          { id: "n8",  title: "Map identifiers",  meta: "UoM conversion",     col: 4, row: 1 },
-          { id: "n9",  title: "Compare ±0.5%",    meta: "tolerance match",    col: 5, row: 0 },
-          { id: "n10", title: "Flag variances",   meta: "7 SKUs · ± units",   col: 6, row: 0 },
-          { id: "n11", title: "MIGO adjustment",  meta: "SAP movement",       col: 7, row: -0.5 },
-          { id: "n12", title: "Audit report",     meta: "PDF + signed log",   col: 7, row: 0.5 },
-        ],
-        edges: [
-          { from: "n1",  to: "n2"  },
-          { from: "n2",  to: "n3"  },
-          { from: "n2",  to: "n4"  },
-          { from: "n3",  to: "n5"  },
-          { from: "n4",  to: "n6"  },
-          { from: "n5",  to: "n7"  },
-          { from: "n6",  to: "n8"  },
-          { from: "n7",  to: "n9"  },
-          { from: "n8",  to: "n9"  },
-          { from: "n9",  to: "n10" },
-          { from: "n10", to: "n11" },
-          { from: "n10", to: "n12" },
-        ],
-      },
-      narration:
-        "Reconciliation done. I ran the cycle count in the warehouse and pulled stock from SAP at the same time, compared everything within a half-percent tolerance, and found seven SKUs out of line. Those went straight into a MIGO adjustment in SAP, and I dropped a signed PDF audit log for the controller. About 48 seconds.",
-    },
-    invoice: {
-      prompt:
-        "Post supplier invoice INV-2048 from Acme — €18,420 against PO 77819. Goods came in last Tuesday, please run the 3-way match.",
-      card: {
-        title: "Supplier invoice posting",
-        meta: "14 nodes · recorded by Pasquale · SAP MIRO + FB60",
-      },
-      reasoning: [
-        "Reading your request",
-        "Locating invoice INV-2048 in MIRO queue",
-        "Confirming vendor Acme · tax ID match",
-        "Locating PO 77819 + goods receipt 5001 2881",
-        "Sequencing 3-way match execution",
-      ],
-      graph: {
-        nodes: [
-          { id: "n1",  title: "Open SAP MIRO",     meta: "invoice queue",       col: 0, row: 0 },
-          { id: "n2",  title: "Pick from queue",   meta: "INV-2048 · 18,420 €", col: 1, row: 0 },
-          { id: "n3",  title: "Parse PDF",         meta: "OCR + field extract", col: 2, row: 0 },
-          { id: "n4",  title: "Vendor data",       meta: "tax ID · address",    col: 3, row: -1 },
-          { id: "n5",  title: "PO reference",      meta: "PO-77819",            col: 3, row: 0 },
-          { id: "n6",  title: "Amount + VAT",      meta: "header values",       col: 3, row: 1 },
-          { id: "n7",  title: "Identify vendor",   meta: "vendor master",       col: 4, row: -1 },
-          { id: "n8",  title: "Match PO lines",    meta: "ERP cross-check",     col: 4, row: 0 },
-          { id: "n9",  title: "Verify VAT rate",   meta: "IT · 22%",            col: 4, row: 1 },
-          { id: "n10", title: "3-way match",       meta: "PO + GR + invoice",   col: 5, row: 0 },
-          { id: "n11", title: "Compute due date",  meta: "net-30 · bank days",  col: 6, row: -0.5 },
-          { id: "n12", title: "Route approval",    meta: ">10k → CFO",          col: 6, row: 0.5 },
-          { id: "n13", title: "Receive sign-off",  meta: "CFO · digital sig",   col: 7, row: 0 },
-          { id: "n14", title: "Post to FB60",      meta: "GL booked",           col: 8, row: 0 },
-        ],
-        edges: [
-          { from: "n1",  to: "n2"  },
-          { from: "n2",  to: "n3"  },
-          { from: "n3",  to: "n4"  },
-          { from: "n3",  to: "n5"  },
-          { from: "n3",  to: "n6"  },
-          { from: "n4",  to: "n7"  },
-          { from: "n5",  to: "n8"  },
-          { from: "n6",  to: "n9"  },
-          { from: "n7",  to: "n10" },
-          { from: "n8",  to: "n10" },
-          { from: "n9",  to: "n10" },
-          { from: "n10", to: "n11" },
-          { from: "n10", to: "n12" },
-          { from: "n11", to: "n13" },
-          { from: "n12", to: "n13" },
-          { from: "n13", to: "n14" },
-        ],
-      },
-      narration:
-        "Invoice posted. I picked INV-2048 out of the MIRO queue, parsed the PDF, and ran the vendor identity, PO match and VAT check side by side — then did a proper three-way match. The CFO signed it off after routing, and it's now booked in FB60 and archived. About 36 seconds.",
-    },
-  };
+const delay = (ms) =>
+  new Promise((resolve) => window.setTimeout(resolve, REDUCE_MOTION ? Math.min(ms, 60) : ms));
 
-  const FALLBACK = {
+const WORKFLOWS = {
+  timesheet: {
     card: {
-      title: "Your workflow",
-      meta: "not recorded yet · capture once, then re-run on demand",
+      title: "Weekly Timesheet + Expenses",
+      meta: "12 nodes · recorded by Marco · timesheet.company.local",
     },
+    chat: [
+      { role: "user", text: "I need to submit my weekly timesheet — full days at Client A Monday to Thursday, half day Friday morning." },
+      { role: "ai", intro: "Got it — a billable week at Client A.", question: "Do you have the expense receipts? I'll log them against the same period." },
+      { role: "user", text: "Yes, they're all in here.", attachment: { name: "receipts.zip", meta: "12 files · 1.4 MB" } },
+    ],
     reasoning: [
-      "Reading your description",
-      "Identifying systems to record across",
-      "Drafting a capture plan",
-      "Estimating node count",
+      "Opening the archive · 12 receipts extracted",
+      "Parsing receipt dates and amounts · €487 total",
+      "Parsing receipt dates and amounts · €487 total",
+      "Resolving Client A in billable project list",
+      "Mapping schedule · Mon to Thu full · Friday half day",
+      "Sequencing workflow execution",
     ],
     graph: {
       nodes: [
-        { id: "n1", title: "Open software",          meta: "no setup · no API",         col: 0, row: 0 },
-        { id: "n2", title: "Authenticate",           meta: "your existing access",      col: 1, row: 0 },
-        { id: "n3", title: "Run workflow",           meta: "you do it once",            col: 2, row: 0 },
-        { id: "n4", title: "Aevra records",          meta: "clicks · inputs · outcomes", col: 3, row: 0 },
-        { id: "n5", title: "Structure as procedure", meta: "steps + guardrails",        col: 4, row: 0 },
-        { id: "n6", title: "Review + save",          meta: "name + share",              col: 5, row: 0 },
-        { id: "n7", title: "Re-run with new data",   meta: "callable · auditable",      col: 6, row: 0 },
+        { id: "n1",  title: "Open portal",       meta: "timesheet.company.local", col: 0, row: 0 },
+        { id: "n2",  title: "Authenticate",      meta: "SSO · session token",     col: 1, row: 0 },
+        { id: "n3",  title: "Load schedule",     meta: "consultant calendar",     col: 2, row: -1 },
+        { id: "n4",  title: "Load clients",      meta: "billable project list",   col: 2, row: 1 },
+        { id: "n5",  title: "Fill Mon to Thu",   meta: "4 × 8.0h",                col: 3, row: -1 },
+        { id: "n6",  title: "Fill Friday",       meta: "half day · 4.0h",         col: 3, row: 0 },
+        { id: "n7",  title: "Match client code", meta: "billable assignment",     col: 3, row: 1 },
+        { id: "n8",  title: "Policy check",      meta: "limits · overtime",       col: 4, row: 0 },
+        { id: "n9",  title: "Attach receipts",   meta: "3 files",                 col: 5, row: -1 },
+        { id: "n10", title: "Categorize",        meta: "expense codes",           col: 5, row: 1 },
+        { id: "n11", title: "Validate totals",   meta: "36h + expenses",          col: 6, row: 0 },
+        { id: "n12", title: "Submit + route",    meta: "approver assigned",       col: 7, row: 0 },
       ],
       edges: [
-        { from: "n1", to: "n2" },
-        { from: "n2", to: "n3" },
-        { from: "n3", to: "n4" },
-        { from: "n4", to: "n5" },
-        { from: "n5", to: "n6" },
-        { from: "n6", to: "n7" },
+        { from: "n1",  to: "n2"  }, { from: "n2",  to: "n3"  }, { from: "n2",  to: "n4"  },
+        { from: "n3",  to: "n5"  }, { from: "n3",  to: "n6"  }, { from: "n4",  to: "n7"  },
+        { from: "n5",  to: "n8"  }, { from: "n6",  to: "n8"  }, { from: "n7",  to: "n8"  },
+        { from: "n8",  to: "n9"  }, { from: "n8",  to: "n10" }, { from: "n9",  to: "n11" },
+        { from: "n10", to: "n11" }, { from: "n11", to: "n12" },
       ],
     },
-    narration:
-      "Here's how it works: you run the workflow once in the software you already use — I'll watch and record every step. After a quick review, the procedure is saved and I can run it for you, with new data, anytime. No setup. No API. No migration.",
-  };
+    narration: "Done. I just ran your weekly timesheet on the internal portal — pulled your schedule and the billable client list at the same time, filled Monday through Friday, ran the policy and overtime check, sorted out the receipts, and routed everything to your approver for sign-off. About 28 seconds.",
+  },
+  production: {
+    card: {
+      title: "End of shift production report",
+      meta: "12 nodes · recorded by Alessia · MES portal · Line 3",
+    },
+    chat: [
+      { role: "user", text: "Close out the end-of-shift production report for Line 3, morning shift." },
+      { role: "ai", intro: "On it — Line 3, 06:00–14:00 shift.", question: "Should I pull output, downtime and quality straight from the MES, or are you supplying the figures?" },
+      { role: "user", text: "Pull everything from the MES." },
+    ],
+    reasoning: [
+      "Locating Line 3 · morning shift in MES",
+      "Loading production plan · target 1,500 units",
+      "Connecting PLC tag channels + downtime log",
+      "Sequencing parallel reporting lanes",
+    ],
+    graph: {
+      nodes: [
+        { id: "n1",  title: "Open MES portal", meta: "mes.factory.local",     col: 0, row: 0 },
+        { id: "n2",  title: "Authenticate",    meta: "factory account",       col: 1, row: 0 },
+        { id: "n3",  title: "Select shift",    meta: "Line 3 · 06–14h",       col: 2, row: 0 },
+        { id: "n4",  title: "Load plan",       meta: "1,500 units target",    col: 3, row: 0 },
+        { id: "n5",  title: "Read output",     meta: "OEE counter",           col: 4, row: -1 },
+        { id: "n6",  title: "Read PLC tags",   meta: "4 channels",            col: 4, row: 0 },
+        { id: "n7",  title: "Read downtime",   meta: "cause-coded events",    col: 4, row: 1 },
+        { id: "n8",  title: "Compute units",   meta: "1,240 good · 18 scrap", col: 5, row: -1 },
+        { id: "n9",  title: "Tag quality lot", meta: "12 rejected",           col: 5, row: 0 },
+        { id: "n10", title: "Total downtime",  meta: "37 min · 2 causes",     col: 5, row: 1 },
+        { id: "n11", title: "Compute OEE",     meta: "0.84 vs plan",          col: 6, row: 0 },
+        { id: "n12", title: "Post to SAP MII", meta: "shift closed",          col: 7, row: 0 },
+      ],
+      edges: [
+        { from: "n1",  to: "n2"  }, { from: "n2",  to: "n3"  }, { from: "n3",  to: "n4"  },
+        { from: "n4",  to: "n5"  }, { from: "n4",  to: "n6"  }, { from: "n4",  to: "n7"  },
+        { from: "n5",  to: "n8"  }, { from: "n6",  to: "n9"  }, { from: "n7",  to: "n10" },
+        { from: "n8",  to: "n11" }, { from: "n9",  to: "n11" }, { from: "n10", to: "n11" },
+        { from: "n11", to: "n12" },
+      ],
+    },
+    narration: "Shift closed. I went into the MES, pulled today's production plan, then captured the output counters, the PLC tag readings, and the downtime events in parallel. OEE came out at 0.84 against plan, and the closed report is posted to SAP MII. About 32 seconds.",
+  },
+  inventory: {
+    card: {
+      title: "Daily inventory reconciliation",
+      meta: "12 nodes · recorded by Paolo · WMS + SAP MM",
+    },
+    chat: [
+      { role: "user", text: "Run today's cycle-count reconciliation for aisle B and fix anything outside tolerance." },
+      { role: "ai", intro: "Understood — aisle B, 184 SKUs.", question: "Can you share this morning's scanner export so I can reconcile it against SAP?" },
+      { role: "user", text: "Here's the sweep.", attachment: { name: "aisle-B-scan.csv", meta: "184 rows · 38 KB" } },
+    ],
+    reasoning: [
+      "Locating aisle B in WMS · 184 SKUs",
+      "Opening SAP MM session for MMBE",
+      "Loading SKU master + UoM conversion tables",
+      "Sequencing dual-lane reconciliation",
+    ],
+    graph: {
+      nodes: [
+        { id: "n1",  title: "Open WMS",         meta: "warehouse.local",    col: 0, row: 0 },
+        { id: "n2",  title: "Authenticate",     meta: "supervisor login",   col: 1, row: 0 },
+        { id: "n3",  title: "Select zone",      meta: "aisle B · 184 SKUs", col: 2, row: -1 },
+        { id: "n4",  title: "Open SAP MMBE",    meta: "MM module",          col: 2, row: 1 },
+        { id: "n5",  title: "Scan SKUs",        meta: "scanner sweep",      col: 3, row: -1 },
+        { id: "n6",  title: "Pull SAP totals",  meta: "stock by SKU",       col: 3, row: 1 },
+        { id: "n7",  title: "Aggregate counts", meta: "by lot + batch",     col: 4, row: -1 },
+        { id: "n8",  title: "Map identifiers",  meta: "UoM conversion",     col: 4, row: 1 },
+        { id: "n9",  title: "Compare ±0.5%",    meta: "tolerance match",    col: 5, row: 0 },
+        { id: "n10", title: "Flag variances",   meta: "7 SKUs · ± units",   col: 6, row: 0 },
+        { id: "n11", title: "MIGO adjustment",  meta: "SAP movement",       col: 7, row: -0.5 },
+        { id: "n12", title: "Audit report",     meta: "PDF + signed log",   col: 7, row: 0.5 },
+      ],
+      edges: [
+        { from: "n1",  to: "n2"  }, { from: "n2",  to: "n3"  }, { from: "n2",  to: "n4"  },
+        { from: "n3",  to: "n5"  }, { from: "n4",  to: "n6"  }, { from: "n5",  to: "n7"  },
+        { from: "n6",  to: "n8"  }, { from: "n7",  to: "n9"  }, { from: "n8",  to: "n9"  },
+        { from: "n9",  to: "n10" }, { from: "n10", to: "n11" }, { from: "n10", to: "n12" },
+      ],
+    },
+    narration: "Reconciliation done. I ran the cycle count in the warehouse and pulled stock from SAP at the same time, compared everything within a half-percent tolerance, and found seven SKUs out of line. Those went straight into a MIGO adjustment in SAP, and I dropped a signed PDF audit log for the controller. About 48 seconds.",
+  },
+  invoice: {
+    card: {
+      title: "Supplier invoice posting",
+      meta: "14 nodes · recorded by Pasquale · SAP MIRO + FB60",
+    },
+    chat: [
+      { role: "user", text: "Post supplier invoice INV-2048 from Acme against PO 77819." },
+      { role: "ai", intro: "Sure — let me take a look.", question: "Can you attach the invoice PDF? I'll run a full three-way match before posting." },
+      { role: "user", text: "Attached.", attachment: { name: "INV-2048.pdf", meta: "Acme S.p.A. · €18,420" } },
+    ],
+    reasoning: [
+      "Reading invoice INV-2048 · OCR complete",
+      "Locating invoice INV-2048 in MIRO queue",
+      "Confirming vendor Acme · tax ID match",
+      "Locating PO 77819 + goods receipt 5001 2881",
+      "Sequencing 3-way match execution",
+    ],
+    graph: {
+      nodes: [
+        { id: "n1",  title: "Open SAP MIRO",     meta: "invoice queue",       col: 0, row: 0 },
+        { id: "n2",  title: "Pick from queue",   meta: "INV-2048 · 18,420 €", col: 1, row: 0 },
+        { id: "n3",  title: "Parse PDF",         meta: "OCR + field extract", col: 2, row: 0 },
+        { id: "n4",  title: "Vendor data",       meta: "tax ID · address",    col: 3, row: -1 },
+        { id: "n5",  title: "PO reference",      meta: "PO-77819",            col: 3, row: 0 },
+        { id: "n6",  title: "Amount + VAT",      meta: "header values",       col: 3, row: 1 },
+        { id: "n7",  title: "Identify vendor",   meta: "vendor master",       col: 4, row: -1 },
+        { id: "n8",  title: "Match PO lines",    meta: "ERP cross-check",     col: 4, row: 0 },
+        { id: "n9",  title: "Verify VAT rate",   meta: "IT · 22%",            col: 4, row: 1 },
+        { id: "n10", title: "3-way match",       meta: "PO + GR + invoice",   col: 5, row: 0 },
+        { id: "n11", title: "Compute due date",  meta: "net-30 · bank days",  col: 6, row: -0.5 },
+        { id: "n12", title: "Route approval",    meta: ">10k → CFO",          col: 6, row: 0.5 },
+        { id: "n13", title: "Receive sign-off",  meta: "CFO · digital sig",   col: 7, row: 0 },
+        { id: "n14", title: "Post to FB60",      meta: "GL booked",           col: 8, row: 0 },
+      ],
+      edges: [
+        { from: "n1",  to: "n2"  }, { from: "n2",  to: "n3"  },
+        { from: "n3",  to: "n4"  }, { from: "n3",  to: "n5"  }, { from: "n3",  to: "n6"  },
+        { from: "n4",  to: "n7"  }, { from: "n5",  to: "n8"  }, { from: "n6",  to: "n9"  },
+        { from: "n7",  to: "n10" }, { from: "n8",  to: "n10" }, { from: "n9",  to: "n10" },
+        { from: "n10", to: "n11" }, { from: "n10", to: "n12" },
+        { from: "n11", to: "n13" }, { from: "n12", to: "n13" },
+        { from: "n13", to: "n14" },
+      ],
+    },
+    narration: "Invoice posted. I picked INV-2048 out of the MIRO queue, parsed the PDF, and ran the vendor identity, PO match and VAT check side by side — then did a proper three-way match. The CFO signed it off after routing, and it's now booked in FB60 and archived. About 36 seconds.",
+  },
+};
 
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let busy = false;
+const GRAPH = {
+  NODE_W: 156,
+  NODE_H: 62,
+  COL_GAP: 36,
+  ROW_GAP: 28,
+  VIEWPORT_H: 360,
+  EDGE_PADDING: 96,
+  NODE_RUN_MS_MIN: 680,
+  NODE_RUN_MS_MAX: 1080,
+  EDGE_SPEED: 0.82,
+  EDGE_MS_MIN: 720,
+  EDGE_MS_MAX: 1400,
+  MATERIALIZE_FADE_MS: 540,
+  TARGET_REVEAL_AT: 0.62,
+};
 
-  function setBusy(state) {
-    busy = state;
-    root.dataset.busy = state ? "true" : "false";
-    if (submit) submit.disabled = state || !input.value.trim();
-    if (input) input.disabled = state;
+function buildReasoning(body, steps) {
+  const block = document.createElement("div");
+  block.className = "hero-chat__reasoning";
+  const stepEls = steps.map((stepText) => {
+    const step = document.createElement("div");
+    step.className = "hero-chat__reasoning-step";
+    const bullet = document.createElement("span");
+    bullet.className = "hero-chat__reasoning-bullet";
+    const text = document.createElement("span");
+    text.className = "hero-chat__reasoning-text";
+    text.textContent = stepText;
+    step.appendChild(bullet);
+    step.appendChild(text);
+    block.appendChild(step);
+    return step;
+  });
+  body.appendChild(block);
+  return stepEls;
+}
+
+async function runReasoning(stepEls, isCancelled) {
+  for (let i = 0; i < stepEls.length; i += 1) {
+    if (isCancelled && isCancelled()) return;
+    const el = stepEls[i];
+    el.dataset.state = "active";
+    await delay(680 + i * 60);
+    if (isCancelled && isCancelled()) return;
+    el.dataset.state = "done";
   }
+}
 
-  function activate() {
-    if (root.dataset.state === "active") return;
-    root.dataset.state = "active";
-    if (suggestions) suggestions.dataset.state = "hidden";
-    if (reset) reset.dataset.state = "visible";
-  }
+function buildGraph(body, graph) {
+  const { NODE_W, NODE_H, COL_GAP, ROW_GAP, VIEWPORT_H } = GRAPH;
+  const COL_UNIT = NODE_W + COL_GAP;
+  const ROW_UNIT = NODE_H + ROW_GAP;
+  const rows = graph.nodes.map((n) => n.row);
+  const cols = graph.nodes.map((n) => n.col);
+  const minRow = Math.min(...rows);
+  const maxRow = Math.max(...rows);
+  const maxCol = Math.max(...cols);
+  const canvasW = maxCol * COL_UNIT + NODE_W;
+  const canvasH = (maxRow - minRow) * ROW_UNIT + NODE_H;
+  const container = document.createElement("div");
+  container.className = "hero-chat__graph";
+  const viewport = document.createElement("div");
+  viewport.className = "hero-chat__graph-viewport";
+  viewport.style.height = VIEWPORT_H + "px";
+  container.appendChild(viewport);
+  const canvas = document.createElement("div");
+  canvas.className = "hero-chat__graph-canvas";
+  canvas.style.width = canvasW + "px";
+  canvas.style.height = canvasH + "px";
+  viewport.appendChild(canvas);
+  const svgNS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(svgNS, "svg");
+  svg.classList.add("hero-chat__graph-svg");
+  svg.setAttribute("width", String(canvasW));
+  svg.setAttribute("height", String(canvasH));
+  svg.setAttribute("viewBox", `0 0 ${canvasW} ${canvasH}`);
+  canvas.appendChild(svg);
+  const nodeMap = new Map();
+  graph.nodes.forEach((node, i) => {
+    const x = node.col * COL_UNIT;
+    const y = (node.row - minRow) * ROW_UNIT;
+    const el = document.createElement("div");
+    el.className = "hero-chat__graph-node";
+    el.dataset.state = "pending";
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    el.style.width = NODE_W + "px";
+    el.style.height = NODE_H + "px";
+    const num = document.createElement("span");
+    num.className = "hero-chat__graph-num";
+    num.textContent = String(i + 1).padStart(2, "0");
+    el.appendChild(num);
+    const title = document.createElement("span");
+    title.className = "hero-chat__graph-title";
+    title.textContent = node.title;
+    el.appendChild(title);
+    const meta = document.createElement("span");
+    meta.className = "hero-chat__graph-meta";
+    meta.textContent = node.meta || "";
+    el.appendChild(meta);
+    nodeMap.set(node.id, { node, x, y, el, materialized: false });
+  });
+  const edgeMap = new Map();
+  graph.edges.forEach((edge) => {
+    const src = nodeMap.get(edge.from);
+    const tgt = nodeMap.get(edge.to);
+    if (!src || !tgt) return;
+    const sx = src.x + NODE_W;
+    const sy = src.y + NODE_H / 2;
+    const tx = tgt.x;
+    const ty = tgt.y + NODE_H / 2;
+    const dx = tx - sx;
+    const offset = Math.min(Math.abs(dx) * 0.5 - 6, Math.max(20, Math.abs(dx) * 0.42));
+    const d = `M ${sx.toFixed(2)},${sy.toFixed(2)} C ${(sx + offset).toFixed(2)},${sy.toFixed(2)} ${(tx - offset).toFixed(2)},${ty.toFixed(2)} ${tx.toFixed(2)},${ty.toFixed(2)}`;
+    const path = document.createElementNS(svgNS, "path");
+    path.classList.add("hero-chat__graph-edge");
+    path.setAttribute("d", d);
+    edgeMap.set(edge, { edge, path, length: 0, materialized: false, canvas });
+  });
+  body.appendChild(container);
+  const panState = attachPanning(viewport, canvas, canvasW, canvasH);
+  return { container, viewport, canvas, svg, nodeMap, edgeMap, canvasW, canvasH, panState };
+}
 
-  function resetChat() {
-    if (busy) return;
-    root.dataset.state = "resting";
-    if (suggestions) delete suggestions.dataset.state;
-    if (reset) delete reset.dataset.state;
-    if (thread) thread.innerHTML = "";
-    if (input) {
-      input.value = "";
-      if (submit) submit.disabled = true;
+function attachPanning(viewport, canvas, canvasW, canvasH) {
+  const state = { interactive: false, drag: null };
+  const PAD = GRAPH.EDGE_PADDING;
+  function clampTransform(tx, ty) {
+    const vw = viewport.offsetWidth;
+    const vh = viewport.offsetHeight;
+    if (canvasW > vw - PAD * 2) {
+      tx = Math.max(vw - canvasW - PAD, Math.min(PAD, tx));
+    } else {
+      tx = (vw - canvasW) / 2;
     }
+    if (canvasH > vh - PAD * 2) {
+      ty = Math.max(vh - canvasH - PAD, Math.min(PAD, ty));
+    } else {
+      ty = (vh - canvasH) / 2;
+    }
+    return { tx, ty };
+  }
+  function getCurrentTransform() {
+    const tr = canvas.style.transform || "";
+    const m = tr.match(/translate\(\s*(-?[\d.]+)px,\s*(-?[\d.]+)px\)/);
+    return m ? { tx: parseFloat(m[1]), ty: parseFloat(m[2]) } : { tx: 0, ty: 0 };
+  }
+  viewport.addEventListener("pointerdown", (e) => {
+    if (!state.interactive) return;
+    e.preventDefault();
+    const { tx, ty } = getCurrentTransform();
+    state.drag = { startX: e.clientX, startY: e.clientY, tx0: tx, ty0: ty };
+    canvas.style.transition = "none";
+    viewport.style.cursor = "grabbing";
+    try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  viewport.addEventListener("pointermove", (e) => {
+    if (!state.drag) return;
+    const dx = e.clientX - state.drag.startX;
+    const dy = e.clientY - state.drag.startY;
+    const { tx, ty } = clampTransform(state.drag.tx0 + dx, state.drag.ty0 + dy);
+    canvas.style.transform = `translate(${tx}px, ${ty}px)`;
+  });
+  function endDrag() {
+    if (!state.drag) return;
+    state.drag = null;
+    viewport.style.cursor = state.interactive ? "grab" : "default";
+    canvas.style.transition = "";
+  }
+  viewport.addEventListener("pointerup", endDrag);
+  viewport.addEventListener("pointercancel", endDrag);
+  return {
+    enable() {
+      state.interactive = true;
+      viewport.style.cursor = "grab";
+    },
+    clampTransform,
+  };
+}
+
+async function runGraph(graph, graphCtx, isCancelled) {
+  const cancelled = () => isCancelled && isCancelled();
+  const { nodeMap, edgeMap, canvas, viewport, svg, canvasW, canvasH, panState } = graphCtx;
+  const { NODE_W, NODE_H, EDGE_PADDING } = GRAPH;
+  const incomingTracker = new Map();
+  graph.nodes.forEach((n) => {
+    const count = graph.edges.filter((e) => e.to === n.id).length;
+    incomingTracker.set(n.id, { needed: count, drawn: 0 });
+  });
+  const roots = graph.nodes.filter((n) => !graph.edges.some((e) => e.to === n.id));
+  const recentTargets = [];
+  const RECENT_MS = 800;
+  function applyCamera(cx, cy) {
+    const vw = viewport.offsetWidth;
+    const vh = viewport.offsetHeight;
+    const PAD = EDGE_PADDING;
+    let tx, ty;
+    if (canvasW <= vw - PAD * 2) {
+      tx = (vw - canvasW) / 2;
+    } else {
+      tx = Math.max(vw - canvasW - PAD, Math.min(PAD, vw / 2 - cx));
+    }
+    if (canvasH <= vh - PAD * 2) {
+      ty = (vh - canvasH) / 2;
+    } else {
+      ty = Math.max(vh - canvasH - PAD, Math.min(PAD, vh / 2 - cy));
+    }
+    canvas.style.transform = `translate(${tx}px, ${ty}px)`;
+  }
+  function followTo(nodeId) {
+    const now = performance.now();
+    recentTargets.push({ nodeId, time: now });
+    while (recentTargets.length > 0 && now - recentTargets[0].time > RECENT_MS) {
+      recentTargets.shift();
+    }
+    let sumX = 0, sumY = 0;
+    for (const { nodeId: id } of recentTargets) {
+      const e = nodeMap.get(id);
+      sumX += e.x + NODE_W / 2;
+      sumY += e.y + NODE_H / 2;
+    }
+    const cx = sumX / recentTargets.length;
+    const cy = sumY / recentTargets.length;
+    applyCamera(cx, cy);
+  }
+  function materializeNode(entry) {
+    if (entry.materialized) return;
+    entry.materialized = true;
+    canvas.appendChild(entry.el);
+    entry.el.getBoundingClientRect();
+    entry.el.classList.add("is-materialized");
+  }
+  function materializeEdge(entry) {
+    if (entry.materialized) return;
+    entry.materialized = true;
+    svg.appendChild(entry.path);
+    const length = entry.path.getTotalLength();
+    entry.length = length;
+    entry.path.style.strokeDasharray = String(length);
+    entry.path.style.strokeDashoffset = String(length);
+  }
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+  function edgeDuration(length) {
+    const base = length / GRAPH.EDGE_SPEED;
+    const clamped = Math.max(GRAPH.EDGE_MS_MIN, Math.min(GRAPH.EDGE_MS_MAX, base));
+    return clamped * (0.88 + (clamped % 137) / 570);
+  }
+  function nodeDuration(index) {
+    const range = GRAPH.NODE_RUN_MS_MAX - GRAPH.NODE_RUN_MS_MIN;
+    return GRAPH.NODE_RUN_MS_MIN + range * ((index % 5) / 4);
+  }
+  function animatePacket(entry, duration) {
+    const { path, length, canvas: c } = entry;
+    if (REDUCE_MOTION) {
+      path.style.strokeDashoffset = "0";
+      path.dataset.state = "done";
+      return Promise.resolve();
+    }
+    const packet = document.createElement("span");
+    packet.className = "hero-chat__graph-packet";
+    packet.style.willChange = "transform, opacity";
+    c.appendChild(packet);
+    const startPoint = path.getPointAtLength(0);
+    packet.style.transform = `translate3d(${startPoint.x}px, ${startPoint.y}px, 0) translate(-50%, -50%)`;
+    const startTime = performance.now();
+    return new Promise((resolve) => {
+      function tick(now) {
+        if (cancelled()) { packet.remove(); resolve(); return; }
+        const t = Math.min(1, (now - startTime) / duration);
+        const eased = easeInOutCubic(t);
+        const point = path.getPointAtLength(length * eased);
+        packet.style.transform = `translate3d(${point.x}px, ${point.y}px, 0) translate(-50%, -50%)`;
+        path.style.strokeDashoffset = (length * (1 - eased)).toFixed(2);
+        path.dataset.state = "active";
+        if (t < 1) {
+          window.requestAnimationFrame(tick);
+        } else {
+          path.dataset.state = "done";
+          packet.style.transition = "opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1)";
+          packet.style.opacity = "0";
+          window.setTimeout(() => packet.remove(), 450);
+          resolve();
+        }
+      }
+      window.requestAnimationFrame(tick);
+    });
+  }
+  let nodeActivationIndex = 0;
+  async function activateEdge(edge) {
+    if (cancelled()) return;
+    const entry = edgeMap.get(edge);
+    if (!entry) return;
+    materializeEdge(entry);
+    const dur = edgeDuration(entry.length);
+    const targetEntry = nodeMap.get(edge.to);
+    window.setTimeout(() => {
+      if (!targetEntry.materialized) {
+        materializeNode(targetEntry);
+        followTo(edge.to);
+      }
+    }, dur * GRAPH.TARGET_REVEAL_AT);
+    await animatePacket(entry, dur);
+    const tracker = incomingTracker.get(edge.to);
+    tracker.drawn += 1;
+    if (tracker.drawn === tracker.needed) {
+      await activateNode(edge.to);
+    }
+  }
+  async function activateNode(nodeId) {
+    if (cancelled()) return;
+    const entry = nodeMap.get(nodeId);
+    if (!entry) return;
+    const idx = nodeActivationIndex;
+    nodeActivationIndex += 1;
+    if (!entry.materialized) {
+      materializeNode(entry);
+      followTo(nodeId);
+      await delay(GRAPH.MATERIALIZE_FADE_MS);
+    } else {
+      followTo(nodeId);
+    }
+    entry.el.dataset.state = "running";
+    await delay(nodeDuration(idx));
+    if (cancelled()) return;
+    entry.el.dataset.state = "done";
+    const outgoing = graph.edges.filter((e) => e.from === nodeId);
+    if (outgoing.length === 0) return;
+    await Promise.all(outgoing.map((edge) => activateEdge(edge)));
+  }
+  if (roots.length > 0) {
+    const firstRoot = nodeMap.get(roots[0].id);
+    applyCamera(firstRoot.x + NODE_W / 2, firstRoot.y + NODE_H / 2);
+  }
+  await delay(520);
+  if (cancelled()) return;
+  roots.forEach((r) => {
+    const entry = nodeMap.get(r.id);
+    materializeNode(entry);
+    followTo(r.id);
+  });
+  await delay(GRAPH.MATERIALIZE_FADE_MS + 120);
+  if (cancelled()) return;
+  await Promise.all(roots.map((r) => activateNode(r.id)));
+  if (cancelled()) return;
+  if (panState) panState.enable();
+}
+
+async function streamNarration(body, text, isCancelled) {
+  if (!text) return;
+  const container = document.createElement("p");
+  container.className = "hero-chat__narration";
+  body.appendChild(container);
+  const parts = text.split(/(\s+)/);
+  for (const part of parts) {
+    if (isCancelled && isCancelled()) return;
+    if (!part) continue;
+    if (/^\s+$/.test(part)) {
+      container.appendChild(document.createTextNode(part));
+      continue;
+    }
+    const span = document.createElement("span");
+    span.className = "hero-chat__narration-word";
+    span.textContent = part;
+    container.appendChild(span);
+    span.getBoundingClientRect();
+    span.classList.add("is-visible");
+    await delay(28);
+  }
+}
+
+// ── Pre-run conversation (realistic agent intake) ────────────────────────────
+
+const WF_FILE_ICON =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>';
+
+function wfAppendUserMessage(thread, msg) {
+  const wrap = document.createElement("div");
+  wrap.className = "wf-chat__msg wf-chat__msg--user";
+  const bubble = document.createElement("div");
+  bubble.className = "wf-chat__bubble";
+  bubble.textContent = msg.text;
+  wrap.appendChild(bubble);
+  if (msg.attachment) {
+    const chip = document.createElement("div");
+    chip.className = "wf-chat__attach";
+    chip.innerHTML = WF_FILE_ICON;
+    const info = document.createElement("span");
+    info.className = "wf-chat__attach-info";
+    const name = document.createElement("span");
+    name.className = "wf-chat__attach-name";
+    name.textContent = msg.attachment.name;
+    info.appendChild(name);
+    if (msg.attachment.meta) {
+      const meta = document.createElement("span");
+      meta.className = "wf-chat__attach-meta";
+      meta.textContent = msg.attachment.meta;
+      info.appendChild(meta);
+    }
+    chip.appendChild(info);
+    wrap.appendChild(chip);
+  }
+  thread.appendChild(wrap);
+}
+
+function wfAppendAiMessage(thread, msg) {
+  const wrap = document.createElement("div");
+  wrap.className = "wf-chat__msg wf-chat__msg--ai";
+  if (msg.intro) {
+    const intro = document.createElement("p");
+    intro.className = "wf-chat__intro";
+    intro.textContent = msg.intro;
+    wrap.appendChild(intro);
+  }
+  if (msg.question) {
+    const q = document.createElement("p");
+    q.className = "wf-chat__q";
+    q.textContent = msg.question;
+    wrap.appendChild(q);
+  }
+  thread.appendChild(wrap);
+}
+
+function wfAppendTyping(thread) {
+  const wrap = document.createElement("div");
+  wrap.className = "wf-chat__typing";
+  wrap.innerHTML = "<span></span><span></span><span></span>";
+  thread.appendChild(wrap);
+  return wrap;
+}
+
+async function runChat(container, chat, isCancelled, scroll) {
+  if (!chat || !chat.length) return;
+  const cancelled = () => isCancelled && isCancelled();
+  const thread = document.createElement("div");
+  thread.className = "wf-chat";
+  container.appendChild(thread);
+  for (let i = 0; i < chat.length; i += 1) {
+    if (cancelled()) return;
+    const msg = chat[i];
+    if (msg.role === "user") {
+      await delay(i === 0 ? 380 : 520);
+      if (cancelled()) return;
+      wfAppendUserMessage(thread, msg);
+      if (scroll) scroll();
+      await delay(560);
+    } else {
+      const typing = wfAppendTyping(thread);
+      if (scroll) scroll();
+      await delay(950);
+      if (cancelled()) { typing.remove(); return; }
+      typing.remove();
+      wfAppendAiMessage(thread, msg);
+      if (scroll) scroll();
+      await delay(780);
+    }
+  }
+}
+
+(function heroRunnerBehavior() {
+  const wf = document.querySelector("[data-wf]");
+  if (!wf) return;
+
+  const tabs        = Array.from(document.querySelectorAll("[data-wf-tab]"));
+  const marker      = document.querySelector("[data-wf-marker]");
+  const canvasEl    = document.querySelector("[data-wf-canvas]");
+  const chatEl      = document.querySelector("[data-wf-chat]");
+  const reasoningEl = document.querySelector("[data-wf-reasoning]");
+  const graphEl     = document.querySelector("[data-wf-graph]");
+  const narrationEl = document.querySelector("[data-wf-narration]");
+  if (!tabs.length) return;
+
+  // A run token: bumping it cancels any in-flight run, so clicking another
+  // workflow switches instantly — no waiting for the current one to finish.
+  let runToken = 0;
+  let activeKey = null;
+  let firstOpen = true;
+
+  function clearCanvas() {
+    if (chatEl)      chatEl.innerHTML      = "";
+    if (reasoningEl) reasoningEl.innerHTML = "";
+    if (graphEl)     graphEl.innerHTML     = "";
+    if (narrationEl) narrationEl.innerHTML = "";
+    if (canvasEl)    canvasEl.scrollTop    = 0;
   }
 
   function scrollToBottom() {
-    if (!thread) return;
-    requestAnimationFrame(() => {
-      thread.scrollTop = thread.scrollHeight;
+    if (!canvasEl) return;
+    window.requestAnimationFrame(() => {
+      canvasEl.scrollTo({ top: canvasEl.scrollHeight, behavior: REDUCE_MOTION ? "auto" : "smooth" });
     });
   }
 
-  const delay = (ms) =>
-    new Promise((resolve) => window.setTimeout(resolve, reduceMotion ? Math.min(ms, 60) : ms));
+  // Glide the rail highlight behind the active workflow.
+  function moveMarkerTo(tab) {
+    if (!marker || !tab) return;
+    marker.style.transform = `translateY(${tab.offsetTop}px)`;
+    marker.style.height = `${tab.offsetHeight}px`;
+    marker.classList.add("is-active");
+  }
 
-  function appendUserMessage(text) {
-    const wrap = document.createElement("div");
-    wrap.className = "hero-chat__msg hero-chat__msg--user";
-    const bubble = document.createElement("div");
-    bubble.className = "hero-chat__msg-bubble";
-    bubble.textContent = text;
-    wrap.appendChild(bubble);
-    thread.appendChild(wrap);
+  async function selectWorkflow(tab, workflowKey) {
+    const data = WORKFLOWS[workflowKey];
+    if (!data) return;
+
+    // Re-clicking the currently running workflow does nothing; a new one interrupts.
+    if (workflowKey === activeKey && wf.dataset.state === "running") return;
+
+    const myToken = ++runToken;          // supersede any prior run
+    const cancelled = () => myToken !== runToken;
+    activeKey = workflowKey;
+
+    tabs.forEach((t) => t.classList.toggle("is-active", t === tab));
+    moveMarkerTo(tab);
+
+    clearCanvas();
+    wf.dataset.state = "running";
+
+    // Brief settle so the canvas swap reads cleanly (longer on the very first run).
+    await delay(firstOpen ? 420 : 200);
+    firstOpen = false;
+    if (cancelled()) return;
+
+    // 1 — the conversation: user asks, Aevra clarifies, user answers.
+    await runChat(chatEl, data.chat, cancelled, scrollToBottom);
+    if (cancelled()) return;
+    await delay(360);
+    if (cancelled()) return;
+
+    // 2 — Aevra extracts + sequences (advanced reasoning).
+    const stepEls = buildReasoning(reasoningEl, data.reasoning);
     scrollToBottom();
-  }
-
-  function buildAssistantBody() {
-    const wrap = document.createElement("div");
-    wrap.className = "hero-chat__msg hero-chat__msg--assistant";
-    const body = document.createElement("div");
-    body.className = "hero-chat__msg-body";
-    wrap.appendChild(body);
-    thread.appendChild(wrap);
-    return body;
-  }
-
-  function buildWorkflowCard(body, card) {
-    if (!card) return;
-    const wrap = document.createElement("div");
-    wrap.className = "hero-chat__workflow-card";
-
-    const icon = document.createElement("span");
-    icon.className = "hero-chat__workflow-icon";
-    icon.setAttribute("aria-hidden", "true");
-    icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5v14l11-7z"/></svg>';
-
-    const info = document.createElement("div");
-    info.className = "hero-chat__workflow-info";
-
-    const title = document.createElement("span");
-    title.className = "hero-chat__workflow-title";
-    title.textContent = card.title;
-
-    const meta = document.createElement("span");
-    meta.className = "hero-chat__workflow-meta";
-    meta.textContent = card.meta;
-
-    info.appendChild(title);
-    info.appendChild(meta);
-    wrap.appendChild(icon);
-    wrap.appendChild(info);
-    body.appendChild(wrap);
-  }
-
-  function buildSummary(body, text) {
-    if (!text) return;
-    const el = document.createElement("p");
-    el.className = "hero-chat__summary";
-    el.textContent = text;
-    body.appendChild(el);
-  }
-
-  function buildReasoning(body, steps) {
-    const block = document.createElement("div");
-    block.className = "hero-chat__reasoning";
-
-    const stepEls = steps.map((stepText) => {
-      const step = document.createElement("div");
-      step.className = "hero-chat__reasoning-step";
-
-      const bullet = document.createElement("span");
-      bullet.className = "hero-chat__reasoning-bullet";
-
-      const text = document.createElement("span");
-      text.className = "hero-chat__reasoning-text";
-      text.textContent = stepText;
-
-      step.appendChild(bullet);
-      step.appendChild(text);
-      block.appendChild(step);
-      return step;
-    });
-
-    body.appendChild(block);
-    return stepEls;
-  }
-
-  async function runReasoning(stepEls) {
-    for (let i = 0; i < stepEls.length; i += 1) {
-      const el = stepEls[i];
-      el.dataset.state = "active";
-      scrollToBottom();
-      await delay(580 + Math.random() * 320);
-      el.dataset.state = "done";
-    }
-  }
-
-  const GRAPH = {
-    NODE_W: 156,
-    NODE_H: 62,
-    COL_GAP: 36,
-    ROW_GAP: 28,
-    VIEWPORT_H: 360,
-    EDGE_PADDING: 96,
-    NODE_RUN_MS_MIN: 680,
-    NODE_RUN_MS_MAX: 1080,
-    EDGE_SPEED: 0.82,
-    EDGE_MS_MIN: 720,
-    EDGE_MS_MAX: 1400,
-    MATERIALIZE_FADE_MS: 540,
-    TARGET_REVEAL_AT: 0.62,
-  };
-
-  function buildGraph(body, graph) {
-    const { NODE_W, NODE_H, COL_GAP, ROW_GAP, VIEWPORT_H } = GRAPH;
-    const COL_UNIT = NODE_W + COL_GAP;
-    const ROW_UNIT = NODE_H + ROW_GAP;
-
-    const rows = graph.nodes.map((n) => n.row);
-    const cols = graph.nodes.map((n) => n.col);
-    const minRow = Math.min(...rows);
-    const maxRow = Math.max(...rows);
-    const maxCol = Math.max(...cols);
-
-    const canvasW = maxCol * COL_UNIT + NODE_W;
-    const canvasH = (maxRow - minRow) * ROW_UNIT + NODE_H;
-
-    const container = document.createElement("div");
-    container.className = "hero-chat__graph";
-
-    const viewport = document.createElement("div");
-    viewport.className = "hero-chat__graph-viewport";
-    viewport.style.height = VIEWPORT_H + "px";
-    container.appendChild(viewport);
-
-    const canvas = document.createElement("div");
-    canvas.className = "hero-chat__graph-canvas";
-    canvas.style.width = canvasW + "px";
-    canvas.style.height = canvasH + "px";
-    viewport.appendChild(canvas);
-
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS, "svg");
-    svg.classList.add("hero-chat__graph-svg");
-    svg.setAttribute("width", String(canvasW));
-    svg.setAttribute("height", String(canvasH));
-    svg.setAttribute("viewBox", `0 0 ${canvasW} ${canvasH}`);
-    canvas.appendChild(svg);
-
-    const nodeMap = new Map();
-    graph.nodes.forEach((node, i) => {
-      const x = node.col * COL_UNIT;
-      const y = (node.row - minRow) * ROW_UNIT;
-
-      const el = document.createElement("div");
-      el.className = "hero-chat__graph-node";
-      el.dataset.state = "pending";
-      el.style.left = x + "px";
-      el.style.top = y + "px";
-      el.style.width = NODE_W + "px";
-      el.style.height = NODE_H + "px";
-
-      const num = document.createElement("span");
-      num.className = "hero-chat__graph-num";
-      num.textContent = String(i + 1).padStart(2, "0");
-      el.appendChild(num);
-
-      const title = document.createElement("span");
-      title.className = "hero-chat__graph-title";
-      title.textContent = node.title;
-      el.appendChild(title);
-
-      const meta = document.createElement("span");
-      meta.className = "hero-chat__graph-meta";
-      meta.textContent = node.meta || "";
-      el.appendChild(meta);
-
-      nodeMap.set(node.id, { node, x, y, el, materialized: false });
-    });
-
-    const edgeMap = new Map();
-    graph.edges.forEach((edge) => {
-      const src = nodeMap.get(edge.from);
-      const tgt = nodeMap.get(edge.to);
-      if (!src || !tgt) return;
-
-      const sx = src.x + NODE_W;
-      const sy = src.y + NODE_H / 2;
-      const tx = tgt.x;
-      const ty = tgt.y + NODE_H / 2;
-
-      const dx = tx - sx;
-      const offset = Math.min(Math.abs(dx) * 0.5 - 6, Math.max(20, Math.abs(dx) * 0.42));
-      const d = `M ${sx.toFixed(2)},${sy.toFixed(2)} C ${(sx + offset).toFixed(2)},${sy.toFixed(2)} ${(tx - offset).toFixed(2)},${ty.toFixed(2)} ${tx.toFixed(2)},${ty.toFixed(2)}`;
-
-      const path = document.createElementNS(svgNS, "path");
-      path.classList.add("hero-chat__graph-edge");
-      path.setAttribute("d", d);
-
-      edgeMap.set(edge, { edge, path, length: 0, materialized: false, canvas });
-    });
-
-    body.appendChild(container);
-
-    const panState = attachPanning(viewport, canvas, canvasW, canvasH);
-
-    return {
-      container, viewport, canvas, svg,
-      nodeMap, edgeMap,
-      canvasW, canvasH,
-      panState,
-    };
-  }
-
-  function attachPanning(viewport, canvas, canvasW, canvasH) {
-    const state = { interactive: false, drag: null };
-    const PAD = GRAPH.EDGE_PADDING;
-
-    function clampTransform(tx, ty) {
-      const vw = viewport.offsetWidth;
-      const vh = viewport.offsetHeight;
-      if (canvasW > vw - PAD * 2) {
-        tx = Math.max(vw - canvasW - PAD, Math.min(PAD, tx));
-      } else {
-        tx = (vw - canvasW) / 2;
-      }
-      if (canvasH > vh - PAD * 2) {
-        ty = Math.max(vh - canvasH - PAD, Math.min(PAD, ty));
-      } else {
-        ty = (vh - canvasH) / 2;
-      }
-      return { tx, ty };
-    }
-
-    function getCurrentTransform() {
-      const tr = canvas.style.transform || "";
-      const m = tr.match(/translate\(\s*(-?[\d.]+)px,\s*(-?[\d.]+)px\)/);
-      return m ? { tx: parseFloat(m[1]), ty: parseFloat(m[2]) } : { tx: 0, ty: 0 };
-    }
-
-    viewport.addEventListener("pointerdown", (e) => {
-      if (!state.interactive) return;
-      e.preventDefault();
-      const { tx, ty } = getCurrentTransform();
-      state.drag = { startX: e.clientX, startY: e.clientY, tx0: tx, ty0: ty };
-      canvas.style.transition = "none";
-      viewport.style.cursor = "grabbing";
-      try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
-    });
-
-    viewport.addEventListener("pointermove", (e) => {
-      if (!state.drag) return;
-      const dx = e.clientX - state.drag.startX;
-      const dy = e.clientY - state.drag.startY;
-      const { tx, ty } = clampTransform(state.drag.tx0 + dx, state.drag.ty0 + dy);
-      canvas.style.transform = `translate(${tx}px, ${ty}px)`;
-    });
-
-    function endDrag() {
-      if (!state.drag) return;
-      state.drag = null;
-      viewport.style.cursor = state.interactive ? "grab" : "default";
-      canvas.style.transition = "";
-    }
-
-    viewport.addEventListener("pointerup", endDrag);
-    viewport.addEventListener("pointercancel", endDrag);
-
-    return {
-      enable() {
-        state.interactive = true;
-        viewport.style.cursor = "grab";
-      },
-      clampTransform,
-    };
-  }
-
-  async function runGraph(graph, graphCtx) {
-    const { nodeMap, edgeMap, canvas, viewport, svg, canvasW, canvasH, panState } = graphCtx;
-    const { NODE_W, NODE_H, EDGE_PADDING } = GRAPH;
-
-    const incomingTracker = new Map();
-    graph.nodes.forEach((n) => {
-      const count = graph.edges.filter((e) => e.to === n.id).length;
-      incomingTracker.set(n.id, { needed: count, drawn: 0 });
-    });
-
-    const roots = graph.nodes.filter(
-      (n) => !graph.edges.some((e) => e.to === n.id)
-    );
-
-    // ── Camera follow ──────────────────────────────────────────────
-    const recentTargets = [];
-    const RECENT_MS = 800;
-
-    function applyCamera(cx, cy) {
-      const vw = viewport.offsetWidth;
-      const vh = viewport.offsetHeight;
-      const PAD = EDGE_PADDING;
-      let tx, ty;
-      if (canvasW <= vw - PAD * 2) {
-        tx = (vw - canvasW) / 2;
-      } else {
-        tx = Math.max(vw - canvasW - PAD, Math.min(PAD, vw / 2 - cx));
-      }
-      if (canvasH <= vh - PAD * 2) {
-        ty = (vh - canvasH) / 2;
-      } else {
-        ty = Math.max(vh - canvasH - PAD, Math.min(PAD, vh / 2 - cy));
-      }
-      canvas.style.transform = `translate(${tx}px, ${ty}px)`;
-    }
-
-    function followTo(nodeId) {
-      const now = performance.now();
-      recentTargets.push({ nodeId, time: now });
-      while (recentTargets.length > 0 && now - recentTargets[0].time > RECENT_MS) {
-        recentTargets.shift();
-      }
-      let sumX = 0, sumY = 0;
-      for (const { nodeId: id } of recentTargets) {
-        const e = nodeMap.get(id);
-        sumX += e.x + NODE_W / 2;
-        sumY += e.y + NODE_H / 2;
-      }
-      const cx = sumX / recentTargets.length;
-      const cy = sumY / recentTargets.length;
-      applyCamera(cx, cy);
-    }
-
-    // ── Materialization ────────────────────────────────────────────
-    function materializeNode(entry) {
-      if (entry.materialized) return;
-      entry.materialized = true;
-      canvas.appendChild(entry.el);
-      entry.el.getBoundingClientRect();
-      entry.el.classList.add("is-materialized");
-    }
-
-    function materializeEdge(entry) {
-      if (entry.materialized) return;
-      entry.materialized = true;
-      svg.appendChild(entry.path);
-      const length = entry.path.getTotalLength();
-      entry.length = length;
-      entry.path.style.strokeDasharray = String(length);
-      entry.path.style.strokeDashoffset = String(length);
-    }
-
-    // ── Animation primitives ──────────────────────────────────────
-    function easeInOutCubic(t) {
-      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    }
-
-    function edgeDuration(length) {
-      const base = length / GRAPH.EDGE_SPEED;
-      const clamped = Math.max(GRAPH.EDGE_MS_MIN, Math.min(GRAPH.EDGE_MS_MAX, base));
-      return clamped * (0.88 + Math.random() * 0.24);
-    }
-
-    function nodeDuration() {
-      const range = GRAPH.NODE_RUN_MS_MAX - GRAPH.NODE_RUN_MS_MIN;
-      return GRAPH.NODE_RUN_MS_MIN + Math.random() * range;
-    }
-
-    function animatePacket(entry, duration) {
-      const { path, length, canvas: c } = entry;
-
-      if (reduceMotion) {
-        path.style.strokeDashoffset = "0";
-        path.dataset.state = "done";
-        return Promise.resolve();
-      }
-
-      const packet = document.createElement("span");
-      packet.className = "hero-chat__graph-packet";
-      packet.style.willChange = "transform, opacity";
-      c.appendChild(packet);
-
-      const startPoint = path.getPointAtLength(0);
-      packet.style.transform = `translate3d(${startPoint.x}px, ${startPoint.y}px, 0) translate(-50%, -50%)`;
-
-      const startTime = performance.now();
-
-      return new Promise((resolve) => {
-        function tick(now) {
-          const t = Math.min(1, (now - startTime) / duration);
-          const eased = easeInOutCubic(t);
-          const point = path.getPointAtLength(length * eased);
-          packet.style.transform = `translate3d(${point.x}px, ${point.y}px, 0) translate(-50%, -50%)`;
-          path.style.strokeDashoffset = (length * (1 - eased)).toFixed(2);
-          path.dataset.state = "active";
-
-          if (t < 1) {
-            window.requestAnimationFrame(tick);
-          } else {
-            path.dataset.state = "done";
-            packet.style.transition = "opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1)";
-            packet.style.opacity = "0";
-            window.setTimeout(() => packet.remove(), 450);
-            resolve();
-          }
-        }
-        window.requestAnimationFrame(tick);
-      });
-    }
-
-    // ── DAG traversal ──────────────────────────────────────────────
-    async function activateEdge(edge) {
-      const entry = edgeMap.get(edge);
-      if (!entry) return;
-
-      materializeEdge(entry);
-      const dur = edgeDuration(entry.length);
-
-      const targetEntry = nodeMap.get(edge.to);
-      window.setTimeout(() => {
-        if (!targetEntry.materialized) {
-          materializeNode(targetEntry);
-          followTo(edge.to);
-        }
-      }, dur * GRAPH.TARGET_REVEAL_AT);
-
-      await animatePacket(entry, dur);
-
-      const tracker = incomingTracker.get(edge.to);
-      tracker.drawn += 1;
-      if (tracker.drawn === tracker.needed) {
-        await activateNode(edge.to);
-      }
-    }
-
-    async function activateNode(nodeId) {
-      const entry = nodeMap.get(nodeId);
-      if (!entry) return;
-
-      if (!entry.materialized) {
-        materializeNode(entry);
-        followTo(nodeId);
-        await delay(GRAPH.MATERIALIZE_FADE_MS);
-      } else {
-        followTo(nodeId);
-      }
-
-      entry.el.dataset.state = "running";
-      await delay(nodeDuration());
-      entry.el.dataset.state = "done";
-
-      const outgoing = graph.edges.filter((e) => e.from === nodeId);
-      if (outgoing.length === 0) return;
-      await Promise.all(outgoing.map((edge) => activateEdge(edge)));
-    }
-
-    // ── Bootstrap ──────────────────────────────────────────────────
-    if (roots.length > 0) {
-      const firstRoot = nodeMap.get(roots[0].id);
-      applyCamera(firstRoot.x + NODE_W / 2, firstRoot.y + NODE_H / 2);
-    }
-    // Wait for the graph container to fully settle before the first node appears
-    await delay(520);
-
-    roots.forEach((r) => {
-      const entry = nodeMap.get(r.id);
-      materializeNode(entry);
-      followTo(r.id);
-    });
-    await delay(GRAPH.MATERIALIZE_FADE_MS + 120);
-
-    await Promise.all(roots.map((r) => activateNode(r.id)));
-
-    // After everything done, allow user to drag the canvas
-    if (panState) panState.enable();
-  }
-
-  async function streamNarration(body, text) {
-    if (!text) return;
-    const container = document.createElement("p");
-    container.className = "hero-chat__narration";
-    body.appendChild(container);
-
-    const parts = text.split(/(\s+)/);
-    for (const part of parts) {
-      if (!part) continue;
-      if (/^\s+$/.test(part)) {
-        container.appendChild(document.createTextNode(part));
-        continue;
-      }
-      const span = document.createElement("span");
-      span.className = "hero-chat__narration-word";
-      span.textContent = part;
-      container.appendChild(span);
-      span.getBoundingClientRect();
-      span.classList.add("is-visible");
-      const dur = reduceMotion ? 1 : 26 + Math.random() * 38;
-      await delay(dur);
-    }
-  }
-
-  async function runFlow(promptText, workflowKey) {
-    if (busy) return;
-    setBusy(true);
-
-    appendUserMessage(promptText);
-    activate();
+    await runReasoning(stepEls, cancelled);
+    if (cancelled()) return;
+    await delay(200);
+    if (cancelled()) return;
+
+    // 3 — the workflow runs.
+    const graphCtx = buildGraph(graphEl, data.graph);
+    scrollToBottom();
+    await runGraph(data.graph, graphCtx, cancelled);
+    if (cancelled()) return;
     await delay(260);
+    if (cancelled()) return;
 
-    const data = workflowKey && WORKFLOWS[workflowKey] ? WORKFLOWS[workflowKey] : FALLBACK;
-    const body = buildAssistantBody();
-    buildWorkflowCard(body, data.card);
-    await delay(220);
-    const stepEls = buildReasoning(body, data.reasoning);
+    // 4 — Aevra reports back.
+    wf.dataset.state = "done";
+    await streamNarration(narrationEl, data.narration, cancelled);
     scrollToBottom();
-
-    await delay(180);
-    await runReasoning(stepEls);
-    await delay(260);
-
-    const graphCtx = buildGraph(body, data.graph);
-    scrollToBottom();
-    await delay(220);
-
-    await runGraph(data.graph, graphCtx);
-    await delay(340);
-
-    await streamNarration(body, data.narration);
-    scrollToBottom();
-
-    setBusy(false);
-    if (input) {
-      input.value = "";
-      input.focus();
-    }
   }
 
-  pills.forEach((pill) => {
-    pill.addEventListener("click", () => {
-      const key = pill.dataset.workflow;
-      const data = key ? WORKFLOWS[key] : null;
-      const text = (data && data.prompt) ? data.prompt : pill.textContent.trim();
-      runFlow(text, key);
-    });
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => selectWorkflow(tab, tab.dataset.workflow));
   });
 
-  if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      resetChat();
-    });
-  }
+  // Keep the marker aligned with the active item on resize.
+  window.addEventListener("resize", () => {
+    const active = tabs.find((t) => t.classList.contains("is-active"));
+    if (active) moveMarkerTo(active);
+  });
 
-  if (input) {
-    input.addEventListener("input", () => {
-      if (submit) submit.disabled = busy || !input.value.trim();
-    });
-  }
+  // ── Auto-play the first workflow when the window scrolls into view ─────────
+  function start() { selectWorkflow(tabs[0], tabs[0].dataset.workflow); }
 
-  (function chatPlaceholderRender() {
-    const placeholder = root.querySelector("[data-chat-placeholder]");
-    if (!placeholder || !input) return;
-
-    const text = placeholder.textContent.trim() || "Describe a workflow to automate...";
-    placeholder.setAttribute("aria-label", text);
-    placeholder.textContent = "";
-    Array.from(text).forEach((ch, i) => {
-      const span = document.createElement("span");
-      span.className = "hero-chat__placeholder-char";
-      span.style.setProperty("--i", i);
-      span.setAttribute("aria-hidden", "true");
-      if (ch === " ") {
-        span.innerHTML = "&nbsp;";
-      } else {
-        span.textContent = ch;
-      }
-      placeholder.appendChild(span);
-    });
-
-    const syncHidden = () => {
-      placeholder.classList.toggle("is-hidden", input.value.length > 0);
-    };
-    input.addEventListener("input", syncHidden);
-    syncHidden();
-  })();
-
-  if (form) {
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const value = input.value.trim();
-      if (!value || busy) return;
-      runFlow(value, null);
-    });
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          obs.disconnect();
+          start();
+        }
+      });
+    }, { threshold: 0.35 });
+    io.observe(wf);
+  } else {
+    start();
   }
 })();
