@@ -8952,34 +8952,6 @@ body::before {
   line-height: 1.2;
 }
 
-/* the only status cue — a quiet dot on the active workflow */
-.wf__nav-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: rgba(var(--wf-ink), 0.85);
-  opacity: 0;
-  transform: scale(0.4);
-  transition:
-    opacity 0.3s ease,
-    transform 0.34s cubic-bezier(0.34, 1.4, 0.5, 1);
-}
-
-.wf__nav.is-active .wf__nav-dot {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.wf[data-state="running"] .wf__nav.is-active .wf__nav-dot {
-  animation: wf-dot-breathe 1.4s ease-in-out infinite;
-}
-
-@keyframes wf-dot-breathe {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.3; }
-}
-
 .wf__canvas {
   position: relative;
   height: 466px;
@@ -9176,7 +9148,6 @@ body::before {
     background: rgba(255, 255, 255, 0.5);
   }
   .wf__nav-label { flex: 0 0 auto; }
-  .wf__nav-dot { display: none; }
   .wf__nav.is-active {
     color: rgba(247, 249, 252, 0.96);
     background: rgba(var(--wf-ink), 0.92);
@@ -9198,6 +9169,5 @@ body::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wf__rail-marker, .wf__nav, .wf__nav-dot { transition: none !important; }
-  .wf[data-state="running"] .wf__nav.is-active .wf__nav-dot { animation: none; }
+  .wf__rail-marker, .wf__nav { transition: none !important; }
 }
