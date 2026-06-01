@@ -8954,7 +8954,7 @@ body::before {
 
 .wf__canvas {
   position: relative;
-  height: 466px;
+  height: 580px;
   overflow-y: auto;
   scrollbar-width: none;
   padding: 24px 28px 26px;
@@ -9155,7 +9155,7 @@ body::before {
   }
   .wf__nav.is-active .wf__nav-icon { opacity: 1; }
   .wf__canvas {
-    height: 420px;
+    height: 500px;
     padding: 16px;
     border-left: 0;
     border-top: 1px solid rgba(var(--wf-ink), 0.05);
